@@ -1,0 +1,34 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class UI : MonoBehaviour
+{
+   BattleData battleData;
+   
+   public void UpdateHandCard()// After drawing a new card, reorgnize the hand card(align right) and move a card from deck to hand at the most left side.
+   {
+
+   }
+
+   public void LoadSomethingWhenNewBattleLevelBegin()
+   {
+
+   }
+
+   public void showNotation(GameObject notion,Vector2 characterpos)
+   {
+        // notion is used to show how is the range or attack damage of a card. For example move left can be arrow pointing left covering one grid.
+        //this function will show the notation in the direction coresponding to the mouse and character position. For example if the mouse is at the top side of character, then the notion will placed at the top side of character.
+   }
+
+    public void MoveTimeLine(Queue<List<Card>> TimeLineSlots)
+    {
+        
+    }
+
+    public void NewCardsCanBeSeen(Queue<List<Card>> TimeLineSlots) // update the UI where cards in 0-3 time steps can be seen
+    {
+
+    }
+}
