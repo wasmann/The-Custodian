@@ -5,6 +5,7 @@ using UnityEngine;
 public class UI : MonoBehaviour
 {
    BattleData battleData;
+   BattleLevelDriver battleLevelDriver;
    
    public void UpdateHandCard()// After drawing a new card, reorgnize the hand card(align right) and move a card from deck to hand at the most left side.
    {
@@ -27,7 +28,7 @@ public class UI : MonoBehaviour
         
     }
 
-    public void NewCardsCanBeSeen(List<List<Card.InfoForActivate>> TimeLineSlots) // update the UI where cards in 0-3 time steps can be seen
+    public static void NewCardsCanBeSeen(Card.InfoForActivate card) // update the UI where cards in 0-3 time steps can be seen
     {
 
     }

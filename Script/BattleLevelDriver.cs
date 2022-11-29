@@ -41,6 +41,7 @@ public class BattleLevelDriver : MonoBehaviour
 
             foreach (Card.InfoForActivate info in currentCards)
             {
+                //TODO: pick out player's card and activate it first.
                 info.card.Acitvate(info);
             }
             
@@ -54,12 +55,10 @@ public class BattleLevelDriver : MonoBehaviour
             info.card.Acitvate(info);
             return;
         }
-        if(info.card.speed <= 3)
-
+        if (info.card.speed <= 3)
+            UI.NewCardsCanBeSeen(info);
 
         TimeLineSlots[info.card.speed].Add(info);
-
-        //if in prediction: NewCardsCanBeSeen()
 
     }
 }
