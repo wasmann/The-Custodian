@@ -4,33 +4,33 @@ using UnityEngine;
 
 public class BattleData : MonoBehaviour
 {
-    int BattleLevelID;
-    List<EnermyData> EnermyDataList;
-    PlayerData playerData;
-    n* m Matrix environmentData;
+    public int BattleLevelID;
+    public List<EnermyData> EnermyDataList;
+    public PlayerData playerData;
+    public n* m Matrix environmentData;
 
     public Deck deck;
     
 
     public struct EnermyData
     {
-        Vector2 position;
-        int Health;
-        int ID;
-        List<Card> Handcard;
-        List<Card> DiscardPile;
-        List<Card> DrawPile;
-        Enermy enermy;
+        public Vector2 position;
+        public int health;
+        public int ID;
+        public List<Card> handCard;
+        public List<Card> discardPile;
+        public List<Card> drawPile;
+        public Enermy enermy;
     }
 
-    struct PlayerData
+    public struct PlayerData
     {
-        Vector2 position;
-        int health;
-        int Energy;
-        List<Card> Handcard;
-        List<Card> DiscardPile;
-        List<Card> DrawPile;
+        public Vector2 position;
+        public int health;
+        public int energy;
+        public List<Card> handCard;
+        public List<Card> discardPile;
+        public List<Card> drawPile;
     }
 
 
@@ -41,19 +41,35 @@ public class BattleData : MonoBehaviour
         LoadEnvironmentData();
         LoadEnermyData();
         LoadPlayerData();
-        deck.StartingHandCards(4);// MaxCardsInHand
+        
     }
-    public void LoadEnvironmentData(){}
-    public void LoadEnermyData(){ }
-    public void LoadPlayerData(){ } 
+    public void LoadEnvironmentData(){
+
+    }
+    public void LoadEnermyData(){
+
+    } 
+    public void LoadPlayerData(){
+        playerData.health = GameData.health;
+        playerData.energy = GameData.Energy;
+        playerData.health = GameData.health;
+        (playerData.drawPile,playerData.handCard)=Deck.StartingHandCards(4,this);
+        playerData.discardPile = new List<Card>();
+    } 
 
     public bool CheckWinCondition()
     {
-        return false;
+        if(EnermyDataList.Count==0)
+            return true;
+        else
+            return false;
     }
     public bool CheckLoseCondition()
     {
-        return false;
+        if (playerData.health == 0)
+            return true;
+        else
+            return false;
     }
     void Start()
     {

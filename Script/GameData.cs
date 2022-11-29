@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class GameData : MonoBehaviour
 {
-    int health;
-    List<Card> Deck;
-    int Energy;
-    int worldLevelID;//the level ID on the world map
-    public int MaxCardsInHand;
+    public static int health;
+    public static List<Card> Deck;
+    public static int Energy;
+    public static int worldLevelID;//the level ID on the world map
+    public static int MaxCardsInHand;
 
     public state currentState;
 

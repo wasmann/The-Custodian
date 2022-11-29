@@ -10,7 +10,7 @@ public class BattleLevelDriver : MonoBehaviour
     public bool Paused;
     public bool BattleOver;
 
-    public Queue<List<Card.InfoForActivate>> TimeLineSlots;
+    public List<List<Card.InfoForActivate>> TimeLineSlots;
 
 
     public void BeginABattleLevel(int ID)
@@ -21,21 +21,27 @@ public class BattleLevelDriver : MonoBehaviour
         gameData.currentState = GameData.state.Battle;
         while (!Paused && !BattleOver)
         {
-
-
+        
         }
+
 
     }
 
     private IEnumerator EnableTimeLineSlots()
     {
+        TimeLineSlots=new List<List<Card.InfoForActivate>>();
         while (!Paused && !BattleOver)
         {
-            //Wait for 1 sec
-            //TimeLineSlots. pop
-            foreach (Card.InfoForActivate card in TimeLineSlots[0])
+            yield return new WaitForSeconds(1);
+
+            //Remove the cards at time steps 0 and add a new list at  time step 10
+            List<Card.InfoForActivate> currentCards = TimeLineSlots[0];
+            TimeLineSlots.RemoveAt(0);
+            TimeLineSlots.Add(new List<Card.InfoForActivate>());
+
+            foreach (Card.InfoForActivate info in currentCards)
             {
-                card.card.activate(card);
+                info.card.Acitvate(info);
             }
             
         }
@@ -43,7 +49,16 @@ public class BattleLevelDriver : MonoBehaviour
 
     public void NewCardPlayed(Card.InfoForActivate info)
     {
-        //update TimeLineSlots
+        if (info.card.speed == 0)//instant
+        {
+            info.card.Acitvate(info);
+            return;
+        }
+        if(info.card.speed <= 3)
+
+
+        TimeLineSlots[info.card.speed].Add(info);
+
         //if in prediction: NewCardsCanBeSeen()
 
     }

@@ -13,9 +13,9 @@ public class Deck : MonoBehaviour
         ui.UpdateHandCard();
     }
 
-    public void StartingHandCards(int num)
+    public static(List<Card>,List<Card>) StartingHandCards(int num, BattleData battleData)
     {
-
+        return (battleData.playerData.drawPile, battleData.playerData.handCard);
     }
     public void Shuffle() { 
 
