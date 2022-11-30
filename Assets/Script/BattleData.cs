@@ -7,7 +7,7 @@ public class BattleData : MonoBehaviour
     public int BattleLevelID;
     public List<EnermyData> EnermyDataList;
     public PlayerData playerData;
-    public n* m Matrix environmentData;
+    //public n* m Matrix environmentData;
 
     public Deck deck;
     
