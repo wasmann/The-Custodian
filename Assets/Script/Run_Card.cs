@@ -17,7 +17,7 @@ public class Run_Card : Card
     public override void IsPlayed()
     {
         this.Info.card = this;
-        this.Info.player_ID = 0;
+        this.Info.owner_ID = 0;
         this.Info.direction.Add(Vector2(BattleData.battleData.player.position + Vector2(1, 0)));
         this.Info.direction.Add(Vector2(BattleData.battleData.player.position + Vector2(-1, 0)));
         this.Info.direction.Add(Vector2(BattleData.battleData.player.position + Vector2(0, 1)));
@@ -30,13 +30,11 @@ public class Run_Card : Card
         this.Info.direction.Add(Vector2(BattleData.battleData.player.position + Vector2(-3, 0)));
         this.Info.direction.Add(Vector2(BattleData.battleData.player.position + Vector2(0, 3)));
         this.Info.direction.Add(Vector2(BattleData.battleData.player.position + Vector2(0, -3)));
-        GameObject notion=
-        UI.ShowNotation(Notation, B)
+        Notation.SetActive(true);
     }
 
-    public override void Acitvate(InfoForActivate info)
+    public override void Acitvate()
     {
-        this.Info = info;
         this.BattleData.battleData.playerData.position = info.direction.at(0);
     }
 }

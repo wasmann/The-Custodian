@@ -6,11 +6,12 @@ using UnityEngine;
 public abstract class Card : MonoBehaviour
 {
     //every card is a prefab and has its own script named card_cardname and this one is a superclass
+    public int ID;
     public string Name;
     public Rarity rarity;
     public int Speed;
     public int Range;
-
+    
     public BattleData BattleData;
     public GameObject Notation;
     public InfoForActivate Info;
@@ -32,7 +33,7 @@ public abstract class Card : MonoBehaviour
     public struct InfoForActivate
     {
         public List<Vector2> direction;
-        public int player_ID;// 0 for player
+        public int owner_ID;// 0 for player
         public Card card;
     }
 
@@ -40,7 +41,7 @@ public abstract class Card : MonoBehaviour
 
     //public abstract void GetDirection();
 
-    public abstract void Acitvate(InfoForActivate info);
+    public abstract void Acitvate();
 
     //Drag and drop function to play the card
 

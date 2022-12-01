@@ -11,18 +11,15 @@ public class Photovoltaics_Card : Card
         this.Speed = 3;
         this.Range = 0;
         this.BattleCata = battleData;
-
     }
     public override void IsPlayed()
     {
         this.Info.card = this;
-        this.Info.player_ID = 0;
-        Instantiate(Notation);
+        this.Info.owner_ID = 0;
     }
 
-    public override void Acitvate(InfoForActivate info)
+    public override void Acitvate()
     {
-        this.Info = info;
         this.BattleData.battleData.playerData.energy += 1;
         this.BattleData.battleData.playerData.health += 2;
     }

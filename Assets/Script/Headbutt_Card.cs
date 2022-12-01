@@ -11,22 +11,21 @@ public class Headbutt_Card : Card
         this.Speed = 4;
         this.Range = 1;
         this.BattleCata = battleData;
-
+        this.Notation = gameObject.transform.Find("notion").gameObject;
     }
     public override void IsPlayed()
     {
         this.Info.card = this;
-        this.Info.player_ID = 0;
+        this.Info.owner_ID = 0;
         this.Info.direction.Add(Vector2(BattleData.battleData.player.position + Vector2(1, 0)));
         this.Info.direction.Add(Vector2(BattleData.battleData.player.position + Vector2(-1, 0)));
         this.Info.direction.Add(Vector2(BattleData.battleData.player.position + Vector2(0, 1)));
         this.Info.direction.Add(Vector2(BattleData.battleData.player.position + Vector2(0, -1)));
-        Instantiate(Notation);
+        Notation.SetActive(true);
     }
 
-    public override void Acitvate(InfoForActivate info)
+    public override void Acitvate()
     {
-        this.Info = info;
         this.BattleData.battleData.EnemyDataList.at(0).health -= 3;
     }
 }
