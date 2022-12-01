@@ -5,7 +5,7 @@ using UnityEngine;
 public class BattleData : MonoBehaviour
 {
     public int BattleLevelID;
-    public List<EnermyData> EnermyDataList;
+    public Dictionary<int,EnermyData> EnermyDataList;
     public PlayerData playerData;
     //public n* m Matrix environmentData;
 
@@ -21,6 +21,7 @@ public class BattleData : MonoBehaviour
         public List<Card> discardPile;
         public List<Card> drawPile;
         public Enermy enermy;
+        //public bool Busy;// by default enermy can only let one card preparing at the same time
     }
 
     public struct PlayerData

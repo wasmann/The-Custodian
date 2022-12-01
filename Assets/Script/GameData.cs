@@ -10,7 +10,7 @@ public class GameData : MonoBehaviour
     public static int worldLevelID;//the level ID on the world map
     public static int MaxCardsInHand;
 
-    public state currentState;
+    public static state currentState;
 
     public enum state // In battle activate drag and drop to play a card, in worldmap activate onmousepointenter to zoom in a card for detailed Information
     {

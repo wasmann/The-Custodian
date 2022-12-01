@@ -12,7 +12,12 @@ public class UI : MonoBehaviour
 
    }
 
-   public void LoadSomethingWhenNewBattleLevelBegin()
+   public static void UpdateTimeLine()
+   {
+
+   }
+
+    public void LoadSomethingWhenNewBattleLevelBegin()
    {
 
    }
@@ -26,10 +31,5 @@ public class UI : MonoBehaviour
     public void MoveTimeLine(List<List<Card.InfoForActivate>> TimeLineSlots)
     {
         
-    }
-
-    public static void NewCardsCanBeSeen(Card.InfoForActivate card) // update the UI where cards in 0-3 time steps can be seen
-    {
-
     }
 }

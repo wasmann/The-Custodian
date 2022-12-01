@@ -7,7 +7,7 @@ public abstract class Card : MonoBehaviour
 {
     //every card is a prefab and has its own script named card_cardname and this one is a superclass
     public string Name;
-    public Rarity Rarity;
+    public Rarity rarity;
     public int Speed;
     public int Range;
 
@@ -20,7 +20,7 @@ public abstract class Card : MonoBehaviour
 
     }
 
-    enum Rarity
+    public enum Rarity
     {
         basic,
         common,

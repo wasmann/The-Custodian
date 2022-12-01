@@ -7,10 +7,11 @@ public class Run_Card : Card
     public Run_Card(BattleData battleData)
     {
         this.Name = "Run";
-        this.Rarity = .basic;
+        this.rarity = Rarity.basic;
         this.Speed = 3;
         this.Range = 3;
-        this.BattleCata = battleData;
+        this.battleCata = battleData;
+        this.Notation = gameObject.transform.Find("notion").gameObject;
 
     }
     public override void IsPlayed()
@@ -29,7 +30,8 @@ public class Run_Card : Card
         this.Info.direction.Add(Vector2(BattleData.battleData.player.position + Vector2(-3, 0)));
         this.Info.direction.Add(Vector2(BattleData.battleData.player.position + Vector2(0, 3)));
         this.Info.direction.Add(Vector2(BattleData.battleData.player.position + Vector2(0, -3)));
-        Instantiate(Notation);
+        GameObject notion=
+        UI.ShowNotation(Notation, B)
     }
 
     public override void Acitvate(InfoForActivate info)
