@@ -5,13 +5,20 @@ using UnityEngine;
 public abstract class Card : MonoBehaviour
 {
     //every card is a prefab and has its own script named card_cardname and this one is a superclass
-    string name;
-    Rarity rarity;
-    public int speed;
-    public BattleData battleData;
-    string range;//describe the range
-    GameObject notation;
-    
+    public string Name;
+    public Rarity Rarity;
+    public int Speed;
+    public int Range;
+
+    public BattleData BattleData;
+    public GameObject Notation;
+    public InfoForActivate Info;
+
+    public Card()
+    {
+
+    }
+
     enum Rarity
     {
         basic,
@@ -23,16 +30,14 @@ public abstract class Card : MonoBehaviour
 
     public struct InfoForActivate
     {
-        public List<Vector2> TargetOrDirection;
-        public int ID_WhoPlayedTheCard;// 0 for player
+        public List<Vector2> direction;
+        public int player_ID;// 0 for player
         public Card card;
     }
 
-    public abstract void Playerplay();// shownotion, wait for choose a dir or a target, 
+    public abstract void IsPlayed();// shownotion, wait for choose a dir or a target, 
 
-
-
-
+    //public abstract void GetDirection();
 
     public abstract void Acitvate(InfoForActivate info);
 
