@@ -9,6 +9,6 @@ public abstract class Enermy : MonoBehaviour
     int health;
     List<Card> Deck;
 
-    public abstract void EnermyChooseACardToPlay(BattleData data); // BattleLevelDriver.NewcardPlayed(Card.InfoForActivate info)
+    public abstract int EnermyChooseACardToPlay(BattleData data); 
 
 }

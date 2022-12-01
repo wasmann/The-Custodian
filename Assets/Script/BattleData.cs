@@ -33,8 +33,7 @@ public class BattleData : MonoBehaviour
         public List<Card> discardPile;
         public List<Card> drawPile;
     }
-
-
+    public HashSet<int> NewCard; 
 
     public void LoadBattlelevel(int battleLevelID)
     {

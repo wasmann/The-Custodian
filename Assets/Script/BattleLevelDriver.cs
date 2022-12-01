@@ -52,6 +52,7 @@ public class BattleLevelDriver : MonoBehaviour
                 info.card.Acitvate(info);
                 if (info.player_ID != 0)
                 {
+                    battleData.NewCard.Add(info.card.ID);
                     battleData.EnermyDataList[info.player_ID].enermy.EnermyChooseACardToPlay(battleData);
                 }
             }
@@ -70,4 +71,12 @@ public class BattleLevelDriver : MonoBehaviour
             UI.UpdateTimeLine();
         TimeLineSlots[info.card.Speed].Add(info);
     }
+
+    public IEnumerable Pause()
+    {
+        Paused = true;
+        UI.ShowDuplicationWin();
+        yield return new WaitUntil(() => Paused == false);
+    }
+
 }

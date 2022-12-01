@@ -32,4 +32,5 @@ public class UI : MonoBehaviour
     {
         
     }
+    public static void ShowDuplicationWin() { }
 }
