@@ -5,21 +5,21 @@ using UnityEngine;
 public class BattleData : MonoBehaviour
 {
     public int BattleLevelID;
-    public Dictionary<int,EnermyData> EnermyDataList;
+    public Dictionary<int,EnemyData> EnermyDataList;
     public PlayerData playerData;
     //public n* m Matrix environmentData;
 
     public Deck deck;
     
 
-    public struct EnermyData
+    public struct EnemyData
     {
         public Vector2 position;
         public int health;
         public int ID;
         public List<Card> handCard;
-        public List<Card> discardPile;
-        public List<Card> drawPile;
+        public HashSet<Card> discardPile;
+        public HashSet<Card> drawPile;
         public Enermy enermy;
         //public bool Busy;// by default enermy can only let one card preparing at the same time
     }
@@ -30,8 +30,8 @@ public class BattleData : MonoBehaviour
         public int health;
         public int energy;
         public List<Card> handCard;
-        public List<Card> discardPile;
-        public List<Card> drawPile;
+        public HashSet<Card> discardPile;
+        public HashSet<Card> drawPile;
     }
     public HashSet<int> NewCard; 
 
@@ -53,8 +53,8 @@ public class BattleData : MonoBehaviour
         playerData.health = GameData.health;
         playerData.energy = GameData.Energy;
         playerData.health = GameData.health;
-        (playerData.drawPile,playerData.handCard)=Deck.StartingHandCards(4,this);
-        playerData.discardPile = new List<Card>();
+        (playerData.drawPile,playerData.handCard)= deck.StartingHandCards(4,this);
+        playerData.discardPile = new HashSet<Card>();
     } 
 
     public bool CheckWinCondition()
