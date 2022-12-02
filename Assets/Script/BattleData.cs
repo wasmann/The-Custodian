@@ -15,7 +15,8 @@ public class BattleData : MonoBehaviour
     public struct EnemyData
     {
         public Vector2 position;
-        public int health;
+        public int maxHealth;
+        public int currentHealth;
         public int ID;
         public List<Card> handCard;
         public HashSet<Card> discardPile;
@@ -27,8 +28,10 @@ public class BattleData : MonoBehaviour
     public struct PlayerData
     {
         public Vector2 position;
-        public int health;
-        public int energy;
+        public int maxHealth;
+        public int currentHealth;
+        public int maxEnergy;
+        public int currentEnergy;
         public List<Card> handCard;
         public HashSet<Card> discardPile;
         public HashSet<Card> drawPile;
@@ -50,9 +53,10 @@ public class BattleData : MonoBehaviour
 
     } 
     public void LoadPlayerData(){
-        playerData.health = GameData.health;
-        playerData.energy = GameData.Energy;
-        playerData.health = GameData.health;
+        playerData.maxHealth = GameData.health;
+        playerData.maxEnergy = GameData.Energy;
+        playerData.currentHealth = playerData.maxHealth;
+        playerData.currentEnergy = playerData.maxEnergy;
         (playerData.drawPile,playerData.handCard)= deck.StartingHandCards(4,this);
         playerData.discardPile = new HashSet<Card>();
     } 
@@ -66,7 +70,7 @@ public class BattleData : MonoBehaviour
     }
     public bool CheckLoseCondition()
     {
-        if (playerData.health == 0)
+        if (playerData.currentHealth == 0)
             return true;
         else
             return false;

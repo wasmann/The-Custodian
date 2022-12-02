@@ -13,8 +13,6 @@ public class Deck : MonoBehaviour
 
     //private HashSet<Card> deckPlayed; // discardPile
 
-    private static List<Card> deckBuild;
-
     public void DrawCard(ref BattleData battleData)
     {
         //TODO drawcard
@@ -33,7 +31,7 @@ public class Deck : MonoBehaviour
     public (HashSet<Card>,List<Card>) StartingHandCards(int num, BattleData battleData)
     {
         // initialize battle deck
-        foreach(Card a in deckBuild) //need a static deck 
+        foreach(Card a in GameData.Deck) 
         {
             battleData.playerData.drawPile.Add(a);
         }
