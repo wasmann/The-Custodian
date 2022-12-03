@@ -6,7 +6,7 @@ using UnityEngine;
 public class Deck : MonoBehaviour
 {
     
-    public UI ui;
+    
     //Get playerData from BattleData.cs
 
     //private HashSet<Card> deck; // drawPile
@@ -24,7 +24,7 @@ public class Deck : MonoBehaviour
         Card card = battleData.playerData.drawPile.First();
         battleData.playerData.drawPile.Remove(card);
         battleData.playerData.discardPile.Add(card);
-        ui.UpdateHandCard();
+        UI.UpdateHandCard(battleData);
         
     }
 

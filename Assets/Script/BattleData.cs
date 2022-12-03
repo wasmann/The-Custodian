@@ -21,7 +21,7 @@ public class BattleData : MonoBehaviour
         public List<Card> handCard;
         public HashSet<Card> discardPile;
         public HashSet<Card> drawPile;
-        public Enermy enermy;
+        //public Enemy enemy;
         //public bool Busy;// by default enermy can only let one card preparing at the same time
     }
 
