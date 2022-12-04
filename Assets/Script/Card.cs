@@ -41,7 +41,7 @@ public abstract class Card : MonoBehaviour
 
     //public abstract void GetDirection();
 
-    public abstract void Acitvate();
+    public abstract void Activate(InfoForActivate Info);
 
     //Drag and drop function to play the card
 

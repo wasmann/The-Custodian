@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
-    BattleData battleData;
-    //BattleLevelDriver battleLevelDriver;
 
     //left first 
     static GameObject card1;
@@ -20,12 +18,12 @@ public class UI : MonoBehaviour
 
     static GameObject timeline;
     const int TIME_LINE_LENGTH = 10;
-    static float cardHeight;
-    static float cardWidth;
+    const float CARD_HEIGHT = 4;
+    const float CARD_WIDTH = 2;
 
-    static List<float> pos;
+    static List<List<Vector3>> pos;
 
-
+    static Vector3 mouseWorldPos;
     private void Start()
     {
 
@@ -40,14 +38,16 @@ public class UI : MonoBehaviour
         card3 = GameObject.Find("Card3");
         card4 = GameObject.Find("Card4");
 
-        GameObject.Instantiate(testcard, card1.transform.position, transform.rotation);
+        card1 = GameObject.Instantiate(testcard, card1.transform.position, transform.rotation) as GameObject;
         GameObject.Instantiate(testcard, card2.transform.position, transform.rotation);
         GameObject.Instantiate(testcard, card3.transform.position, transform.rotation);
 
         timeline = GameObject.Find("TimeLine");
-        GameObject.Instantiate(testicon, timeline.transform.position + new Vector3(4.24f, -1.2f, 0), transform.rotation);
-        GameObject.Instantiate(testicon, timeline.transform.position + new Vector3(2.61f, -1.2f, 0), transform.rotation);
-       
+        GameObject.Instantiate(testicon, timeline.transform.position + new Vector3(4.24f, -1.2f,0), transform.rotation);
+        GameObject.Instantiate(testicon, timeline.transform.position + new Vector3(2.61f, -1.2f,0), transform.rotation);
+        UpdateTimeLine();
+        
+
     }
     public static void UpdateHandCard(BattleData battleData)// After drawing a new card, reorgnize the hand card(align right) and move a card from deck to hand at the most left side.
     {
@@ -67,8 +67,7 @@ public class UI : MonoBehaviour
 
     public static void UpdateTimeLine()
     {
-        
-        
+
     }
 
     public static void LoadBattleBegin(BattleData battleData)
@@ -83,7 +82,7 @@ public class UI : MonoBehaviour
 
         UpdatePlayerData(battleData.playerData);
 
-        UpdateEnemyData(battleData.EnermyDataList);
+        UpdateEnemyData(battleData.EnemyDataList);
 
         card1 = GameObject.Find("Card1");
         card2 = GameObject.Find("Card2");
@@ -106,15 +105,38 @@ public class UI : MonoBehaviour
 
     }
 
-    public void ShowNotation(GameObject notion, Vector2 characterpos)
+    public static IEnumerator ShowNotation(GameObject notion, Vector2 characterpos)
     {
         // notion is used to show how is the range or attack damage of a card. For example move left can be arrow pointing left covering one grid.
         //this function will show the notation in the direction coresponding to the mouse and character position. For example if the mouse is at the top side of character, then the notion will placed at the top side of character.
+        
+        GameObject.Instantiate(notion, new Vector2(characterpos.x, characterpos.y), Quaternion.identity);
+        GameObject.Instantiate(notion, new Vector2(mouseWorldPos.x, mouseWorldPos.y), Quaternion.identity);
+
+        //Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+
+        while (!Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            GameObject.Instantiate(notion, new Vector2(mouseWorldPos.x, mouseWorldPos.y), Quaternion.identity);
+
+            //problem!!
+       
+        }
+        UpdateTimeLine();
+        yield return null;
     }
 
-    public void MoveTimeLine(List<List<Card.InfoForActivate>> TimeLineSlots)
+    public static void MoveTimeLine(List<List<Card.InfoForActivate>> timeLineSlots)
     {
-
+        for(int i = 0; i < timeLineSlots.Count; ++i)
+        {
+           for(int j = 0; j < timeLineSlots[0].Count; ++j)
+            {
+                GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].card.name) as GameObject,
+            timeline.transform.position + pos[i][j],timeline.transform.rotation);
+            }
+        }
     }
     public static void ShowDuplicationWin()
     {
@@ -127,17 +149,30 @@ public class UI : MonoBehaviour
         energy.value = playerData.currentEnergy;
     }
 
-    public static void UpdateEnemyData(Dictionary<int, BattleData.EnemyData> EnemyDataList)
+    public static void UpdateEnemyData(Dictionary<int, BattleData.EnemyData> enemyDataList)
     {
 
     }
 
     public static void InitPos()
     {
-       float offsite = cardWidth * TIME_LINE_LENGTH / 2;
+        //one line under timeline for enemy, one line above for player, one line for duplication
+       float offsite = CARD_WIDTH * TIME_LINE_LENGTH / 2;
+       float heightOffsite = CARD_HEIGHT;
        for (int i = 0; i < TIME_LINE_LENGTH; ++i)
         {
-            pos[i] = i * cardWidth - offsite;
+            for (int j = 0; j < 3; ++j)
+            {
+                pos[i][j] = new Vector3(i * CARD_WIDTH - offsite, j * CARD_HEIGHT / 2 - heightOffsite, 0);
+            }
         }
     }
+
+
+    /*private void Update()
+    {
+        //Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        //Debug.Log(Input.mousePosition);
+        mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    }*/
 }

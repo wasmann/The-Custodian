@@ -5,7 +5,7 @@ using UnityEngine;
 public class BattleLevelDriver : MonoBehaviour
 {
     public BattleData battleData;
-    public UI uI;
+    //public UI uI;
     public bool Paused;
     public bool BattleOver;
 
@@ -15,7 +15,7 @@ public class BattleLevelDriver : MonoBehaviour
     public void BeginABattleLevel(int ID)
     {
         battleData.LoadBattlelevel(ID);
-        uI.UpdateHandCard();
+        UI.UpdateHandCard(battleData);
         GameData.currentState = GameData.state.Battle;
         StartCoroutine(EnableTimeLineSlots());
         StartCoroutine(BattleLevelGame());
@@ -49,11 +49,11 @@ public class BattleLevelDriver : MonoBehaviour
             foreach (Card.InfoForActivate info in currentCards)
             {
                 //TODO: pick out player's card and activate it first.
-                info.card.Acitvate(info);
-                if (info.player_ID != 0)
+                info.card.Activate(info);
+                if (info.owner_ID != 0)
                 {
                     battleData.NewCard.Add(info.card.ID);
-                    battleData.EnermyDataList[info.player_ID].enermy.EnermyChooseACardToPlay(battleData);
+                    //battleData.EnemyDataList[info.owner_ID].enemy.EnermyChooseACardToPlay(battleData);
                 }
             }
             
@@ -64,7 +64,7 @@ public class BattleLevelDriver : MonoBehaviour
     {
         if (info.card.Speed == 0)//instant
         {
-            info.card.Acitvate(info);
+            info.card.Activate(info);
             return;
         }
         if (info.card.Speed <= 3)
