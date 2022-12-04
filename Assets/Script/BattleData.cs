@@ -5,7 +5,7 @@ using UnityEngine;
 public class BattleData : MonoBehaviour
 {
     public int BattleLevelID;
-    public Dictionary<int,EnemyData> EnermyDataList;
+    public Dictionary<int,EnemyData> EnemyDataList;
     public PlayerData playerData;
     //public n* m Matrix environmentData;
 
@@ -63,7 +63,7 @@ public class BattleData : MonoBehaviour
 
     public bool CheckWinCondition()
     {
-        if(EnermyDataList.Count==0)
+        if(EnemyDataList.Count==0)
             return true;
         else
             return false;
