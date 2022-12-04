@@ -1,94 +1,98 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Sheep_Enemy : Enemy
 {
-    public ActionStates CurrentActionState;
-    public PositionStates CurrentPositionState;
+    public enum ActionStates
+    {
+        Walk,
+        Run,
+        Headbutt,
+        RushAndCollision,
+        Unknown,
+    }
+
+    public enum PositionStates
+    {
+        InRange,
+        NotInRange,
+        Unknown,
+    }
+
+    int ID;
+    ActionStates CurrentActionState;
+    PositionStates CurrentPositionState;
 
     Sheep_Enemy(int ID)
     {
         this.ID = ID;
-        this.CurrentActionState = ActionStates.unknown;
-        this.CurrentPositionState = PositionStates.notInRange;
+        this.CurrentActionState = ActionStates.Unknown;
+        this.CurrentPositionState = PositionStates.Unknown;
     }
-    enum ActionStates
+    
+    
+    public override int EnemyChooseACardToPlay(BattleData data)
     {
-        walk,
-        run,
-        headbutt,
-        rushAndCollision,
-        unknown,
-    }
-    enum PositionStates
-    {
-        inRange,
-        notInRange,
-    }
-    public override void EnermyChooseACardToPlay(BattleData data)
-    {
-        Vector2 playerPosition = data.playerData.position;
-        Vector2 selfPosition = data.EnermyDataList.at(ID).position;
-        if(playerPosition.x == selfPosition.x || playerPosition.y == selfPosition.y)
-        {
-            if ((playerPosition - selfPosition).Length <= 3)
-                this.CurrentPositionState = PositionStates.inRange;
-        }
-        if(this.CurrentPositionState == PositionStates.inRange)
-        {
-            if ((playerPosition - selfPosition).Length == 1)
-            {
-                if (data.EnermyDataList.at(ID).handCard.OfType<Headbutt_Card>().FirstOrDefault() != null)
-                {
-                    //play the card
-                }
-                else if (data.EnermyDataList.at(ID).handCard.OfType<RushAndCollisionAttack_Card>().FirstOrDefault() != null)
-                {
-                    //play the card
-                }
-                else
-                {
-                    //discard card and return
+        Vector2 PlayerPosition = data.playerData.position;
+        Vector2 SelfPosition = data.EnemyDataList[ID].position;
 
-                }
-            }
-            else
-            {
-                if (data.EnermyDataList.at(ID).handCard.OfType<RushAndCollisionAttack_Card>().FirstOrDefault() != null)
-                {
-                    //play the card
-                }
-                else if (data.EnermyDataList.at(ID).handCard.OfType<Run_Card>().FirstOrDefault() != null)
-                {
-                    //choose direction play and return (newPosition = selfPosition - selfPosition - playerPosition)
-                }
-                else if (data.EnermyDataList.at(ID).handCard.OfType<Walk_Card>().FirstOrDefault() != null)
-                {
-                    //choose direction play and return (newPosition = selfPosition - normalize(selfPosition - playerPosition))
-                }
-            }
+
+        // Are we in range?
+            // If yes, do we have the headbutt attack card or rush attack?
+                // We have both.
+                    // If we are 1 grid away from the player, use the headbutt card. Otherwise, use rush attack.
+                // We have the headbutt attack card.
+                    // If we are 1 grid away, use the card.
+                    // If we are more than 1 grid away, discard a card other than the headbutt card and try to get a movement card or the rush attack card.
+                // We have the rush attack card.
+                    // Use the card.
+                // We have neither.
+                    // Discard a card and try to get the headbutt card or rush attack card.
+            // If no, try to move into range
+                // Do we have a movement card?
+                    // If yes, play it!
+                    // If no, discard one of the cards at hand to get a movement card.
+
+        // Are we in range?
+        // If the enemy is directly , at most, 3 grid units to the right, left, above or below the enemy,
+        // then the enemy is within range.
+        if ((PlayerPosition.x == SelfPosition.x || PlayerPosition.y == SelfPosition.y) && 
+            (Math.Abs(PlayerPosition.x - SelfPosition.x) <= 3 || Math.Abs(PlayerPosition.y - SelfPosition.y) <= 3))
+        {
         }
+        // If no, try to move into range
         else
         {
-            //TODO implement out of range case
-        }
-        //foreach (var card in data.EnermyDataList.at(ID).handCard)
-        //{
+            // Do we have a movement card?
+            if (data.playerData.handCard.Contains("ID for the walk card") || data.playerData.handCard.Contains("ID for the run card"))
+            {
+                // Do we have both cards?
+                if (data.playerData.handCard.Contains("ID for the walk card") && data.playerData.handCard.Contains("ID for the run card"))
+                {
+                    // If we have both cards and the distance to get into range is greater then 1 grid, then use the run card.
+                    if ((Math.Abs(PlayerPosition.x - SelfPosition.x) > 1 || Math.Abs(PlayerPosition.y - SelfPosition.y) > 1))
+                    {
+                        // Play the run card!
+                    }
+                    // If we have both cards and the distance to get into range is equal to 1 grid, then use the run card.
+                    else if ((Math.Abs(PlayerPosition.x - SelfPosition.x) == 1 || Math.Abs(PlayerPosition.y - SelfPosition.y)== 1))
+                    {
+                        // Play the walk card!
+                    }
+                }
+                // Otherwise, play whatever movement card we have at hand!
+                else
+                {
 
-        //    switch (card.GetType())
-        //    {
-        //        case typeof(Walk_Card):
-        //            CurrentSate = States.walk;
-        //        case typeof(Run_Card):
-        //            return 3;
-        //        case typeof(Headbutt_Card):
-        //            return 0;
-        //        case typeof(RushAndCollisionAttack_Card):
-        //            return 2;
-        //        default:
-        //            return -1;
-        //    }
-        //}
+                }
+            }
+            // If we don't have any movement cards, discard one of the cards at hand to try to get a movement card.
+            else
+            {
+                // Discard a card at hand!
+            }
+        }
     }
 }
