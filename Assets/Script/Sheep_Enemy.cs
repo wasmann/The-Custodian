@@ -5,6 +5,7 @@ using System;
 
 public class Sheep_Enemy : Enemy
 {
+<<<<<<< Updated upstream
     public enum ActionStates
     {
         Walk,
@@ -15,22 +16,41 @@ public class Sheep_Enemy : Enemy
     }
 
     public enum PositionStates
+=======
+    public ActionStates CurrentActionState;
+    public PositionStates CurrentPositionState;
+    public int Health = 5;
+    public string EnemyName;
+
+    Sheep_Enemy(int ID)
+    {
+        this.EnemyID = ID;
+        this.CurrentActionState = ActionStates.unknown;
+        this.CurrentPositionState = PositionStates.notInRange;
+    }
+    public enum ActionStates
+>>>>>>> Stashed changes
     {
         InRange,
         NotInRange,
         Unknown,
     }
+<<<<<<< Updated upstream
 
     int ID;
     ActionStates CurrentActionState;
     PositionStates CurrentPositionState;
 
     Sheep_Enemy(int ID)
+=======
+    public enum PositionStates
+>>>>>>> Stashed changes
     {
         this.ID = ID;
         this.CurrentActionState = ActionStates.Unknown;
         this.CurrentPositionState = PositionStates.Unknown;
     }
+<<<<<<< Updated upstream
     
     
     public override int EnemyChooseACardToPlay(BattleData data)
@@ -61,10 +81,24 @@ public class Sheep_Enemy : Enemy
         if ((PlayerPosition.x == SelfPosition.x || PlayerPosition.y == SelfPosition.y) && 
             (Math.Abs(PlayerPosition.x - SelfPosition.x) <= 3 || Math.Abs(PlayerPosition.y - SelfPosition.y) <= 3))
         {
+=======
+    public override Card.InfoForActivate EnermyChooseACardToPlay(BattleData data, int ID)
+    {
+        Vector2 playerPosition = data.playerData.position;
+        BattleData.EnermyData mydata = data.EnermyDataList[ID];
+        List<Card> handCards = mydata.handCard;
+        Vector2 selfPosition = mydata.position;
+
+        if(playerPosition.x == selfPosition.x || playerPosition.y == selfPosition.y)
+        {
+            if (Vector2.Distance(playerPosition ,selfPosition)<= 3)
+                this.CurrentPositionState = PositionStates.inRange;
+>>>>>>> Stashed changes
         }
         // If no, try to move into range
         else
         {
+<<<<<<< Updated upstream
             // Do we have a movement card?
             if (data.playerData.handCard.Contains("ID for the walk card") || data.playerData.handCard.Contains("ID for the run card"))
             {
@@ -81,6 +115,17 @@ public class Sheep_Enemy : Enemy
                     {
                         // Play the walk card!
                     }
+=======
+            if (Vector2.Distance(playerPosition, selfPosition) == 1)
+            {
+                if (Card.Contain(handCards,6))
+                {
+                    
+                }
+                else if (Card.Contain(handCards, 7))
+                {
+                    
+>>>>>>> Stashed changes
                 }
                 // Otherwise, play whatever movement card we have at hand!
                 else
@@ -91,7 +136,22 @@ public class Sheep_Enemy : Enemy
             // If we don't have any movement cards, discard one of the cards at hand to try to get a movement card.
             else
             {
+<<<<<<< Updated upstream
                 // Discard a card at hand!
+=======
+                if (Card.Contain(handCards, 7))
+                {
+                    //play the card
+                }
+                else if ()// 2345
+                {
+                    //choose direction play and return (newPosition = selfPosition - selfPosition - playerPosition)
+                }
+                else if (Card.Contain(handCards, 1))
+                {
+                    //choose direction play and return (newPosition = selfPosition - normalize(selfPosition - playerPosition))
+                }
+>>>>>>> Stashed changes
             }
         }
     }

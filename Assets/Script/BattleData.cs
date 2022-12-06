@@ -21,9 +21,15 @@ public class BattleData : MonoBehaviour
         public int currentHealth;
         public int ID;
         public List<Card> handCard;
+<<<<<<< Updated upstream
         public HashSet<Card> discardPile;
         public HashSet<Card> drawPile;
         //public Enemy enemy;
+=======
+        public List<Card> discardPile;
+        public List<Card> drawPile;
+        public GameObject enemy;
+>>>>>>> Stashed changes
         //public bool Busy;// by default enermy can only let one card preparing at the same time
     }
 
