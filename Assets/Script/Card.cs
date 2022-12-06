@@ -60,10 +60,7 @@ public abstract class Card : MonoBehaviour
 
     public abstract void Activate(InfoForActivate Info);
 
-<<<<<<< Updated upstream
-    
-=======
-    //Drag and drop function to play the card
+
     public static bool Contain(List<Card> cards,int ID)
     {
         for(int i = 0; i < cards.Count; i++)
@@ -73,6 +70,5 @@ public abstract class Card : MonoBehaviour
         }
         return false;
     }
->>>>>>> Stashed changes
 
 }

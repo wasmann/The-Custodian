@@ -49,19 +49,12 @@ public class BattleLevelDriver : MonoBehaviour
             foreach (Card.InfoForActivate info in currentCards)
             {
                 //TODO: pick out player's card and activate it first.
-<<<<<<< Updated upstream
                 info.card.Activate(info);
                 if (info.owner_ID != 0)
                 {
                     battleData.NewCard.Add(info.card.ID);
-                    //battleData.EnemyDataList[info.owner_ID].enemy.EnermyChooseACardToPlay(battleData);
-=======
-                info.card.Acitvate(info);
-                if (info.owner_ID != 0)
-                {
-                    battleData.NewCard.Add(info.card.ID);
-                    battleData.EnermyDataList[info.owner_ID].enemy.EnermyChooseACardToPlay(battleData£¬info.owner_ID);
->>>>>>> Stashed changes
+                    BattleData.EnemyDataList[info.owner_ID].enemy.EnermyChooseACardToPlay(battleData,info.owner_ID);
+
                 }
             }
             
