@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class BattleData : MonoBehaviour
 {
-    public int BattleLevelID;
-    public Dictionary<int,EnemyData> EnemyDataList;
-    public PlayerData playerData;
+    public static int BattleLevelID;
+    public static Dictionary<int,EnemyData> EnemyDataList;
+    public static PlayerData playerData;
+
+    public static Card CardReadyToPlay;
     //public n* m Matrix environmentData;
 
     public Deck deck;
@@ -38,13 +40,12 @@ public class BattleData : MonoBehaviour
     }
     public HashSet<int> NewCard; 
 
-    public void LoadBattlelevel(int battleLevelID)
+    public void BattleLevelIni(int battleLevelID)
     {
         BattleLevelID = battleLevelID;
         LoadEnvironmentData();
         LoadEnermyData();
-        LoadPlayerData();
-        
+        LoadPlayerData();       
     }
     public void LoadEnvironmentData(){
 

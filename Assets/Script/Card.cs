@@ -6,14 +6,14 @@ using UnityEngine;
 public abstract class Card : MonoBehaviour
 {
     //every card is a prefab and has its own script named card_cardname and this one is a superclass
-    public int ID;
-    public string Name;
-    public Rarity rarity;
-    public int Speed;
-    public int Range;
-    
-    public BattleData BattleData;
-    public GameObject Notation;
+    public abstract int ID { get; }
+    public abstract string Name { get; }
+    public abstract Rarity rarity { get; }
+    public abstract int Speed { get; }
+    public abstract int TargetNum { get; set; }
+
+    public List<GameObject> Notation;
+
     public InfoForActivate Info;
 
     public Card()
@@ -35,14 +35,31 @@ public abstract class Card : MonoBehaviour
         public List<Vector2> direction;
         public int owner_ID;// 0 for player
         public Card card;
+        public List<Vector2> Selection;
     }
 
-    public abstract void IsPlayed();// shownotion, wait for choose a dir or a target, 
-
-    //public abstract void GetDirection();
+    public abstract IEnumerator Play();
+   
+    public void UpdateData(int OwnerID,int CardID,InfoForActivate info)
+    {
+        if(OwnerID == 0)
+        {
+            BattleData.playerData.handCard.Remove(this);
+            BattleData.playerData.discardPile.Add(this);// need test
+            UI.UpdateHandCard();
+            BattleLevelDriver.NewCardPlayed(BattleData.CardReadyToPlay.Info);
+        }
+        else
+        {
+            BattleData.EnemyDataList[OwnerID].handCard.Remove(this);
+            BattleData.EnemyDataList[OwnerID].discardPile.Add(this);
+            BattleLevelDriver.NewCardPlayed(info);
+        }
+        
+    }
 
     public abstract void Activate(InfoForActivate Info);
 
-    //Drag and drop function to play the card
+    
 
 }

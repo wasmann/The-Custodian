@@ -9,13 +9,13 @@ public class BattleLevelDriver : MonoBehaviour
     public bool Paused;
     public bool BattleOver;
 
-    public List<List<Card.InfoForActivate>> TimeLineSlots;
+    public static List<List<Card.InfoForActivate>> TimeLineSlots;
 
 
     public void BeginABattleLevel(int ID)
     {
-        battleData.LoadBattlelevel(ID);
-        UI.UpdateHandCard(battleData);
+        battleData.BattleLevelIni(ID);
+        UI.LoadBattleBegin();
         GameData.currentState = GameData.state.Battle;
         StartCoroutine(EnableTimeLineSlots());
         StartCoroutine(BattleLevelGame());
@@ -25,9 +25,7 @@ public class BattleLevelDriver : MonoBehaviour
     {
         yield return new WaitUntil(() => BattleOver == true);
         GameData.currentState = GameData.state.WorldMap;
-        //TODO: load to Menu or show battle summary
-
-
+        //TODO: load gameover or show battle summary
     }
 
     private IEnumerator EnableTimeLineSlots()
@@ -46,6 +44,8 @@ public class BattleLevelDriver : MonoBehaviour
             TimeLineSlots.RemoveAt(0);
             TimeLineSlots.Add(new List<Card.InfoForActivate>());
 
+            UI.MoveTimeLine();
+
             foreach (Card.InfoForActivate info in currentCards)
             {
                 //TODO: pick out player's card and activate it first.
@@ -60,7 +60,7 @@ public class BattleLevelDriver : MonoBehaviour
         }
     }
 
-    public void NewCardPlayed(Card.InfoForActivate info)
+    public static void NewCardPlayed(Card.InfoForActivate info)
     {
         if (info.card.Speed == 0)//instant
         {

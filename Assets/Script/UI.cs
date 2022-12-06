@@ -5,13 +5,6 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
-
-    //left first 
-    static GameObject card1;
-    static GameObject card2;
-    static GameObject card3;
-    static GameObject card4;
-
     static Slider health;
     static Slider energy;
     //static int RAM;
@@ -28,36 +21,6 @@ public class UI : MonoBehaviour
 
 
     //test case
-    private void Start()
-    {
-
-        BattleData battle = new BattleData();
-        battle.playerData.maxEnergy = 20;
-        battle.playerData.currentEnergy = 18;
-
-        battle.playerData.maxHealth = 20;
-        battle.playerData.currentHealth = 10;
-
-
-        Card testcard1 = new Card();
-        testcard1.Name = "TestCard";
-
-        Card testcard2 = new Card();
-        testcard2.Name = "Circle";
-
-        battle.playerData.handCard = new List<Card> { testcard1,testcard2,testcard2,testcard1 };
-        LoadBattleBegin(battle);
-
-        List<List<Card>> testlist = new List<List<Card>>();
-        List<Card> list1 = new List<Card> { testcard2, testcard2 };
-        List<Card> list2 = new List<Card> { testcard2 };
-        List<Card> list3 = new List<Card> { testcard2, testcard2 };
-        testlist.Add(list1);
-        testlist.Add(list2);
-        testlist.Add(list3);
-
-        MoveTimeLine(testlist);
-    }
 
     public static void MoveTimeLine(List<List<Card>> timeLineSlots)
     {
@@ -70,20 +33,23 @@ public class UI : MonoBehaviour
             }
         }
     }
-    public static void UpdateHandCard(BattleData battleData)// After drawing a new card, reorgnize the hand card(align right) and move a card from deck to hand at the most left side.
+    public static void UpdateHandCard()// After drawing a new card, reorgnize the hand card(align right) and move a card from deck to hand at the most left side.
     {
+        for(int i = 0; i < BattleData.playerData.handCard.Count; i++)
+        {
 
-        GameObject.Instantiate(Resources.Load(battleData.playerData.handCard[0].Name) as GameObject, 
-            card1.transform.position, card1.transform.rotation);
+        }
+        //GameObject.Instantiate(Resources.Load(BattleData.playerData.handCard[0].Name) as GameObject, 
+        //    card1.transform.position, card1.transform.rotation);
 
-        GameObject.Instantiate(Resources.Load(battleData.playerData.handCard[1].Name) as GameObject,
-            card2.transform.position, card2.transform.rotation);
+        //GameObject.Instantiate(Resources.Load(BattleData.playerData.handCard[1].Name) as GameObject,
+        //    card2.transform.position, card2.transform.rotation);
 
-        GameObject.Instantiate(Resources.Load(battleData.playerData.handCard[2].Name) as GameObject,
-            card3.transform.position, card3.transform.rotation);
+        //GameObject.Instantiate(Resources.Load(BattleData.playerData.handCard[2].Name) as GameObject,
+        //    card3.transform.position, card3.transform.rotation);
 
-        GameObject.Instantiate(Resources.Load(battleData.playerData.handCard[3].Name) as GameObject,
-            card4.transform.position, card4.transform.rotation);
+        //GameObject.Instantiate(Resources.Load(BattleData.playerData.handCard[3].Name) as GameObject,
+        //    card4.transform.position, card4.transform.rotation);
     }
 
     public static void UpdateTimeLine()
@@ -91,25 +57,21 @@ public class UI : MonoBehaviour
 
     }
 
-    public static void LoadBattleBegin(BattleData battleData)
+    public static void LoadBattleBegin()
     {
 
         var sliders = Object.FindObjectsOfType<Slider>();
         health = sliders[0];
         energy = sliders[1];
 
-        health.maxValue = battleData.playerData.maxHealth;
-        energy.maxValue = battleData.playerData.maxEnergy;
+        health.maxValue = BattleData.playerData.maxHealth;
+        energy.maxValue = BattleData.playerData.maxEnergy;
 
-        UpdatePlayerData(battleData.playerData);
+        UpdatePlayerData();
 
-        UpdateEnemyData(battleData.EnemyDataList);
+        //UpdateEnemyData();
 
-        card1 = GameObject.Find("Card1");
-        card2 = GameObject.Find("Card2");
-        card3 = GameObject.Find("Card3");
-        card4 = GameObject.Find("Card4");
-        UpdateHandCard(battleData);
+        UpdateHandCard();
 
 
         timeline = GameObject.Find("TimeLine");
@@ -119,11 +81,11 @@ public class UI : MonoBehaviour
 
     }
 
-    public static IEnumerator ShowNotation(GameObject notion, Vector2 characterpos)
+    public static IEnumerator ShowNotation(List<GameObject> notion)
     {
         // notion is used to show how is the range or attack damage of a card. For example move left can be arrow pointing left covering one grid.
         //this function will show the notation in the direction coresponding to the mouse and character position. For example if the mouse is at the top side of character, then the notion will placed at the top side of character.
-        
+        if()
         GameObject.Instantiate(notion, new Vector2(characterpos.x, characterpos.y), Quaternion.identity);
         GameObject.Instantiate(notion, new Vector2(mouseWorldPos.x, mouseWorldPos.y), Quaternion.identity);
 
@@ -141,26 +103,15 @@ public class UI : MonoBehaviour
         yield return null;
     }
 
-    public static void MoveTimeLine(List<List<Card.InfoForActivate>> timeLineSlots)
-    {
-        for(int i = 0; i < timeLineSlots.Count; ++i)
-        {
-           for(int j = 0; j < timeLineSlots[0].Count; ++j)
-            {
-                GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].card.Name) as GameObject,
-            timeline.transform.position + pos[i,j],timeline.transform.rotation);
-            }
-        }
-    }
     public static void ShowDuplicationWin()
     {
 
     }
 
-    public static void UpdatePlayerData(BattleData.PlayerData playerData)
+    public static void UpdatePlayerData()
     {
-        health.value = playerData.currentHealth;
-        energy.value = playerData.currentEnergy;
+        health.value = BattleData.playerData.currentHealth;
+        energy.value = BattleData.playerData.currentEnergy;
     }
 
     public static void UpdateEnemyData(Dictionary<int, BattleData.EnemyData> enemyDataList)
@@ -183,12 +134,4 @@ public class UI : MonoBehaviour
             }
         }
     }
-
-
-    /*private void Update()
-    {
-        //Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        //Debug.Log(Input.mousePosition);
-        mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    }*/
 }
