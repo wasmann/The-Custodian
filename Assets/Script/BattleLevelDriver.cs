@@ -14,7 +14,7 @@ public class BattleLevelDriver : MonoBehaviour
 
     public void BeginABattleLevel(int ID)
     {
-        battleData.BattleLevelIni(ID);
+        battleData.BattleLevelInit(ID);
         UI.LoadBattleBegin();
         GameData.currentState = GameData.state.Battle;
         StartCoroutine(EnableTimeLineSlots());

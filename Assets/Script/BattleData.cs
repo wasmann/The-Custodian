@@ -39,7 +39,7 @@ public class BattleData : MonoBehaviour
     }
     public HashSet<int> NewCard; 
 
-    public void BattleLevelIni(int battleLevelID)
+    public void BattleLevelInit(int battleLevelID)
     {
         BattleLevelID = battleLevelID;
         LoadEnvironmentData();
