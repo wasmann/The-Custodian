@@ -16,12 +16,13 @@ public class Headbutt_Card : Card
         Info.direction.Add(BattleData.playerData.position + new Vector2(-1, 0));
         Info.direction.Add(BattleData.playerData.position + new Vector2(0, -1));
         Info.direction.Add(BattleData.playerData.position + new Vector2(0, 1));
-        Notation.Add(this.transform.Find("RangeNotion").gameObject);
-        Notation.Add(this.transform.Find("SelectionNotion").gameObject);
-        BattleData.CardReadyToPlay=this;
-        UI.ShowNotation(Notation);
+        Notation.Add(this.transform.Find("RangeNotation").gameObject);
+        Notation.Add(this.transform.Find("SelectionNotation").gameObject);
+        //BattleData.CardReadyToPlay=this;
+        UI.ShowNotation(Notation,Info);
         //assign the functionality to grids in info.direction
         yield return new WaitUntil(() => TargetNum == 0);
+        //disable the grid selection function
         UpdateData(0, ID, Info);
     }
 

@@ -14,15 +14,13 @@ public class UI : MonoBehaviour
     const float CARD_HEIGHT = 2;
     const float CARD_WIDTH = 1;
 
+
     //static List<List<Vector3>> pos;
     static Vector3[,] pos;
 
     static Vector3 mouseWorldPos;
 
-
-    //test case
-
-    public static void MoveTimeLine(List<List<Card>> timeLineSlots)
+    public static void MoveTimeLine(List<List<Card.InfoForActivate>> timeLineSlots)
     {
         for (int i = 0; i < timeLineSlots.Count; ++i)
         {
@@ -81,7 +79,7 @@ public class UI : MonoBehaviour
 
     }
 
-    public static IEnumerator ShowNotation(List<GameObject> notion)
+    public static IEnumerator ShowNotation(List<GameObject> notion,Card.InfoForActivate info)
     {
         // notion is used to show how is the range or attack damage of a card. For example move left can be arrow pointing left covering one grid.
         //this function will show the notation in the direction coresponding to the mouse and character position. For example if the mouse is at the top side of character, then the notion will placed at the top side of character.
@@ -122,8 +120,8 @@ public class UI : MonoBehaviour
     public static void InitPos()
     {
 
-        pos = new Vector3[10, 3];
-        //one line under timeline for enemy, one line above for player, one line for duplication
+       pos = new Vector3[10, 3];
+       //one line under timeline for enemy, one line above for player, one line for duplication
        float offsite = CARD_WIDTH * TIME_LINE_LENGTH / 2;
        float heightOffsite = CARD_HEIGHT;
        for (int i = 0; i < TIME_LINE_LENGTH; ++i)
