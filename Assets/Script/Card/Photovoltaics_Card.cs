@@ -4,23 +4,22 @@ using UnityEngine;
 
 public class Photovoltaics_Card : Card
 {
-    public Photovoltaics_Card(BattleData battleData)
+
+    public override string Name { get { return "Photovoltaics"; } }
+    public override Rarity rarity { get { return Rarity.basic; } }
+    public override int Speed { get { return 3; } }
+    public override int ID { get { return 8; } }
+    public override int TargetNum { get { return 0; } set { } }
+    public override IEnumerator Play()
     {
-        this.Name = "Photovoltaics";
-        this.Rarity = .basic;
-        this.Speed = 3;
-        this.Range = 0;
-        this.BattleCata = battleData;
-    }
-    public override void IsPlayed()
-    {
-        this.Info.card = this;
-        this.Info.owner_ID = 0;
+        Info.owner_ID = 0;
+        yield return new WaitForSeconds(0.1f);
+        UpdateData(0, ID, Info);
     }
 
-    public override void Acitvate()
+    public override void Activate(InfoForActivate Info)
     {
-        this.BattleData.battleData.playerData.energy += 1;
-        this.BattleData.battleData.playerData.health += 2;
+        BattleData.playerData.currentEnergy += 1;
+        BattleData.playerData.currentHealth += 2;
     }
 }

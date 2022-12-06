@@ -4,28 +4,29 @@ using UnityEngine;
 
 public class Walk_Card : Card
 {
-    public Walk_Card(BattleData battleData)
+    public override string Name { get { return "Walk"; } }
+    public override Rarity rarity { get { return Rarity.basic; } }
+    public override int Speed { get { return 2; } }
+    public override int ID { get { return 1; } }
+    public override int TargetNum { get { return 1; } set { } }
+    public override IEnumerator Play()
     {
-        this.Name = "Walk";
-        this.Rarity = .basic;
-        this.Speed = 2;
-        this.Range = 1;
-        this.BattleCata = battleData;
-        this.Notation = gameObject.transform.Find("notion").gameObject;
-    }
-    public override void IsPlayed()
-    {
-        this.Info.card = this;
-        this.Info.owner_ID = 0;
-        this.Info.direction.Add(Vector2(BattleData.battleData.player.position + Vector2(1, 0)));
-        this.Info.direction.Add(Vector2(BattleData.battleData.player.position + Vector2(-1, 0)));
-        this.Info.direction.Add(Vector2(BattleData.battleData.player.position + Vector2(0, 1)));
-        this.Info.direction.Add(Vector2(BattleData.battleData.player.position + Vector2(0, -1)));
-        Notation.SetActive(true);
+        Info.owner_ID = 0;
+        Info.direction.Add(BattleData.playerData.position + new Vector2(1, 0));
+        Info.direction.Add(BattleData.playerData.position + new Vector2(-1, 0));
+        Info.direction.Add(BattleData.playerData.position + new Vector2(0, -1));
+        Info.direction.Add(BattleData.playerData.position + new Vector2(0, 1));
+        Notation.Add(this.transform.Find("RangeNotion").gameObject);
+        Notation.Add(this.transform.Find("SelectionNotion").gameObject);
+        BattleData.CardReadyToPlay = this;
+        UI.ShowNotation(Notation);
+        //assign the functionality to grids in info.direction
+        yield return new WaitUntil(() => TargetNum == 0);
+        UpdateData(0, ID, Info);
     }
 
-    public override void Acitvate()
+    public override void Activate(InfoForActivate Info)
     {
-        this.BattleData.battleData.playerData.position = info.direction.at(0);
+        BattleData.playerData.position = Info.Selection[0];
     }
 }
