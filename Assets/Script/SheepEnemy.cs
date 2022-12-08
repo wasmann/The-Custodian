@@ -154,7 +154,9 @@ public class Sheep_Enemy : Enemy
                         {
 
                         }
-                        else if (DifferenceInXCoordinate == DifferenceInYCoordinate) // CONTINUE
+                        // If we are closer in the same distance in both x and y coordinates, the just move in the x coordinate by default!
+                        // TO DO: In the next updates, make the direction random and consider factors such as obstacles etc.
+                        else if (DifferenceInXCoordinate == DifferenceInYCoordinate)
                         {
 
                         }
@@ -162,13 +164,51 @@ public class Sheep_Enemy : Enemy
                     // If we have both cards and the distance to get into range is equal to 1 grid, then use the run card.
                     else if ((Math.Abs(PlayerPosition.x - SelfPosition.x) == 1 || Math.Abs(PlayerPosition.y - SelfPosition.y)== 1))
                     {
-                        // Play the walk card!
+                        // If we are closer in the x coordinate then use a walk card in that direction unless our x position is aligned with that of the player
+                        // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
+                        // our allignment.
+                        if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && !(PlayerPosition.x == SelfPosition.x))
+                        {
+
+                        }
+                        // If we are closer in the y coordinate then use a walk card in that direction unless our y position is aligned with that of the player
+                        // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
+                        // our allignment.
+                        else if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && !(PlayerPosition.x == SelfPosition.x))
+                        {
+
+                        }
+                        // If we are closer in the same distance in both x and y coordinates, the just move in the x coordinate by default!
+                        // TO DO: In the next updates, make the direction random and consider factors such as obstacles etc.
+                        else if (DifferenceInXCoordinate == DifferenceInYCoordinate)
+                        {
+
+                        }
                     }
                 }
                 // Otherwise, play whatever movement card we have at hand!
                 else
                 {
+                    if (HasWalkCardAtHand == true)
+                    {
 
+                    }
+                    else if (HasRunTopCardAtHand == true)
+                    {
+
+                    }
+                    else if (HasRunDownCardAtHand == true)
+                    {
+
+                    }
+                    else if (HasRunLeftCardAtHand == true)
+                    {
+
+                    }
+                    else // if (HasRunRightCardAtHand == true)
+                    {
+                        
+                    }
                 }
             }
             // If we don't have any movement cards, discard one of the cards at hand to try to get a movement card.
