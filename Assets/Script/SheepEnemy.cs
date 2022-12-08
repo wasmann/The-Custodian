@@ -50,7 +50,7 @@ public class Sheep_Enemy : Enemy
         this.CurrentPositionState = PositionStates.Unknown;
     }
     
-    
+    // TO DO: In the next updates, make the direction random and consider factors such as obstacles etc.
     public override int EnemyChooseACardToPlay(BattleData data)
     {
         Vector2 PlayerPosition = data.playerData.position;
@@ -140,47 +140,143 @@ public class Sheep_Enemy : Enemy
                     // If we have both types of cards and the distance to get into range is greater then 1 grid, then use a run card.
                     if (DifferenceInXCoordinate > 5 || DifferenceInYCoordinate > 5)
                     {
-                        // If we are closer in the x coordinate then use a run card in that direction unless our x position is aligned with that of the player
+                        // If we are closer in the x coordinate and the player is roughly above us then use a run top card in that direction unless our x position is aligned with that of the player
                         // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
                         // our allignment.
-                        if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && !(PlayerPosition.x == SelfPosition.x))
+                        if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && !(PlayerPosition.x == SelfPosition.x) && HasRunTopCardAtHand && (PlayerPosition.x < SelfPosition.x))
                         {
 
                         }
-                        // If we are closer in the y coordinate then use a run card in that direction unless our y position is aligned with that of the player
+                        // If we are closer in the x coordinate and the player is roughly below us then use a run down card in that direction unless our x position is aligned with that of the player
                         // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
                         // our allignment.
-                        else if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && !(PlayerPosition.x == SelfPosition.x))
+                        else if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && !(PlayerPosition.x == SelfPosition.x) && HasRunDownCardAtHand && (PlayerPosition.x > SelfPosition.x))
                         {
 
                         }
-                        // If we are closer in the same distance in both x and y coordinates, the just move in the x coordinate by default!
-                        // TO DO: In the next updates, make the direction random and consider factors such as obstacles etc.
-                        else if (DifferenceInXCoordinate == DifferenceInYCoordinate)
+                        // If we are closer in the y coordinate and the player is roughly to the right of us then use a run right card in that direction unless our y position is aligned with that of the player
+                        // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
+                        // our allignment.
+                        else if ((DifferenceInYCoordinate < DifferenceInXCoordinate) && !(PlayerPosition.x == SelfPosition.x) && HasRunRightCardAtHand && (PlayerPosition.y > SelfPosition.y))
                         {
 
+                        }
+                        // If we are closer in the y coordinate and the player is roughly to the left of us then use a run left card in that direction unless our y position is aligned with that of the player
+                        // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
+                        // our allignment.
+                        else if ((DifferenceInYCoordinate < DifferenceInXCoordinate) && !(PlayerPosition.x == SelfPosition.x) && HasRunLeftCardAtHand && (PlayerPosition.y < SelfPosition.y))
+                        {
+
+                        }
+                        // If the distance difference is the same in both coordinates, we have the run top card and the player is roughly above us,
+                        // move up.
+                        else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunTopCardAtHand && (PlayerPosition.x < SelfPosition.x))
+                        {
+
+                        }
+                        // If the distance difference is the same in both coordinates, we have the run down card and the player is roughly below us,
+                        // move down.
+                        else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunDownCardAtHand && (PlayerPosition.x > SelfPosition.x))
+                        {
+
+                        }
+                        // If the distance difference is the same in both coordinates, we have the run right card and the player is roughly to the right of us,
+                        // move right.
+                        else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunRightCardAtHand && (PlayerPosition.y > SelfPosition.y))
+                        {
+
+                        }
+                        // If the distance difference is the same in both coordinates, we have the run left card and the player is roughly to the left of us,
+                        // move left.
+                        else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunLeftCardAtHand && (PlayerPosition.y < SelfPosition.y))
+                        {
+
+                        }
+                        // If we, however, don't have the run card we need, then play the walk card instead!
+                        else 
+                        {
+                            // If we are closer in the x coordinate and the player is roughly above us then walk upwards.
+                            if (DifferenceInXCoordinate < DifferenceInYCoordinate && PlayerPosition.x < SelfPosition.x)
+                            {
+
+                            }
+                            // If we are closer in the x coordinate and the player is roughly below us then walk downwards.
+                            else if (DifferenceInXCoordinate < DifferenceInYCoordinate && PlayerPosition.x > SelfPosition.x)
+                            {
+
+                            }
+                            // If we are closer in the y coordinate and the player is roughly to the right of us then walk towards right.
+                            else if (DifferenceInYCoordinate < DifferenceInXCoordinate && PlayerPosition.y > SelfPosition.y)
+                            {
+
+                            }
+                            // If we are closer in the y coordinate and the player is roughly to the left of us then walk towards left.
+                            else if (DifferenceInYCoordinate < DifferenceInXCoordinate && PlayerPosition.y < SelfPosition.y)
+                            {
+
+                            }
+                            // If the distance difference is the same in both coordinates and the player is roughly above us then walk upwards.
+                            else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.x < SelfPosition.x)
+                            {
+
+                            }
+                            // If the distance difference is the same in both coordinates and the player is roughly below us then walk downwards.
+                            else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.x > SelfPosition.x)
+                            {
+
+                            }
+                            // If the distance difference is the same in both coordinates and the player is roughly to the right of us then walk towards right.
+                            else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.y > SelfPosition.y)
+                            {
+
+                            }
+                            // If the distance difference is the same in both coordinates and the player is roughly to the left of us then walk towards left.
+                            else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.y < SelfPosition.y)
+                            {
+
+                            }
                         }
                     }
                     // If we have both cards and the distance to get into range is equal to 1 grid, then use the run card.
-                    else if ((Math.Abs(PlayerPosition.x - SelfPosition.x) == 1 || Math.Abs(PlayerPosition.y - SelfPosition.y)== 1))
+                    else if (DifferenceInXCoordinate == 4 || DifferenceInYCoordinate == 4)
                     {
-                        // If we are closer in the x coordinate then use a walk card in that direction unless our x position is aligned with that of the player
-                        // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
-                        // our allignment.
-                        if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && !(PlayerPosition.x == SelfPosition.x))
+                        // If we are closer in the x coordinate and the player is roughly above us then walk upwards.
+                        if (DifferenceInXCoordinate < DifferenceInYCoordinate && PlayerPosition.x < SelfPosition.x)
                         {
 
                         }
-                        // If we are closer in the y coordinate then use a walk card in that direction unless our y position is aligned with that of the player
-                        // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
-                        // our allignment.
-                        else if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && !(PlayerPosition.x == SelfPosition.x))
+                        // If we are closer in the x coordinate and the player is roughly below us then walk downwards.
+                        else if (DifferenceInXCoordinate < DifferenceInYCoordinate && PlayerPosition.x > SelfPosition.x)
                         {
 
                         }
-                        // If we are closer in the same distance in both x and y coordinates, the just move in the x coordinate by default!
-                        // TO DO: In the next updates, make the direction random and consider factors such as obstacles etc.
-                        else if (DifferenceInXCoordinate == DifferenceInYCoordinate)
+                        // If we are closer in the y coordinate and the player is roughly to the right of us then walk towards right.
+                        else if (DifferenceInYCoordinate < DifferenceInXCoordinate && PlayerPosition.y > SelfPosition.y)
+                        {
+
+                        }
+                        // If we are closer in the y coordinate and the player is roughly to the left of us then walk towards left.
+                        else if (DifferenceInYCoordinate < DifferenceInXCoordinate && PlayerPosition.y < SelfPosition.y)
+                        {
+
+                        }
+                        // If the distance difference is the same in both coordinates and the player is roughly above us then walk upwards.
+                        else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.x < SelfPosition.x)
+                        {
+
+                        }
+                        // If the distance difference is the same in both coordinates and the player is roughly below us then walk downwards.
+                        else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.x > SelfPosition.x)
+                        {
+
+                        }
+                        // If the distance difference is the same in both coordinates and the player is roughly to the right of us then walk towards right.
+                        else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.y > SelfPosition.y)
+                        {
+
+                        }
+                        // If the distance difference is the same in both coordinates and the player is roughly to the left of us then walk towards left.
+                        else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.y < SelfPosition.y)
                         {
 
                         }
@@ -189,32 +285,108 @@ public class Sheep_Enemy : Enemy
                 // Otherwise, play whatever movement card we have at hand!
                 else
                 {
-                    if (HasWalkCardAtHand == true)
+                    // If we are closer in the x coordinate and the player is roughly above us then use a run top card in that direction unless our x position is aligned with that of the player
+                    // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
+                    // our allignment.
+                    if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && !(PlayerPosition.x == SelfPosition.x) && HasRunTopCardAtHand && (PlayerPosition.x < SelfPosition.x))
                     {
 
                     }
-                    else if (HasRunTopCardAtHand == true)
+                    // If we are closer in the x coordinate and the player is roughly below us then use a run down card in that direction unless our x position is aligned with that of the player
+                    // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
+                    // our allignment.
+                    else if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && !(PlayerPosition.x == SelfPosition.x) && HasRunDownCardAtHand && (PlayerPosition.x > SelfPosition.x))
                     {
 
                     }
-                    else if (HasRunDownCardAtHand == true)
+                    // If we are closer in the y coordinate and the player is roughly to the right of us then use a run right card in that direction unless our y position is aligned with that of the player
+                    // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
+                    // our allignment.
+                    else if ((DifferenceInYCoordinate < DifferenceInXCoordinate) && !(PlayerPosition.x == SelfPosition.x) && HasRunRightCardAtHand && (PlayerPosition.y > SelfPosition.y))
                     {
 
                     }
-                    else if (HasRunLeftCardAtHand == true)
+                    // If we are closer in the y coordinate and the player is roughly to the left of us then use a run left card in that direction unless our y position is aligned with that of the player
+                    // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
+                    // our allignment.
+                    else if ((DifferenceInYCoordinate < DifferenceInXCoordinate) && !(PlayerPosition.x == SelfPosition.x) && HasRunLeftCardAtHand && (PlayerPosition.y < SelfPosition.y))
                     {
 
                     }
-                    else // if (HasRunRightCardAtHand == true)
+                    // If the distance difference is the same in both coordinates, we have the run top card and the player is roughly above us,
+                    // move up.
+                    else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunTopCardAtHand && (PlayerPosition.x < SelfPosition.x))
                     {
-                        
+
+                    }
+                    // If the distance difference is the same in both coordinates, we have the run down card and the player is roughly below us,
+                    // move down.
+                    else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunDownCardAtHand && (PlayerPosition.x > SelfPosition.x))
+                    {
+
+                    }
+                    // If the distance difference is the same in both coordinates, we have the run right card and the player is roughly to the right of us,
+                    // move right.
+                    else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunRightCardAtHand && (PlayerPosition.y > SelfPosition.y))
+                    {
+
+                    }
+                    // If the distance difference is the same in both coordinates, we have the run left card and the player is roughly to the left of us,
+                    // move left.
+                    else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunLeftCardAtHand && (PlayerPosition.y < SelfPosition.y))
+                    {
+
+                    }
+                    // If we, however, don't have the run card we need, then play the walk card instead!
+                    else 
+                    {
+                        // If we are closer in the x coordinate and the player is roughly above us then walk upwards.
+                        if (DifferenceInXCoordinate < DifferenceInYCoordinate && PlayerPosition.x < SelfPosition.x)
+                        {
+
+                        }
+                        // If we are closer in the x coordinate and the player is roughly below us then walk downwards.
+                        else if (DifferenceInXCoordinate < DifferenceInYCoordinate && PlayerPosition.x > SelfPosition.x)
+                        {
+
+                        }
+                        // If we are closer in the y coordinate and the player is roughly to the right of us then walk towards right.
+                        else if (DifferenceInYCoordinate < DifferenceInXCoordinate && PlayerPosition.y > SelfPosition.y)
+                        {
+
+                        }
+                        // If we are closer in the y coordinate and the player is roughly to the left of us then walk towards left.
+                        else if (DifferenceInYCoordinate < DifferenceInXCoordinate && PlayerPosition.y < SelfPosition.y)
+                        {
+
+                        }
+                        // If the distance difference is the same in both coordinates and the player is roughly above us then walk upwards.
+                        else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.x < SelfPosition.x)
+                        {
+
+                        }
+                        // If the distance difference is the same in both coordinates and the player is roughly below us then walk downwards.
+                        else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.x > SelfPosition.x)
+                        {
+
+                        }
+                        // If the distance difference is the same in both coordinates and the player is roughly to the right of us then walk towards right.
+                        else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.y > SelfPosition.y)
+                        {
+
+                        }
+                        // If the distance difference is the same in both coordinates and the player is roughly to the left of us then walk towards left.
+                        else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.y < SelfPosition.y)
+                        {
+
+                        }
                     }
                 }
             }
             // If we don't have any movement cards, discard one of the cards at hand to try to get a movement card.
             else
             {
-                // Discard a card at hand!
+                // Discard a non movement card at hand!
             }
         }
 
