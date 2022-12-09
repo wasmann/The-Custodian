@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RunLeft_Card : Card
-{
-   {
-    public override string Name { get { return "Run Left"; } }
+{   public override string Name { get { return "Run Left"; } }
     public override Rarity rarity { get { return Rarity.basic; } }
     public override int Speed { get { return 3; } }
     public override int ID { get { return 4; } }

@@ -11,6 +11,8 @@ public class UI : MonoBehaviour
     static GameObject card3;
     static GameObject card4;
 
+    static List<GameObject> handcards;
+
     static Slider health;
     static Slider energy;
     //static int RAM;
@@ -100,17 +102,24 @@ public class UI : MonoBehaviour
     public static void UpdateHandCard()// After drawing a new card, reorgnize the hand card(align right) and move a card from deck to hand at the most left side.
     {
         DestroyHandcard();
-        card1 = GameObject.Instantiate(Resources.Load(BattleData.playerData.handCard[0].Name) as GameObject,
-           handcardPos[0], Quaternion.identity);
 
-        card2 = GameObject.Instantiate(Resources.Load(BattleData.playerData.handCard[1].Name) as GameObject,
-            handcardPos[1], Quaternion.identity);
+        for(int i = 0; i < BattleData.playerData.handCard.Count; i++)
+        {
+         GameObject card= GameObject.Instantiate(Resources.Load(BattleData.playerData.handCard[0].Name) as GameObject,
+           handcardPos[i], Quaternion.identity);
+        }
 
-        card3 = GameObject.Instantiate(Resources.Load(BattleData.playerData.handCard[2].Name) as GameObject,
-            handcardPos[2], Quaternion.identity);
+        //card1 = GameObject.Instantiate(Resources.Load(BattleData.playerData.handCard[0].Name) as GameObject,
+        //   handcardPos[0], Quaternion.identity);
 
-        card4 = GameObject.Instantiate(Resources.Load(BattleData.playerData.handCard[3].Name) as GameObject,
-            handcardPos[3], Quaternion.identity);
+        //card2 = GameObject.Instantiate(Resources.Load(BattleData.playerData.handCard[1].Name) as GameObject,
+        //    handcardPos[1], Quaternion.identity);
+
+        //card3 = GameObject.Instantiate(Resources.Load(BattleData.playerData.handCard[2].Name) as GameObject,
+        //    handcardPos[2], Quaternion.identity);
+
+        //card4 = GameObject.Instantiate(Resources.Load(BattleData.playerData.handCard[3].Name) as GameObject,
+        //    handcardPos[3], Quaternion.identity);
     }
 
     public static void MoveTimeLine()
@@ -262,9 +271,13 @@ public class UI : MonoBehaviour
 
     public static void DestroyHandcard()
     {
-        Destroy(card1.gameObject);
-        Destroy(card2.gameObject);
-        Destroy(card3.gameObject);
-        Destroy(card4.gameObject);
+        for (int i = 0; i < handcards.Count; i++)
+        {
+            Destroy(handcards[i].gameObject);
+        }
+        //Destroy(card1.gameObject);
+        //Destroy(card2.gameObject);
+        //Destroy(card3.gameObject);
+        //Destroy(card4.gameObject);
     }
 }

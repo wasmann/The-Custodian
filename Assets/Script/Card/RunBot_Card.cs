@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RunBot_Card : Card
 {
-   {
     public override string Name { get { return "Run Bot"; } }
     public override Rarity rarity { get { return Rarity.basic; } }
     public override int Speed { get { return 3; } }
@@ -20,7 +19,7 @@ public class RunBot_Card : Card
         Notation.Add(this.transform.Find("RangeNotation").gameObject);
         Notation.Add(this.transform.Find("SelectionNotation").gameObject);
         // BattleData.CardReadyToPlay = this;
-        UI.ShowNotation(Notation, Info);
+        UI.ShowNotation(Notation,Info);
         //assign the functionality to grids in info.direction
         yield return new WaitUntil(() => TargetNum == 0);
         UpdateData(0, ID, Info);
@@ -31,4 +30,4 @@ public class RunBot_Card : Card
         BattleData.playerData.position = Info.Selection[0];
     }
 }
-}
+
