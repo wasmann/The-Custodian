@@ -5,13 +5,11 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
-    //left first 
+   //left first 
     static GameObject card1;
     static GameObject card2;
     static GameObject card3;
     static GameObject card4;
-
-    static List<GameObject> handcards;
 
     static Slider health;
     static Slider energy;
@@ -35,66 +33,88 @@ public class UI : MonoBehaviour
     //**************************************************************************
     //**************************************************************************
     // TEST CASE BEGIN
-    /*    private void Start()
+/*     private void Start()
+    {
+
+
+        BattleData.playerData.maxEnergy = 20;
+        BattleData.playerData.currentEnergy = 18;
+
+        BattleData.playerData.maxHealth = 20;
+        BattleData.playerData.currentHealth = 10;
+
+
+        Card testcard1 = new Card();
+        testcard1.Name = "TestCard";
+        testcard1.ID = 1;
+
+        Card testcard2 = new Card();
+        testcard2.Name = "Circle";
+        testcard2.ID = 0;
+
+        Card testcard3 = new Card();
+        testcard3.Name = "Circle1";  //enemy
+        testcard3.ID = 1;
+
+        Card testcard4 = new Card();
+        testcard4.Name = "Circle2";  //dupli
+        testcard4.ID = 2;
+
+        BattleData.playerData.handCard = new List<Card> { testcard1, testcard1, testcard1, testcard1 };
+        LoadBattleBegin();
+
+        List<List<Card>> testlist = new List<List<Card>>();
+        List<Card> list1 = new List<Card> { testcard2 };
+        List<Card> list2 = new List<Card> { testcard2, testcard3};
+        List<Card> list3 = new List<Card> { testcard3, testcard2, testcard4 };
+        List<Card> list4 = new List<Card> { testcard4, testcard3, testcard2 };
+        testlist.Add(list1);
+        testlist.Add(list2);
+        testlist.Add(list3);
+        testlist.Add(list4);
+
+        UpdateTimeLine(testlist);
+    }
+
+    public static void UpdateTimeLine(List<List<Card>> timeLineSlots)
+    {
+        
+        for (int i = 0; i < timeLineSlots.Count; ++i)
         {
-
-
-            BattleData.playerData.maxEnergy = 20;
-            BattleData.playerData.currentEnergy = 18;
-
-            BattleData.playerData.maxHealth = 20;
-            BattleData.playerData.currentHealth = 10;
-
-
-            Card testcard1 = new Card();
-            testcard1.Name = "TestCard";
-            testcard1.ID = 1;
-
-            Card testcard2 = new Card();
-            testcard2.Name = "Circle";
-            testcard2.ID = 0;
-
-            BattleData.playerData.handCard = new List<Card> { testcard1, testcard1, testcard1, testcard1 };
-            LoadBattleBegin();
-
-            List<List<Card>> testlist = new List<List<Card>>();
-            List<Card> list1 = new List<Card> { testcard2, testcard2, testcard2 };
-            List<Card> list2 = new List<Card> { testcard2, testcard2 };
-            List<Card> list3 = new List<Card> { testcard2, };
-            List<Card> list4 = new List<Card> { testcard1, testcard1, testcard2 };
-            testlist.Add(list1);
-            testlist.Add(list2);
-            testlist.Add(list3);
-            testlist.Add(list4);
-
-            UpdateTimeLine(testlist);
-        }
-
-        public static void UpdateTimeLine(List<List<Card>> timeLineSlots)
-        {
-            List<List<Card>> timeLineSlotsTest = timeLineSlots;
-            for (int i = 0; i < timeLineSlots.Count; ++i)
+            for (int j = 0; j < timeLineSlots[i].Count; ++j)
             {
-                for (int j = 0; j < timeLineSlots[i].Count; ++j)
+                if (timeLineSlots[i][j].ID == 0)
                 {
-                    if (i < 3 || (i > 2 && timeLineSlots[i][j].ID == 0))
-                    {
-                        timelineObj[j,i] = GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].Name) as GameObject,
-                timeline.transform.position + pos[j, i], Quaternion.identity);
+                    timelineObj[1, i] = GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].Name) as GameObject,
+            timeline.transform.position + pos[1, i], Quaternion.identity);
 
-                    }
-
+                }else if(timeLineSlots[i][j].ID == 2)
+                {
+                    timelineObj[2, i] = GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].Name) as GameObject,
+            timeline.transform.position + pos[2, i], Quaternion.identity);
+                }else if(i <= 2)
+                {
+                    timelineObj[0, i] = GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].Name) as GameObject,
+            timeline.transform.position + pos[0, i], Quaternion.identity);
                 }
+                else
+                {
+                    timelineObj[0, i] = GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].Name) as GameObject,
+            timeline.transform.position + pos[0, i], Quaternion.identity);
+                    timelineObj[0, i].SetActive(false);
+                }
+
             }
         }
+    }
 
-        private void Update()
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                MoveTimeLine();
-            }
-        }*/
+            MoveTimeLine();
+        }
+    } */
     // TEST CASE END
     //**************************************************************************
     //**************************************************************************
@@ -125,19 +145,28 @@ public class UI : MonoBehaviour
     public static void MoveTimeLine()
     {
         //move one timeslot
-        for (int i = 0; i < TIME_LINE_LENGTH; ++i)
+        for (int i = 0; i < 3; ++i)
         {
-            for (int j = 0; j < 3; ++j)
+            for (int j = 0; j < TIME_LINE_LENGTH - 1; ++j)
             {
-                if (i == 0 && timelineObj[j, i] != null)
+
+               if( j == TIME_LINE_LENGTH)
                 {
-                    Destroy(timelineObj[j, i].gameObject);
+                    Destroy(timelineObj[i, j].gameObject);
+                    
                 }
-                else if (timelineObj[j, i] != null)
+                else if(j <= 2)
                 {
-
-                    timelineObj[j, i].transform.position = timeline.transform.position + pos[j, i - 1];
-
+                    Destroy(timelineObj[i, j].gameObject);
+                    timelineObj[i, j] = timelineObj[i, j + 1];
+                    timelineObj[i, j] = Instantiate(timelineObj[i, j], timeline.transform.position + pos[i,j], Quaternion.identity);
+                    timelineObj[i, j].SetActive(true);
+                }
+                else
+                {
+                    Destroy(timelineObj[i, j].gameObject);
+                    timelineObj[i, j] = timelineObj[i, j + 1];
+                    timelineObj[i, j] = Instantiate(timelineObj[i, j], timeline.transform.position + pos[i, j], Quaternion.identity);
                 }
             }
         }
@@ -192,22 +221,39 @@ public class UI : MonoBehaviour
         yield return null;
     }*/
 
-    public static void UpdateTimeLine(List<List<Card.InfoForActivate>> timeLineSlots)
+   public static void UpdateTimeLine(List<List<Card.InfoForActivate>> timeLineSlots)
     {
         for (int i = 0; i < timeLineSlots.Count; ++i)
         {
             for (int j = 0; j < timeLineSlots[i].Count; ++j)
             {
-                if (i < 3 || (i > 2 && timeLineSlots[i][j].card.ID == 0))
+                if (timeLineSlots[i][j].card.ID == 0)
                 {
-                    GameObject.Instantiate(Resources.Load(timeLineSlots[i][i].card.Name) as GameObject,
-            timeline.transform.position + pos[j, i], Quaternion.identity);
+                    timelineObj[1, i] = GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].card.Name) as GameObject,
+            timeline.transform.position + pos[1, i], Quaternion.identity);
 
+                }
+                else if (timeLineSlots[i][j].card.ID == 2)
+                {
+                    timelineObj[2, i] = GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].card.Name) as GameObject,
+            timeline.transform.position + pos[2, i], Quaternion.identity);
+                }
+                else if (i <= 2)
+                {
+                    timelineObj[0, i] = GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].card.Name) as GameObject,
+            timeline.transform.position + pos[0, i], Quaternion.identity);
+                }
+                else
+                {
+                    timelineObj[0, i] = GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].card.Name) as GameObject,
+            timeline.transform.position + pos[0, i], Quaternion.identity);
+                    timelineObj[0, i].SetActive(false);
                 }
 
             }
         }
     }
+
     public static void ShowDuplicationWin()
     {
 
@@ -227,7 +273,16 @@ public class UI : MonoBehaviour
     private static void InitPos()
     {
 
+        
         timelineObj = new GameObject[3, TIME_LINE_LENGTH];
+
+        for (int i = 0; i < 3; ++i)
+        {
+            for (int j = 0; j < TIME_LINE_LENGTH; ++j)
+            {
+                timelineObj[i, j] = new GameObject();
+            }
+        }
 
         pos = new Vector3[3, TIME_LINE_LENGTH];
         //one line under timeline for enemy, one line above for player, one line for duplication
