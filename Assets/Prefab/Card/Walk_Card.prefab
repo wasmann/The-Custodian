@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3155985619896615189}
   - component: {fileID: 7988294755889701472}
   m_Layer: 0
-  m_Name: Walk_Card 1
+  m_Name: Walk_Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
