@@ -11,7 +11,6 @@ public class BattleLevelDriver : MonoBehaviour
 
     public static List<List<Card.InfoForActivate>> TimeLineSlots;
 
-
     public void BeginABattleLevel(int ID)
     {
         battleData.BattleLevelInit(ID);

@@ -5,11 +5,8 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
-   //left first 
-    static GameObject card1;
-    static GameObject card2;
-    static GameObject card3;
-    static GameObject card4;
+    private static GameObject custodian;
+    private static Dictionary<int,GameObject> Enemies = new Dictionary<int, GameObject>();
 
     static Slider health;
     static Slider energy;
@@ -28,7 +25,14 @@ public class UI : MonoBehaviour
 
     static Vector3 mouseWorldPos;
 
-
+    public void loadEnemyGameObject(List<string> enemyNames)
+    {
+        for(int i= 0; i < enemyNames.Count; i++)
+        {
+            GameObject obj = GameObject.Find(enemyNames[i]);
+            Enemies.Add(i, obj);
+        }
+    }
 
     //**************************************************************************
     //**************************************************************************
@@ -145,7 +149,7 @@ public class UI : MonoBehaviour
     public static void MoveTimeLine()
     {
         //move one timeslot
-        for (int i = 0; i < 3; ++i)
+        for (int i = 0; i < 2; ++i)
         {
             for (int j = 0; j < TIME_LINE_LENGTH - 1; ++j)
             {
@@ -155,19 +159,12 @@ public class UI : MonoBehaviour
                     Destroy(timelineObj[i, j].gameObject);
                     
                 }
-                else if(j <= 2)
-                {
-                    Destroy(timelineObj[i, j].gameObject);
-                    timelineObj[i, j] = timelineObj[i, j + 1];
-                    timelineObj[i, j] = Instantiate(timelineObj[i, j], timeline.transform.position + pos[i,j], Quaternion.identity);
+               Destroy(timelineObj[i, j].gameObject);
+               timelineObj[i, j] = timelineObj[i, j + 1];
+               timelineObj[i, j] = Instantiate(timelineObj[i, j], timeline.transform.position + pos[i,j], Quaternion.identity);
+
+               if (j == 3)
                     timelineObj[i, j].SetActive(true);
-                }
-                else
-                {
-                    Destroy(timelineObj[i, j].gameObject);
-                    timelineObj[i, j] = timelineObj[i, j + 1];
-                    timelineObj[i, j] = Instantiate(timelineObj[i, j], timeline.transform.position + pos[i, j], Quaternion.identity);
-                }
             }
         }
 
@@ -227,18 +224,13 @@ public class UI : MonoBehaviour
         {
             for (int j = 0; j < timeLineSlots[i].Count; ++j)
             {
-                if (timeLineSlots[i][j].card.ID == 0)
+                if (timeLineSlots[i][j].owner_ID == 0)
                 {
                     timelineObj[1, i] = GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].card.Name) as GameObject,
             timeline.transform.position + pos[1, i], Quaternion.identity);
 
                 }
-                else if (timeLineSlots[i][j].card.ID == 2)
-                {
-                    timelineObj[2, i] = GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].card.Name) as GameObject,
-            timeline.transform.position + pos[2, i], Quaternion.identity);
-                }
-                else if (i <= 2)
+                else if (i <= 3)
                 {
                     timelineObj[0, i] = GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].card.Name) as GameObject,
             timeline.transform.position + pos[0, i], Quaternion.identity);
@@ -263,9 +255,11 @@ public class UI : MonoBehaviour
     {
         health.value = BattleData.playerData.currentHealth;
         energy.value = BattleData.playerData.currentEnergy;
+        custodian=
+
     }
 
-    public static void UpdateEnemyData(Dictionary<int, BattleData.EnemyData> enemyDataList)
+    public static void UpdateEnemyData(int ID)
     {
 
     }
@@ -274,7 +268,7 @@ public class UI : MonoBehaviour
     {
 
         
-        timelineObj = new GameObject[3, TIME_LINE_LENGTH];
+        timelineObj = new GameObject[2, TIME_LINE_LENGTH];
 
         for (int i = 0; i < 3; ++i)
         {
@@ -312,11 +306,6 @@ public class UI : MonoBehaviour
 
     private static void InitHandcardPos()
     {
-        card1 = new GameObject();
-        card2 = new GameObject();
-        card3 = new GameObject();
-        card4 = new GameObject();
-
         handcardPos = new Vector3[4];
         handcardPos[0] = new Vector3(1, 0.7f, 100);
         handcardPos[1] = new Vector3(1 - 2 * CARD_WIDTH, 0.7f, 100);
@@ -326,9 +315,9 @@ public class UI : MonoBehaviour
 
     public static void DestroyHandcard()
     {
-        for (int i = 0; i < handcards.Count; i++)
+        for (int i = 0; i < BattleData.playerData.handCard.Count; i++)
         {
-            Destroy(handcards[i].gameObject);
+            Destroy(BattleData.playerData.handCard[i].gameObject);
         }
         //Destroy(card1.gameObject);
         //Destroy(card2.gameObject);

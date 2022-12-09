@@ -28,5 +28,5 @@ public class RunLeft_Card : Card
     {
         BattleData.playerData.position = Info.Selection[0];
     }
-}
+
 }

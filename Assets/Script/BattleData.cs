@@ -47,7 +47,7 @@ public class BattleData : MonoBehaviour
         LoadPlayerData();       
     }
     public void LoadEnvironmentData(){
-
+        
     }
     public void LoadEnermyData(){
 
