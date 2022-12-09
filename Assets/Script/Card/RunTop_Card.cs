@@ -27,6 +27,13 @@ public class RunTop_Card : Card
 
     public override void Activate(InfoForActivate Info)
     {
-        BattleData.playerData.position = Info.Selection[0];
+        if (Info.owner_ID == 0)
+            BattleData.playerData.position += Info.Selection[0];
+        else
+        {
+            BattleData.EnemyData newData = BattleData.EnemyDataList[Info.owner_ID];
+            newData.position += Info.Selection[0];
+            BattleData.EnemyDataList[Info.owner_ID] = newData;
+        }
     }
 }

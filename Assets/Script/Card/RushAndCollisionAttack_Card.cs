@@ -51,30 +51,50 @@ public class RushAndCollisionAttack_Card : Card
 
     public override void Activate(InfoForActivate Info)
     {
+        if (Info.owner_ID == 0) {
+            Vector2 oriPos = BattleData.playerData.position;
 
+            Vector2 moveDir = Info.Selection[0];
 
-        Vector2 oriPos = new Vector2(float.Parse(Info.otherInfo[0]), float.Parse(Info.otherInfo[1]));
+            int Distance = (int)moveDir.magnitude - 1;
 
-        Vector2 moveDir = Info.Selection[0] - oriPos;
-
-        int Distance = (int)moveDir.magnitude - 1;
-
-        for (int i = 1; i < BattleData.EnemyDataList.Count + 1; i++)
-        {
-            if (BattleData.EnemyDataList[i].position == Info.Selection[0])
+            for (int i = 1; i < BattleData.EnemyDataList.Count + 1; i++)
             {
-                BattleData.EnemyData data = BattleData.EnemyDataList[i];
-                data.currentHealth -= 2 + Distance;
-                BattleData.EnemyDataList[i] = data;
+                if (BattleData.EnemyDataList[i].position == Info.Selection[0]+oriPos)
+                {
+                    BattleData.EnemyData data = BattleData.EnemyDataList[i];
+                    data.currentHealth -= 2 + Distance;
+                    BattleData.EnemyDataList[i] = data;
+                }
             }
+            if (moveDir.x > 0)
+                BattleData.playerData.position = Info.Selection[0] - new Vector2(-1, 0);
+            else if (moveDir.x < 0)
+                BattleData.playerData.position = Info.Selection[0] - new Vector2(1, 0);
+            else if (moveDir.y < 0)
+                BattleData.playerData.position = Info.Selection[0] - new Vector2(0, 1);
+            else
+                BattleData.playerData.position = Info.Selection[0] - new Vector2(0, -1);
         }
-        if (moveDir.x > 0)
-            BattleData.playerData.position = Info.Selection[0] - new Vector2(-1, 0);
-        else if (moveDir.x < 0)
-            BattleData.playerData.position = Info.Selection[0] - new Vector2(1, 0);
-        else if (moveDir.y < 0)
-            BattleData.playerData.position = Info.Selection[0] - new Vector2(0, 1);
+
         else
-            BattleData.playerData.position = Info.Selection[0] - new Vector2(0, -1);
+        {
+            Vector2 oriPos = BattleData.EnemyDataList[Info.owner_ID].position;
+
+            Vector2 moveDir = Info.Selection[0];
+
+            int Distance = (int)moveDir.magnitude - 1;
+
+            if (BattleData.playerData.position == Info.Selection[0]+oriPos)
+                BattleData.playerData.currentHealth -= 2 + Distance;
+
+            BattleData.EnemyData newData = BattleData.EnemyDataList[Info.owner_ID];
+            if (moveDir.x > 0)
+            {
+                newData.position += Info.Selection[0];
+                BattleData.EnemyDataList[Info.owner_ID] = newData;
+            }
+
+        }
     }
 }

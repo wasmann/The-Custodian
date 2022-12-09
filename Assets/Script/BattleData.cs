@@ -39,25 +39,25 @@ public class BattleData : MonoBehaviour
     }
     public HashSet<int> NewCard; 
 
-    public void BattleLevelInit(int battleLevelID)
+    public static void BattleLevelInit(int battleLevelID)
     {
         BattleLevelID = battleLevelID;
         LoadEnvironmentData();
         LoadEnermyData();
         LoadPlayerData();       
     }
-    public void LoadEnvironmentData(){
+    public static void LoadEnvironmentData(){
         
     }
-    public void LoadEnermyData(){
+    public static void LoadEnermyData(){
 
     } 
-    public void LoadPlayerData(){
+    public static void LoadPlayerData(){
         playerData.maxHealth = GameData.health;
         playerData.maxEnergy = GameData.Energy;
         playerData.currentHealth = playerData.maxHealth;
         playerData.currentEnergy = playerData.maxEnergy;
-        (playerData.drawPile,playerData.handCard)= deck.StartingHandCards(4,this);
+        (playerData.drawPile,playerData.handCard)= Deck.StartingHandCards(4);
         playerData.discardPile = new HashSet<Card>();
     } 
 

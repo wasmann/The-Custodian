@@ -13,7 +13,7 @@ public class Deck : MonoBehaviour
 
     //private HashSet<Card> deckPlayed; // discardPile
 
-    public void DrawCard()
+    public static void DrawCard()
     {
         //TODO drawcard
         if(BattleData.playerData.drawPile.Count == 0)
@@ -28,7 +28,7 @@ public class Deck : MonoBehaviour
         
     }
 
-    public (HashSet<Card>,List<Card>) StartingHandCards(int num, BattleData battleData)
+    public static (HashSet<Card>,List<Card>) StartingHandCards(int num)
     {
         // initialize battle deck
         foreach(Card a in GameData.Deck) 
@@ -44,18 +44,14 @@ public class Deck : MonoBehaviour
         return (BattleData.playerData.drawPile, startingCards); 
     }
 
-    /*
-     * public void Shuffle() {
-        
-    }*/
 
-    public void RebuildDrawPile()
+    public static void RebuildDrawPile()
     {
         BattleData.playerData.drawPile = BattleData.playerData.discardPile;
         BattleData.playerData.discardPile = new HashSet<Card>();
     }
 
-    public void Withdraw(Card card)
+    public static void Withdraw(Card card)
     {
         BattleData.playerData.drawPile.Add(card);
         DrawCard();

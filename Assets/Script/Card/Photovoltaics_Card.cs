@@ -19,7 +19,18 @@ public class Photovoltaics_Card : Card
 
     public override void Activate(InfoForActivate Info)
     {
-        BattleData.playerData.currentEnergy += 1;
-        BattleData.playerData.currentHealth += 2;
+        if(Info.owner_ID == 0)
+        {
+            BattleData.playerData.currentEnergy += 1;
+            BattleData.playerData.currentHealth += 2;
+        }
+        else
+        {
+            BattleData.EnemyData newData = BattleData.EnemyDataList[Info.owner_ID];
+            newData.currentHealth +=2;
+            BattleData.EnemyDataList[Info.owner_ID] = newData;
+        }
+
+
     }
 }

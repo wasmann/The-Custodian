@@ -28,14 +28,24 @@ public class Headbutt_Card : Card
 
     public override void Activate(InfoForActivate Info)
     {
-       for(int i= 1; i < BattleData.EnemyDataList.Count+1; i++)
-       {
-            if (BattleData.EnemyDataList[i].position == Info.Selection[0])
+        if (Info.owner_ID == 0)
+        {
+            for (int i = 1; i < BattleData.EnemyDataList.Count + 1; i++)
             {
-                BattleData.EnemyData data= BattleData.EnemyDataList[i];
-                data.currentHealth -= 3;
-                BattleData.EnemyDataList[i] = data;
+                if (BattleData.EnemyDataList[i].position == Info.Selection[0]+ BattleData.playerData.position)
+                {
+                    BattleData.EnemyData data = BattleData.EnemyDataList[i];
+                    data.currentHealth -= 3;
+                    BattleData.EnemyDataList[i] = data;
+                }
             }
-       }
+        }
+        else
+        {
+            if (BattleData.playerData.position == Info.Selection[0] + BattleData.EnemyDataList[Info.owner_ID].position)
+            {
+                BattleData.playerData.currentHealth -= 3;
+            }
+        }
     }
 }
