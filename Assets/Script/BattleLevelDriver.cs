@@ -52,7 +52,7 @@ public class BattleLevelDriver : MonoBehaviour
                 if (info.owner_ID != 0)
                 {
                     battleData.NewCard.Add(info.card.ID);
-                    BattleData.EnemyDataList[info.owner_ID].enemy.EnermyChooseACardToPlay(battleData,info.owner_ID);
+                    BattleData.EnemyDataList[info.owner_ID].enemy.EnermyChooseACardToPlay(info.owner_ID);
 
                 }
             }
@@ -68,7 +68,7 @@ public class BattleLevelDriver : MonoBehaviour
             return;
         }
         if (info.card.Speed <= 3)
-            UI.UpdateTimeLine();
+            UI.UpdateTimeLine(TimeLineSlots);
         //player 
         TimeLineSlots[info.card.Speed].Add(info);
     }

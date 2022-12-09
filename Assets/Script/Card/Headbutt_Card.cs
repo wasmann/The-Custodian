@@ -19,7 +19,7 @@ public class Headbutt_Card : Card
         Notation.Add(this.transform.Find("RangeNotation").gameObject);
         Notation.Add(this.transform.Find("SelectionNotation").gameObject);
         //BattleData.CardReadyToPlay=this;
-        UI.ShowNotation(Notation,Info);
+        //UI.ShowNotation(Notation,Info);
         //assign the functionality to grids in info.direction
         yield return new WaitUntil(() => TargetNum == 0);
         //disable the grid selection function

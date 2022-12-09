@@ -255,7 +255,6 @@ public class UI : MonoBehaviour
     {
         health.value = BattleData.playerData.currentHealth;
         energy.value = BattleData.playerData.currentEnergy;
-        custodian=
 
     }
 

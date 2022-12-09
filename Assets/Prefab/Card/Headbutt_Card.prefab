@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6821530161448391278}
   - component: {fileID: 1513848091152015199}
+  - component: {fileID: -7606746570223978723}
   m_Layer: 0
   m_Name: Headbutt_Card
   m_TagString: Untagged
@@ -84,3 +85,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-7606746570223978723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8240118645495981889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2811cfcd38c8f734aae11ba214b844bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Notation: []

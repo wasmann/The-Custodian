@@ -42,7 +42,7 @@ public class RushAndCollisionAttack_Card : Card
         //better to design two notation
 
        // BattleData.CardReadyToPlay = this;
-        UI.ShowNotation(Notation,Info);
+        //UI.ShowNotation(Notation,Info);
         //assign the functionality to grids in info.direction
         yield return new WaitUntil(() => TargetNum == 0);
         //disable the grid selection function
