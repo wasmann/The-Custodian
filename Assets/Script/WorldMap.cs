@@ -22,8 +22,9 @@ public class WorldMap : MonoBehaviour
     public void LoadLevelScene(int id)
     {
         currentLevelID = id;
-        battleLevelDriver.BeginABattleLevel(0);
+        battleLevelDriver.BeginABattleLevel(id);
         battleLevelDriver.Paused = true;
+        GameData.currentState = GameData.state.Battle;
     }
 
 
