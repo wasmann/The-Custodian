@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 2ca7ef45589ab9d4386bb06237ae483c
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Pixelme
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: cfcbe27b3da678248be11c3aec4870ed, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
