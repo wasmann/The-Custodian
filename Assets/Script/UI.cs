@@ -22,7 +22,7 @@ public class UI : MonoBehaviour
     const float CARD_WIDTH = 1;
     const float TIME_LINE_HEIGHT = 0.5f;
     const float TIME_LINE_SPEED = 1.0f;
-    static string PREFAB_PATH = "Prefabs/";
+    static string PREFAB_PATH = "Prefab/Card/";
 
     static Vector3[,] pos;
     static Vector3[] handcardPos;
