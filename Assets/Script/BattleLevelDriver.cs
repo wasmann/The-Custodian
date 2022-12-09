@@ -70,6 +70,7 @@ public class BattleLevelDriver : MonoBehaviour
         }
         if (info.card.Speed <= 3)
             UI.UpdateTimeLine();
+        //player 
         TimeLineSlots[info.card.Speed].Add(info);
     }
 

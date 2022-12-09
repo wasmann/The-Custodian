@@ -13,18 +13,18 @@ public class Deck : MonoBehaviour
 
     //private HashSet<Card> deckPlayed; // discardPile
 
-    public void DrawCard(ref BattleData battleData)
+    public void DrawCard()
     {
         //TODO drawcard
-        if(battleData.playerData.drawPile.Count == 0)
+        if(BattleData.playerData.drawPile.Count == 0)
         {
-            RebuildDrawPile(ref battleData);
+            RebuildDrawPile();
         }
 
-        Card card = battleData.playerData.drawPile.First();
-        battleData.playerData.drawPile.Remove(card);
-        battleData.playerData.discardPile.Add(card);
-        UI.UpdateHandCard(battleData);
+        Card card = BattleData.playerData.drawPile.First();
+        BattleData.playerData.drawPile.Remove(card);
+        BattleData.playerData.discardPile.Add(card);
+        UI.UpdateHandCard();
         
     }
 
@@ -33,15 +33,15 @@ public class Deck : MonoBehaviour
         // initialize battle deck
         foreach(Card a in GameData.Deck) 
         {
-            battleData.playerData.drawPile.Add(a);
+            BattleData.playerData.drawPile.Add(a);
         }
 
         List<Card> startingCards = new List<Card>();
         for (int i = 0; i < 4; ++i)
         {
-            DrawCard(ref battleData);
+            DrawCard();
         }
-        return (battleData.playerData.drawPile, startingCards); 
+        return (BattleData.playerData.drawPile, startingCards); 
     }
 
     /*
@@ -49,16 +49,16 @@ public class Deck : MonoBehaviour
         
     }*/
 
-    public void RebuildDrawPile(ref BattleData battleData)
+    public void RebuildDrawPile()
     {
-        battleData.playerData.drawPile = battleData.playerData.discardPile;
-        battleData.playerData.discardPile = new HashSet<Card>();
+        BattleData.playerData.drawPile = BattleData.playerData.discardPile;
+        BattleData.playerData.discardPile = new HashSet<Card>();
     }
 
-    public void Withdraw(Card card, ref BattleData battleData)
+    public void Withdraw(Card card)
     {
-        battleData.playerData.drawPile.Add(card);
-        DrawCard(ref battleData);
+        BattleData.playerData.drawPile.Add(card);
+        DrawCard();
     }
 
     // Anything left?

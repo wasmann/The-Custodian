@@ -36,6 +36,7 @@ public abstract class Card : MonoBehaviour
         public int owner_ID;// 0 for player
         public Card card;
         public List<Vector2> Selection;
+        public List<string> otherInfo;
     }
 
     public abstract IEnumerator Play();
@@ -47,7 +48,7 @@ public abstract class Card : MonoBehaviour
             BattleData.playerData.handCard.Remove(this);
             BattleData.playerData.discardPile.Add(this);// need test
             UI.UpdateHandCard();
-            BattleLevelDriver.NewCardPlayed(BattleData.CardReadyToPlay.Info);
+            BattleLevelDriver.NewCardPlayed(this.Info);
         }
         else
         {
@@ -69,6 +70,11 @@ public abstract class Card : MonoBehaviour
                 return true;
         }
         return false;
+    }
+
+    public void MakeSelectable(InfoForActivate info)
+    {
+        //Implement in UI
     }
 
 }
