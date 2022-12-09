@@ -5,19 +5,24 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
+    //custodian
     private static GameObject custodian;
-    private static Dictionary<int,GameObject> Enemies = new Dictionary<int, GameObject>();
-
     static Slider health;
     static Slider energy;
+    static Vector3 custodianPos;
     //static int RAM;
 
+    //enemy
+    private static Dictionary<int, GameObject> Enemies = new Dictionary<int, GameObject>();
+
+    //ui components
     static GameObject timeline;
     const int TIME_LINE_LENGTH = 10;
     const float CARD_HEIGHT = 1;
     const float CARD_WIDTH = 1;
     const float TIME_LINE_HEIGHT = 0.5f;
     const float TIME_LINE_SPEED = 1.0f;
+    static string PREFAB_PATH = "Prefabs/";
 
     static Vector3[,] pos;
     static Vector3[] handcardPos;
@@ -25,15 +30,7 @@ public class UI : MonoBehaviour
 
     static Vector3 mouseWorldPos;
 
-    public void loadEnemyGameObject(List<string> enemyNames)
-    {
-        for(int i= 0; i < enemyNames.Count; i++)
-        {
-            GameObject obj = GameObject.Find(enemyNames[i]);
-            Enemies.Add(i, obj);
-        }
-    }
-
+    
     //**************************************************************************
     //**************************************************************************
     // TEST CASE BEGIN
@@ -123,14 +120,41 @@ public class UI : MonoBehaviour
     //**************************************************************************
     //**************************************************************************
 
+    
+    public static void LoadBattleBegin()
+    {
+
+        custodian = GameObject.Find("Custodian");
+        var sliders = Object.FindObjectsOfType<Slider>();
+        health = sliders[0];
+        energy = sliders[1];
+
+        health.maxValue = BattleData.playerData.maxHealth;
+        energy.maxValue = BattleData.playerData.maxEnergy;
+
+        UpdatePlayerData();
+
+        //UpdateEnemyData();
+
+        InitPos();
+        InitHandcardPos();
+
+        timeline = GameObject.Find("TimeLine");
+
+
+        UpdateHandCard();
+
+
+    }
+
     public static void UpdateHandCard()// After drawing a new card, reorgnize the hand card(align right) and move a card from deck to hand at the most left side.
     {
         DestroyHandcard();
 
-        for(int i = 0; i < BattleData.playerData.handCard.Count; i++)
+        for (int i = 0; i < BattleData.playerData.handCard.Count; i++)
         {
-         GameObject card= GameObject.Instantiate(Resources.Load(BattleData.playerData.handCard[0].Name) as GameObject,
-           handcardPos[i], Quaternion.identity);
+            GameObject card = GameObject.Instantiate(Resources.Load(PREFAB_PATH + BattleData.playerData.handCard[i].Name) as GameObject,
+              handcardPos[i], Quaternion.identity);
         }
 
         //card1 = GameObject.Instantiate(Resources.Load(BattleData.playerData.handCard[0].Name) as GameObject,
@@ -154,46 +178,22 @@ public class UI : MonoBehaviour
             for (int j = 0; j < TIME_LINE_LENGTH - 1; ++j)
             {
 
-               if( j == TIME_LINE_LENGTH)
+                if (j == TIME_LINE_LENGTH)
                 {
                     Destroy(timelineObj[i, j].gameObject);
-                    
-                }
-               Destroy(timelineObj[i, j].gameObject);
-               timelineObj[i, j] = timelineObj[i, j + 1];
-               timelineObj[i, j] = Instantiate(timelineObj[i, j], timeline.transform.position + pos[i,j], Quaternion.identity);
 
-               if (j == 3)
+                }
+                Destroy(timelineObj[i, j].gameObject);
+                timelineObj[i, j] = timelineObj[i, j + 1];
+                timelineObj[i, j] = Instantiate(timelineObj[i, j], timeline.transform.position + pos[i, j], Quaternion.identity);
+
+                if (j == 3)
                     timelineObj[i, j].SetActive(true);
             }
         }
 
     }
 
-    public static void LoadBattleBegin()
-    {
-
-        var sliders = Object.FindObjectsOfType<Slider>();
-        health = sliders[0];
-        energy = sliders[1];
-
-        health.maxValue = BattleData.playerData.maxHealth;
-        energy.maxValue = BattleData.playerData.maxEnergy;
-
-        UpdatePlayerData();
-
-        //UpdateEnemyData();
-
-        InitPos();
-        InitHandcardPos();
-
-        timeline = GameObject.Find("TimeLine");
-
-
-        UpdateHandCard();
-
-
-    }
 
     /*public static IEnumerator ShowNotation(List<GameObject> notion, Card.InfoForActivate info)
     {
@@ -218,7 +218,7 @@ public class UI : MonoBehaviour
         yield return null;
     }*/
 
-   public static void UpdateTimeLine(List<List<Card.InfoForActivate>> timeLineSlots)
+    public static void UpdateTimeLine(List<List<Card.InfoForActivate>> timeLineSlots)
     {
         for (int i = 0; i < timeLineSlots.Count; ++i)
         {
@@ -255,7 +255,17 @@ public class UI : MonoBehaviour
     {
         health.value = BattleData.playerData.currentHealth;
         energy.value = BattleData.playerData.currentEnergy;
+        custodianPos = BattleData.playerData.position;
 
+    }
+
+    public void loadEnemyGameObject(List<string> enemyNames)
+    {
+        for (int i = 0; i < enemyNames.Count; i++)
+        {
+            GameObject obj = GameObject.Find(enemyNames[i]);
+            Enemies.Add(i, obj);
+        }
     }
 
     public static void UpdateEnemyData(int ID)
@@ -269,7 +279,7 @@ public class UI : MonoBehaviour
         
         timelineObj = new GameObject[2, TIME_LINE_LENGTH];
 
-        for (int i = 0; i < 3; ++i)
+        for (int i = 0; i < 2; ++i)
         {
             for (int j = 0; j < TIME_LINE_LENGTH; ++j)
             {
@@ -277,13 +287,13 @@ public class UI : MonoBehaviour
             }
         }
 
-        pos = new Vector3[3, TIME_LINE_LENGTH];
+        pos = new Vector3[2, TIME_LINE_LENGTH];
         //one line under timeline for enemy, one line above for player, one line for duplication
 
         float offsite = CARD_WIDTH * TIME_LINE_LENGTH / 2;
         float heightOffsite = CARD_HEIGHT;
 
-        for (int i = 0; i < 3; ++i)
+        for (int i = 0; i < 2; ++i)
         {
             if (i != 0)
             {
