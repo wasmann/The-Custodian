@@ -29,97 +29,6 @@ public class UI : MonoBehaviour
     static GameObject[,] timelineObj;
 
     static Vector3 mouseWorldPos;
-
-    
-    //**************************************************************************
-    //**************************************************************************
-    // TEST CASE BEGIN
-/*     private void Start()
-    {
-
-
-        BattleData.playerData.maxEnergy = 20;
-        BattleData.playerData.currentEnergy = 18;
-
-        BattleData.playerData.maxHealth = 20;
-        BattleData.playerData.currentHealth = 10;
-
-
-        Card testcard1 = new Card();
-        testcard1.Name = "TestCard";
-        testcard1.ID = 1;
-
-        Card testcard2 = new Card();
-        testcard2.Name = "Circle";
-        testcard2.ID = 0;
-
-        Card testcard3 = new Card();
-        testcard3.Name = "Circle1";  //enemy
-        testcard3.ID = 1;
-
-        Card testcard4 = new Card();
-        testcard4.Name = "Circle2";  //dupli
-        testcard4.ID = 2;
-
-        BattleData.playerData.handCard = new List<Card> { testcard1, testcard1, testcard1, testcard1 };
-        LoadBattleBegin();
-
-        List<List<Card>> testlist = new List<List<Card>>();
-        List<Card> list1 = new List<Card> { testcard2 };
-        List<Card> list2 = new List<Card> { testcard2, testcard3};
-        List<Card> list3 = new List<Card> { testcard3, testcard2, testcard4 };
-        List<Card> list4 = new List<Card> { testcard4, testcard3, testcard2 };
-        testlist.Add(list1);
-        testlist.Add(list2);
-        testlist.Add(list3);
-        testlist.Add(list4);
-
-        UpdateTimeLine(testlist);
-    }
-
-    public static void UpdateTimeLine(List<List<Card>> timeLineSlots)
-    {
-        
-        for (int i = 0; i < timeLineSlots.Count; ++i)
-        {
-            for (int j = 0; j < timeLineSlots[i].Count; ++j)
-            {
-                if (timeLineSlots[i][j].ID == 0)
-                {
-                    timelineObj[1, i] = GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].Name) as GameObject,
-            timeline.transform.position + pos[1, i], Quaternion.identity);
-
-                }else if(timeLineSlots[i][j].ID == 2)
-                {
-                    timelineObj[2, i] = GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].Name) as GameObject,
-            timeline.transform.position + pos[2, i], Quaternion.identity);
-                }else if(i <= 2)
-                {
-                    timelineObj[0, i] = GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].Name) as GameObject,
-            timeline.transform.position + pos[0, i], Quaternion.identity);
-                }
-                else
-                {
-                    timelineObj[0, i] = GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].Name) as GameObject,
-            timeline.transform.position + pos[0, i], Quaternion.identity);
-                    timelineObj[0, i].SetActive(false);
-                }
-
-            }
-        }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            MoveTimeLine();
-        }
-    } */
-    // TEST CASE END
-    //**************************************************************************
-    //**************************************************************************
-
     
     public static void LoadBattleBegin()
     {
@@ -141,7 +50,6 @@ public class UI : MonoBehaviour
 
         timeline = GameObject.Find("TimeLine");
 
-
         UpdateHandCard();
 
 
@@ -156,18 +64,6 @@ public class UI : MonoBehaviour
             GameObject card = GameObject.Instantiate(Resources.Load(PREFAB_PATH + BattleData.playerData.handCard[i].Name) as GameObject,
               handcardPos[i], Quaternion.identity);
         }
-
-        //card1 = GameObject.Instantiate(Resources.Load(BattleData.playerData.handCard[0].Name) as GameObject,
-        //   handcardPos[0], Quaternion.identity);
-
-        //card2 = GameObject.Instantiate(Resources.Load(BattleData.playerData.handCard[1].Name) as GameObject,
-        //    handcardPos[1], Quaternion.identity);
-
-        //card3 = GameObject.Instantiate(Resources.Load(BattleData.playerData.handCard[2].Name) as GameObject,
-        //    handcardPos[2], Quaternion.identity);
-
-        //card4 = GameObject.Instantiate(Resources.Load(BattleData.playerData.handCard[3].Name) as GameObject,
-        //    handcardPos[3], Quaternion.identity);
     }
 
     public static void MoveTimeLine()

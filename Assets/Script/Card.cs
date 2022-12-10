@@ -16,11 +16,6 @@ public abstract class Card : MonoBehaviour
 
     public InfoForActivate Info;
 
-    public Card()
-    {
-
-    }
-
     public enum Rarity
     {
         basic,

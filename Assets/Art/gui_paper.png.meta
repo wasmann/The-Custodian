@@ -1,0 +1,1950 @@
+fileFormatVersion: 2
+guid: 1ec660611205d534f98644d7c2c0966f
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 224, y: 160, z: 384, w: 160}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: 0.28
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: gui_paper_0
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -48, y: 48}
+        - {x: -48, y: -48}
+        - {x: 48, y: -48}
+        - {x: 48, y: 48}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: baac13afc6064dd4382346a619681e66
+      internalID: 560982405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_1
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 224
+        width: 32
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f70bdff973e802b46bc03cce8717ec44
+      internalID: 641883682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_2
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 224
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fddbf4e9afc294f4abb4eaaf91d8836a
+      internalID: -1742883846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_3
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 224
+        width: 32
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7eb7bb02873a704b8311004deea59d6
+      internalID: 985593811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_4
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 294
+        width: 64
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1d846eaab72ad24f841c5cfcab8c399
+      internalID: 1517751678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_5
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 298
+        width: 76
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b33d4d251dafd1b47aa8afbf0ec4b5a8
+      internalID: 991416029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_6
+      rect:
+        serializedVersion: 2
+        x: 587
+        y: 298
+        width: 75
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 245d28219b8316f4fb94661c41cc48b1
+      internalID: 1807201100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_7
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 262
+        width: 64
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0f5fb10e06004b49b9a3ac6fbd129a4
+      internalID: 253716251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_8
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 266
+        width: 76
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60c08139034ccc049be43bbd0325e882
+      internalID: 1865215459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_9
+      rect:
+        serializedVersion: 2
+        x: 586
+        y: 267
+        width: 76
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f194008a172f0f4ebff27aa5affcfe3
+      internalID: 402306675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_10
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 232
+        width: 64
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bf38174ffb325a4d909b3d3f7bcf351
+      internalID: -1404577668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_11
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 234
+        width: 76
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1313b66d2500b340955103e66ef8b46
+      internalID: -1387135263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_12
+      rect:
+        serializedVersion: 2
+        x: 586
+        y: 233
+        width: 76
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f26e25d511f7afe4e9535a0ef7ee0d24
+      internalID: 1030562747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_13
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 192
+        width: 159
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee854cdcbd4e9a44c93705e847f71d7e
+      internalID: -263767803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_14
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 192
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44bc8fd4d335ed044b5d3e4036ac3a07
+      internalID: 1073132398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_15
+      rect:
+        serializedVersion: 2
+        x: 641
+        y: 202
+        width: 31
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b8d677e353f89147a5508a030d10da3
+      internalID: -1718968775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_16
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 96
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a735dab1da6ff6849ab46660be316198
+      internalID: 86698777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_17
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4a507ae7b8266d40b40b872d1b72da5
+      internalID: 1597018901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_18
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 160
+        width: 96
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13a19e4d9b98939478258016dc9998e6
+      internalID: 843821594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_19
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f3fae2f824a9ac49aad299c8d1c5c5e
+      internalID: 205541248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_20
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 164
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec3c1cd5dabbbc84dadc95dcd52132ed
+      internalID: 1405831383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_21
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 164
+        width: 59
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cbaa038295721c419d09fb06c7d22b8
+      internalID: 116653160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_22
+      rect:
+        serializedVersion: 2
+        x: 488
+        y: 169
+        width: 17
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 665d9d4c0e05a5f4bb2a061e9334684d
+      internalID: -816607536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_23
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 169
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2350da6fe07bc84fb34e5fc4a9d00bb
+      internalID: -1532883485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_24
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 173
+        width: 7
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7350d8b2d36e7fa47b967abfdded3b0d
+      internalID: -2045973784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_25
+      rect:
+        serializedVersion: 2
+        x: 589
+        y: 173
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ef4364b6fab67048a280de5c6490743
+      internalID: -635708088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_26
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 106
+        width: 53
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -14.5, y: -38}
+        - {x: -14.5, y: 38}
+        - {x: -26.5, y: 38}
+        - {x: -26.5, y: -38}
+      - - {x: -6.5, y: -35}
+        - {x: 26.5, y: -35}
+        - {x: 26.5, y: -29}
+        - {x: -4.5, y: -29}
+        - {x: -6.5, y: -30}
+      - - {x: -7.5, y: 1}
+        - {x: -7.5, y: -1}
+        - {x: -5.5, y: -3}
+        - {x: 26.5, y: -3}
+        - {x: 26.5, y: 3}
+        - {x: -5.5, y: 3}
+      - - {x: -7.5, y: 33}
+        - {x: -7.5, y: 31}
+        - {x: -5.5, y: 29}
+        - {x: 26.5, y: 29}
+        - {x: 26.5, y: 35}
+        - {x: -5.5, y: 35}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb7f8dff101b899409407525da09b677
+      internalID: 1038869314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_27
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 132
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d2925bb6d496f44ba452fe393da42fe
+      internalID: 1443797598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_28
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 150
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f328efe976808d745b92880faeafb151
+      internalID: 1055299543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_29
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 150
+        width: 20
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3fcf2b00aab05a643a57d576b1327699
+      internalID: 1187813673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_30
+      rect:
+        serializedVersion: 2
+        x: 470
+        y: 150
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b846f0b19fccccd49a1ac8efa305cf58
+      internalID: -1359837487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_31
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 140
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28ce12cb60838f04186ae1e293edc126
+      internalID: 708344624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_32
+      rect:
+        serializedVersion: 2
+        x: 523
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b90a627e712164a4c868ff8e12da03b8
+      internalID: -2002069515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_33
+      rect:
+        serializedVersion: 2
+        x: 544
+        y: 139
+        width: 32
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7dee11db5acde904a84970aee25f5d51
+      internalID: 23511522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_34
+      rect:
+        serializedVersion: 2
+        x: 587
+        y: 139
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab589e5956f99fc409297fc6602e71af
+      internalID: -519874439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_35
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 128
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31823bb0a3b41ee4e964253e379eca63
+      internalID: 197273464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_36
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 128
+        width: 20
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2288551857b0b2d4e910fe6bb2692055
+      internalID: 366668370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_37
+      rect:
+        serializedVersion: 2
+        x: 470
+        y: 128
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f011a2fa227234247bf9468508f3bd9f
+      internalID: 818791314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_38
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d2dbdd6df1a3154d8c15890e7472845
+      internalID: 500345526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_39
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 97
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 468b7bcd8d56628488c733659a6b1157
+      internalID: -1284571027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_40
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 32
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac5e497a796ec4647978806b6e6a1aa6
+      internalID: -527468824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_41
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 97
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 785048f6021160c46ba42d9d615743f5
+      internalID: 797312483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_42
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 98
+        width: 88
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5666f343f5fcf394294b980f4ff3b226
+      internalID: -1098668528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_43
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 100
+        width: 88
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb62150963999344288125caf787ee1c
+      internalID: -1118048811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_44
+      rect:
+        serializedVersion: 2
+        x: 586
+        y: 107
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a218fa40d3880a46a72e1e4d61a1a35
+      internalID: 1864512414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_45
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 65
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bb0f1749f74ac64da5f389f8f74c521
+      internalID: -1007483723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_46
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 65
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cd247ceb3442644da828719435f0b73
+      internalID: 333227102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_47
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 66
+        width: 56
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bba176247a0df1843b558c6cf31653aa
+      internalID: 1371074032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_48
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 68
+        width: 56
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e80e30146b833c4448cb5c4842e44b3c
+      internalID: 1453840912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_49
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 64
+        width: 10
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2304ce08caa48ac43ab2394684035f78
+      internalID: -709661407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_50
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 73
+        width: 32
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45c351dd0b4b50a43bc8333e12a2cce4
+      internalID: 1296926538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_51
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 33
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca9ab54957ebd744e9383e553b6b6776
+      internalID: 237456156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_52
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 33
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 173c104fee5fa7b43b3228a1057333db
+      internalID: 369222372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_53
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 34
+        width: 24
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 823124828b7697c4baa6849fd6585970
+      internalID: -1426941838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_54
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 36
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a79f9cc1f2b41a24ea8363716cf9f3d1
+      internalID: -417745875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_55
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 42
+        width: 32
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5038cfbca9e0cd34885826f6ffb19019
+      internalID: 1376086484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_56
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 42
+        width: 24
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f52f379baaca3df44b4d345768be7ed5
+      internalID: -1452333989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_57
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 42
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e958561a4bf08744483b13221102d8c7
+      internalID: -1444463065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_58
+      rect:
+        serializedVersion: 2
+        x: 618
+        y: 42
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f5a071d79144f94d987557a9f051daa
+      internalID: 1345646125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_paper_59
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 41
+        width: 32
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16424ddda65452f4091c40180a64d7ee
+      internalID: 1015346927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline:
+    - - {x: -322, y: -46}
+      - {x: -322, y: -144}
+      - {x: -320, y: -146}
+      - {x: -222, y: -146}
+      - {x: -222, y: -46}
+    - - {x: -130, y: -46}
+      - {x: -130, y: -146}
+      - {x: -32, y: -146}
+      - {x: -30, y: -144}
+      - {x: -30, y: -46}
+    - - {x: -159, y: -49}
+      - {x: -160, y: -47}
+      - {x: -191, y: -47}
+      - {x: -193, y: -49}
+      - {x: -193, y: -143}
+      - {x: -191, y: -145}
+      - {x: -161, y: -145}
+      - {x: -159, y: -143}
+    - - {x: 33, y: -121}
+      - {x: 31, y: -113}
+      - {x: 33, y: -112}
+      - {x: 33, y: -86}
+      - {x: 31, y: -81}
+      - {x: 33, y: -79}
+      - {x: 33, y: -57}
+      - {x: 23, y: -47}
+      - {x: 1, y: -47}
+      - {x: -1, y: -49}
+      - {x: -1, y: -143}
+      - {x: 1, y: -145}
+      - {x: 31, y: -145}
+      - {x: 33, y: -143}
+    - - {x: 34, y: -113}
+      - {x: 34, y: -144}
+      - {x: 62, y: -144}
+      - {x: 62, y: -113}
+    - - {x: 130, y: -114}
+      - {x: 130, y: -142}
+      - {x: 157, y: -142}
+      - {x: 158, y: -141}
+      - {x: 158, y: -115}
+      - {x: 157, y: -114}
+    - - {x: 322, y: -137}
+      - {x: 322, y: -119}
+      - {x: 286, y: -119}
+      - {x: 286, y: -137}
+    - - {x: 158, y: -120}
+      - {x: 158, y: -136}
+      - {x: 194, y: -136}
+      - {x: 194, y: -120}
+    - - {x: 222, y: -136}
+      - {x: 222, y: -120}
+      - {x: 194, y: -120}
+      - {x: 194, y: -136}
+    - - {x: 230, y: -136}
+      - {x: 250, y: -136}
+      - {x: 250, y: -120}
+      - {x: 230, y: -120}
+    - - {x: 266, y: -120}
+      - {x: 264, y: -122}
+      - {x: 264, y: -134}
+      - {x: 266, y: -136}
+      - {x: 278, y: -136}
+      - {x: 280, y: -134}
+      - {x: 280, y: -122}
+      - {x: 278, y: -120}
+    - - {x: 267, y: -78}
+      - {x: 265, y: -80}
+      - {x: 265, y: -112}
+      - {x: 267, y: -114}
+      - {x: 277, y: -114}
+      - {x: 279, y: -112}
+      - {x: 279, y: -80}
+      - {x: 277, y: -78}
+    - - {x: -285, y: -98}
+      - {x: -286, y: -97}
+      - {x: -285, y: -94}
+      - {x: -285, y: -90}
+      - {x: -286, y: -89}
+      - {x: -285, y: -83}
+      - {x: -286, y: -82}
+      - {x: -282, y: -82}
+      - {x: -281, y: -83}
+      - {x: -278, y: -83}
+      - {x: -277, y: -82}
+      - {x: -273, y: -82}
+      - {x: -272, y: -83}
+      - {x: -264, y: -83}
+      - {x: -263, y: -82}
+      - {x: -258, y: -82}
+      - {x: -258, y: -85}
+      - {x: -259, y: -86}
+      - {x: -259, y: -100}
+      - {x: -258, y: -101}
+      - {x: -259, y: -107}
+      - {x: -258, y: -108}
+      - {x: -258, y: -110}
+      - {x: -265, y: -110}
+      - {x: -266, y: -109}
+      - {x: -278, y: -109}
+      - {x: -279, y: -110}
+      - {x: -286, y: -110}
+    - - {x: -93, y: -104}
+      - {x: -94, y: -103}
+      - {x: -94, y: -101}
+      - {x: -93, y: -100}
+      - {x: -93, y: -92}
+      - {x: -94, y: -91}
+      - {x: -93, y: -85}
+      - {x: -94, y: -84}
+      - {x: -94, y: -83}
+      - {x: -87, y: -82}
+      - {x: -86, y: -83}
+      - {x: -74, y: -83}
+      - {x: -73, y: -82}
+      - {x: -71, y: -82}
+      - {x: -70, y: -83}
+      - {x: -66, y: -83}
+      - {x: -65, y: -82}
+      - {x: -66, y: -87}
+      - {x: -67, y: -88}
+      - {x: -67, y: -96}
+      - {x: -66, y: -97}
+      - {x: -67, y: -109}
+      - {x: -66, y: -110}
+      - {x: -75, y: -110}
+      - {x: -76, y: -109}
+      - {x: -80, y: -109}
+      - {x: -81, y: -110}
+      - {x: -83, y: -110}
+      - {x: -84, y: -109}
+      - {x: -90, y: -109}
+      - {x: -91, y: -110}
+      - {x: -94, y: -110}
+    - - {x: 37, y: -81}
+      - {x: 34, y: -84}
+      - {x: 34, y: -109}
+      - {x: 37, y: -112}
+      - {x: 91, y: -112}
+      - {x: 94, y: -109}
+      - {x: 94, y: -84}
+      - {x: 91, y: -81}
+    - - {x: 190, y: -84}
+      - {x: 189, y: -82}
+      - {x: 132, y: -82}
+      - {x: 130, y: -83}
+      - {x: 130, y: -109}
+      - {x: 132, y: -110}
+      - {x: 188, y: -110}
+      - {x: 190, y: -108}
+    - - {x: 288, y: -89}
+      - {x: 286, y: -91}
+      - {x: 286, y: -103}
+      - {x: 288, y: -105}
+      - {x: 320, y: -105}
+      - {x: 322, y: -103}
+      - {x: 322, y: -91}
+      - {x: 320, y: -89}
+    - - {x: 129, y: -36}
+      - {x: 123, y: -36}
+      - {x: 115, y: -44}
+      - {x: 103, y: -36}
+      - {x: 60, y: -36}
+      - {x: 59, y: -37}
+      - {x: 59, y: -46}
+      - {x: 34, y: -49}
+      - {x: 34, y: -77}
+      - {x: 37, y: -80}
+      - {x: 123, y: -80}
+      - {x: 126, y: -77}
+      - {x: 130, y: -56}
+      - {x: 130, y: -39}
+    - - {x: 222, y: -76}
+      - {x: 222, y: -52}
+      - {x: 221, y: -50}
+      - {x: 132, y: -50}
+      - {x: 130, y: -52}
+      - {x: 130, y: -76}
+      - {x: 132, y: -78}
+      - {x: 167, y: -78}
+      - {x: 181, y: -77}
+      - {x: 182, y: -78}
+      - {x: 220, y: -78}
+    - - {x: 267, y: 8}
+      - {x: 265, y: 6}
+      - {x: 265, y: -70}
+      - {x: 267, y: -72}
+      - {x: 277, y: -72}
+      - {x: 279, y: -70}
+      - {x: 279, y: 6}
+      - {x: 277, y: 8}
+    - - {x: 232, y: -57}
+      - {x: 232, y: -69}
+      - {x: 234, y: -71}
+      - {x: 248, y: -71}
+      - {x: 248, y: -60}
+      - {x: 245, y: -57}
+    - - {x: 289, y: -61}
+      - {x: 287, y: -63}
+      - {x: 287, y: -65}
+      - {x: 289, y: -67}
+      - {x: 319, y: -67}
+      - {x: 321, y: -65}
+      - {x: 321, y: -63}
+      - {x: 319, y: -61}
+    - - {x: 34, y: -46}
+      - {x: 62, y: -46}
+      - {x: 62, y: -18}
+      - {x: 34, y: -18}
+    - - {x: 192, y: -25}
+      - {x: 190, y: -27}
+      - {x: 190, y: -37}
+      - {x: 192, y: -39}
+      - {x: 224, y: -39}
+      - {x: 226, y: -37}
+      - {x: 226, y: -27}
+      - {x: 224, y: -25}
+    - - {x: 233, y: -25}
+      - {x: 233, y: -39}
+      - {x: 247, y: -39}
+      - {x: 247, y: -31}
+      - {x: 243, y: -25}
+    - - {x: 137, y: -32}
+      - {x: 141, y: -38}
+      - {x: 144, y: -38}
+      - {x: 152, y: -32}
+      - {x: 152, y: -28}
+      - {x: 150, y: -25}
+      - {x: 144, y: -25}
+      - {x: 140, y: -26}
+      - {x: 137, y: -31}
+    - - {x: 169, y: -27}
+      - {x: 169, y: -34}
+      - {x: 170, y: -38}
+      - {x: 179, y: -38}
+      - {x: 182, y: -37}
+      - {x: 182, y: -29}
+      - {x: 178, y: -25}
+      - {x: 173, y: -25}
+    - - {x: 288, y: -29}
+      - {x: 286, y: -31}
+      - {x: 286, y: -33}
+      - {x: 288, y: -35}
+      - {x: 320, y: -35}
+      - {x: 322, y: -33}
+      - {x: 322, y: -31}
+      - {x: 320, y: -29}
+    - - {x: 65, y: -14}
+      - {x: 62, y: -15}
+      - {x: 62, y: -25}
+      - {x: 63, y: -28}
+      - {x: 70, y: -28}
+      - {x: 73, y: -27}
+      - {x: 76, y: -19}
+      - {x: 76, y: -14}
+    - - {x: 85, y: -14}
+      - {x: 84, y: -17}
+      - {x: 84, y: -21}
+      - {x: 91, y: -28}
+      - {x: 100, y: -28}
+      - {x: 108, y: -21}
+      - {x: 108, y: -17}
+      - {x: 107, y: -14}
+    - - {x: 118, y: -14}
+      - {x: 116, y: -17}
+      - {x: 116, y: -22}
+      - {x: 122, y: -28}
+      - {x: 128, y: -28}
+      - {x: 130, y: -27}
+      - {x: 130, y: -18}
+      - {x: 126, y: -14}
+    - - {x: -223, y: 18}
+      - {x: -320, y: 18}
+      - {x: -322, y: 16}
+      - {x: -322, y: -17}
+      - {x: -320, y: -18}
+      - {x: -224, y: -18}
+      - {x: -222, y: -16}
+      - {x: -222, y: 16}
+    - - {x: -193, y: 18}
+      - {x: -194, y: 17}
+      - {x: -194, y: -18}
+      - {x: -158, y: -18}
+      - {x: -158, y: 18}
+    - - {x: -39, y: 18}
+      - {x: -128, y: 18}
+      - {x: -130, y: 17}
+      - {x: -130, y: -9}
+      - {x: -128, y: -11}
+      - {x: -113, y: -18}
+      - {x: -32, y: -18}
+      - {x: -30, y: -16}
+      - {x: -30, y: 8}
+    - - {x: -2, y: 18}
+      - {x: -2, y: -17}
+      - {x: 4, y: -18}
+      - {x: 34, y: -18}
+      - {x: 34, y: 15}
+      - {x: 26, y: 18}
+    - - {x: 34, y: -14}
+      - {x: 62, y: -14}
+      - {x: 62, y: 14}
+      - {x: 34, y: 14}
+    - - {x: 66, y: -14}
+      - {x: 94, y: -14}
+      - {x: 94, y: 14}
+      - {x: 66, y: 14}
+    - - {x: 146, y: 9}
+      - {x: 138, y: 6}
+      - {x: 134, y: 1}
+      - {x: 134, y: -3}
+      - {x: 142, y: -9}
+      - {x: 146, y: -9}
+      - {x: 155, y: 3}
+      - {x: 155, y: 4}
+      - {x: 152, y: 9}
+    - - {x: 171, y: 10}
+      - {x: 166, y: 8}
+      - {x: 166, y: -7}
+      - {x: 169, y: -9}
+      - {x: 180, y: -9}
+      - {x: 185, y: -7}
+      - {x: 185, y: 8}
+      - {x: 183, y: 10}
+    - - {x: 204, y: 4}
+      - {x: 203, y: 1}
+      - {x: 203, y: -2}
+      - {x: 206, y: -5}
+      - {x: 210, y: -5}
+      - {x: 214, y: -2}
+      - {x: 214, y: 1}
+      - {x: 212, y: 4}
+    - - {x: 235, y: -5}
+      - {x: 245, y: -5}
+      - {x: 245, y: 2}
+      - {x: 244, y: 5}
+      - {x: 235, y: 5}
+    - - {x: 97, y: 3}
+      - {x: 95, y: 1}
+      - {x: 95, y: -1}
+      - {x: 97, y: -3}
+      - {x: 127, y: -3}
+      - {x: 129, y: -1}
+      - {x: 129, y: 1}
+      - {x: 127, y: 3}
+    - - {x: 288, y: 3}
+      - {x: 286, y: 1}
+      - {x: 286, y: -1}
+      - {x: 288, y: -3}
+      - {x: 320, y: -3}
+      - {x: 322, y: -1}
+      - {x: 322, y: 1}
+      - {x: 320, y: 3}
+    - - {x: 193, y: 50}
+      - {x: 126, y: 50}
+      - {x: 125, y: 49}
+      - {x: 125, y: 36}
+      - {x: 34, y: 35}
+      - {x: 31, y: 33}
+      - {x: 31, y: 30}
+      - {x: 32, y: 27}
+      - {x: 65, y: 27}
+      - {x: 126, y: 29}
+      - {x: 126, y: 16}
+      - {x: 127, y: 14}
+      - {x: 192, y: 14}
+      - {x: 194, y: 15}
+      - {x: 194, y: 49}
+    - - {x: 320, y: 24}
+      - {x: 322, y: 26}
+      - {x: 322, y: 38}
+      - {x: 320, y: 40}
+      - {x: 290, y: 48}
+      - {x: 289, y: 50}
+      - {x: 224, y: 50}
+      - {x: 222, y: 49}
+      - {x: 222, y: 15}
+      - {x: 223, y: 14}
+      - {x: 288, y: 14}
+      - {x: 291, y: 15}
+      - {x: 291, y: 24}
+    - - {x: -224, y: 46}
+      - {x: -222, y: 48}
+      - {x: -222, y: 144}
+      - {x: -224, y: 146}
+      - {x: -244, y: 146}
+      - {x: -249, y: 145}
+      - {x: -250, y: 146}
+      - {x: -320, y: 146}
+      - {x: -322, y: 144}
+      - {x: -322, y: 48}
+      - {x: -320, y: 46}
+    - - {x: -158, y: 144}
+      - {x: -160, y: 146}
+      - {x: -192, y: 146}
+      - {x: -194, y: 144}
+      - {x: -194, y: 62}
+      - {x: -193, y: 59}
+      - {x: -194, y: 58}
+      - {x: -194, y: 48}
+      - {x: -192, y: 46}
+      - {x: -160, y: 46}
+      - {x: -158, y: 48}
+    - - {x: -31, y: 46}
+      - {x: -30, y: 48}
+      - {x: -30, y: 136}
+      - {x: -40, y: 146}
+      - {x: -128, y: 146}
+      - {x: -130, y: 144}
+      - {x: -130, y: 56}
+      - {x: -128, y: 53}
+      - {x: -113, y: 46}
+    - - {x: 24, y: 146}
+      - {x: 0, y: 146}
+      - {x: -2, y: 144}
+      - {x: -2, y: 55}
+      - {x: 0, y: 53}
+      - {x: 12, y: 46}
+      - {x: 33, y: 46}
+      - {x: 34, y: 47}
+      - {x: 34, y: 136}
+    - - {x: 46, y: 74}
+      - {x: 46, y: 54}
+      - {x: 114, y: 54}
+      - {x: 114, y: 74}
+    - - {x: 232, y: 73}
+      - {x: 232, y: 55}
+      - {x: 312, y: 55}
+      - {x: 312, y: 73}
+    - - {x: 136, y: 72}
+      - {x: 136, y: 56}
+      - {x: 216, y: 56}
+      - {x: 216, y: 72}
+    - - {x: 47, y: 108}
+      - {x: 46, y: 105}
+      - {x: 46, y: 87}
+      - {x: 50, y: 84}
+      - {x: 103, y: 84}
+      - {x: 112, y: 85}
+      - {x: 114, y: 89}
+      - {x: 114, y: 108}
+    - - {x: 138, y: 104}
+      - {x: 136, y: 102}
+      - {x: 136, y: 90}
+      - {x: 138, y: 88}
+      - {x: 214, y: 88}
+      - {x: 216, y: 90}
+      - {x: 216, y: 102}
+      - {x: 214, y: 104}
+    - - {x: 234, y: 103}
+      - {x: 232, y: 101}
+      - {x: 232, y: 91}
+      - {x: 234, y: 89}
+      - {x: 310, y: 89}
+      - {x: 312, y: 91}
+      - {x: 312, y: 101}
+      - {x: 310, y: 103}
+    - - {x: 109, y: 140}
+      - {x: 58, y: 140}
+      - {x: 47, y: 139}
+      - {x: 46, y: 133}
+      - {x: 46, y: 120}
+      - {x: 47, y: 116}
+      - {x: 111, y: 116}
+      - {x: 114, y: 120}
+      - {x: 114, y: 136}
+    - - {x: 138, y: 136}
+      - {x: 136, y: 134}
+      - {x: 136, y: 122}
+      - {x: 138, y: 120}
+      - {x: 214, y: 120}
+      - {x: 216, y: 122}
+      - {x: 216, y: 134}
+      - {x: 214, y: 136}
+    - - {x: 235, y: 136}
+      - {x: 233, y: 134}
+      - {x: 233, y: 122}
+      - {x: 235, y: 120}
+      - {x: 310, y: 120}
+      - {x: 312, y: 122}
+      - {x: 312, y: 134}
+      - {x: 310, y: 136}
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 1537655665
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      gui_paper_51: 237456156
+      gui_paper_53: -1426941838
+      gui_paper_5: 991416029
+      gui_paper_28: 1055299543
+      gui_paper_45: -1007483723
+      gui_paper_7: 253716251
+      gui_paper_24: -2045973784
+      gui_paper_3: 985593811
+      gui_paper_15: -1718968775
+      gui_paper_21: 116653160
+      gui_paper_14: 1073132398
+      gui_paper_57: -1444463065
+      gui_paper_19: 205541248
+      gui_paper_34: -519874439
+      gui_paper_10: -1404577668
+      gui_paper_29: 1187813673
+      gui_paper_59: 1015346927
+      gui_paper_11: -1387135263
+      gui_paper_33: 23511522
+      gui_paper_42: -1098668528
+      gui_paper_30: -1359837487
+      gui_paper_48: 1453840912
+      gui_paper_56: -1452333989
+      gui_paper_0: 560982405
+      gui_paper_37: 818791314
+      gui_paper_26: 1038869314
+      gui_paper_54: -417745875
+      gui_paper_22: -816607536
+      gui_paper_6: 1807201100
+      gui_paper_46: 333227102
+      gui_paper_39: -1284571027
+      gui_paper_16: 86698777
+      gui_paper_58: 1345646125
+      gui_paper_2: -1742883846
+      gui_paper_17: 1597018901
+      gui_paper_8: 1865215459
+      gui_paper_49: -709661407
+      gui_paper_40: -527468824
+      gui_paper_23: -1532883485
+      gui_paper_27: 1443797598
+      gui_paper_50: 1296926538
+      gui_paper_36: 366668370
+      gui_paper_18: 843821594
+      gui_paper_20: 1405831383
+      gui_paper_32: -2002069515
+      gui_paper_35: 197273464
+      gui_paper_13: -263767803
+      gui_paper_4: 1517751678
+      gui_paper_25: -635708088
+      gui_paper_12: 1030562747
+      gui_paper_52: 369222372
+      gui_paper_38: 500345526
+      gui_paper_44: 1864512414
+      gui_paper_55: 1376086484
+      gui_paper_9: 402306675
+      gui_paper_47: 1371074032
+      gui_paper_41: 797312483
+      gui_paper_31: 708344624
+      gui_paper_1: 641883682
+      gui_paper_43: -1118048811
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

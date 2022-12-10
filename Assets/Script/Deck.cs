@@ -28,13 +28,11 @@ public class Deck : MonoBehaviour
         
     }
 
-    public static (HashSet<Card>,List<Card>) StartingHandCards(int num)
+    public static (List<Card>,List<Card>) StartingHandCards(int num)
     {
         // initialize battle deck
-        foreach(Card a in GameData.Deck) 
-        {
-            BattleData.playerData.drawPile.Add(a);
-        }
+
+        BattleData.playerData.drawPile = GameData.Deck;
 
         List<Card> startingCards = new List<Card>();
         for (int i = 0; i < 4; ++i)
@@ -48,7 +46,7 @@ public class Deck : MonoBehaviour
     public static void RebuildDrawPile()
     {
         BattleData.playerData.drawPile = BattleData.playerData.discardPile;
-        BattleData.playerData.discardPile = new HashSet<Card>();
+        BattleData.playerData.discardPile = new List<Card>();
     }
 
     public static void Withdraw(Card card)

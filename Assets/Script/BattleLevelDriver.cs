@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class BattleLevelDriver : MonoBehaviour
 {
-    public BattleData battleData;
     //public UI uI;
     public bool Paused;
     public bool BattleOver;
 
     public static List<List<Card.InfoForActivate>> TimeLineSlots;
 
+    private void Start()
+    {
+        BeginABattleLevel(1);
+    }
     public void BeginABattleLevel(int ID)
     {
         BattleData.BattleLevelInit(ID);
@@ -51,8 +54,8 @@ public class BattleLevelDriver : MonoBehaviour
                 info.card.Activate(info);
                 if (info.owner_ID != 0)
                 {
-                    battleData.NewCard.Add(info.card.ID);
-                    BattleData.EnemyDataList[info.owner_ID].enemy.EnermyChooseACardToPlay(info.owner_ID);
+                    BattleData.NewCard.Add(info.card.ID);
+                    BattleData.EnemyDataList[info.owner_ID].obj.GetComponent<Enemy>().EnermyChooseACardToPlay(info.owner_ID);
 
                 }
             }

@@ -19,6 +19,9 @@ public class GameData : MonoBehaviour
     }
 
     //static List<Hardware> hardwares;
-
+    private void Start()
+    {
+        Deck = new List<Card>();
+    }
 
 }

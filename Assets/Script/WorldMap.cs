@@ -25,6 +25,7 @@ public class WorldMap : MonoBehaviour
         battleLevelDriver.BeginABattleLevel(id);
         battleLevelDriver.Paused = true;
         GameData.currentState = GameData.state.Battle;
+        //load scene
     }
 
 
