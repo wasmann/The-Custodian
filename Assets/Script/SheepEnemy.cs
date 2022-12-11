@@ -152,70 +152,87 @@ public class Sheep_Enemy : Enemy
                     SheepData.handCard[HeadButtCardIndex].Info.owner_ID = EnemyID;
                     SheepData.handCard[HeadButtCardIndex].Info.card = SheepData.handCard[HeadButtCardIndex];
                     SheepData.handCard[HeadButtCardIndex].Info.Selection = PlayerPosition;
-                    NewCardPlayed(data.playerData.handCard[HeadButtCardIndex].Info);
+                    NewCardPlayed(SheepData.handCard[HeadButtCardIndex].Info);
                     return;
                 }
                 // If we are more than 1 grid away but we have a movement card, then try to use it!
                 else if (HasWalkCardAtHand || HasRunTopCardAtHand || HasRunDownCardAtHand || HasRunLeftCardAtHand || HasRunRightCardAtHand)
                 {
-                    // If we are closer in the y coordinate and the player is roughly above us then use a run top card in that direction unless our y position is aligned with that of the player
-                    // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
-                    // our allignment.
-                    if ((DifferenceInYCoordinate < DifferenceInXCoordinate) && !(PlayerPosition.y == SelfPosition.y) && HasRunTopCardAtHand && (PlayerPosition.y < SelfPosition.y))
+                    // If we are closer in the y coordinate and the player is roughly above us then use a run top card in that direction!
+                    if ((DifferenceInYCoordinate < DifferenceInXCoordinate) && HasRunTopCardAtHand && (PlayerPosition.y < SelfPosition.y))
                     {
                         SheepData.handCard[RunTopCardIndex].Info.owner_ID = EnemyID;
                         SheepData.handCard[RunTopCardIndex].Info.card = SheepData.handCard[RunTopCardIndex];
-                        SheepData.handCard[RunTopCardIndex].Info.Selection = (0, 2);
+                        SheepData.handCard[RunTopCardIndex].Info.Selection = (0, -(DifferenceInYCoordinate - 1)); // Move 2 or 1 units to be right under the player (1 grid below)
                         NewCardPlayed(SheepData.handCard[RunTopCardIndex].Info);
                         return;
                     }
-                    // If we are closer in the y coordinate and the player is roughly below us then use a run down card in that direction unless our y position is aligned with that of the player
-                    // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
-                    // our allignment.
-                    else if ((DifferenceInYCoordinate < DifferenceInXCoordinate) && !(PlayerPosition.y == SelfPosition.y) && HasRunDownCardAtHand && (PlayerPosition.y > SelfPosition.y))
+                    // If we are closer in the y coordinate and the player is roughly below us then use a run down card in that direction!
+                    else if ((DifferenceInYCoordinate < DifferenceInXCoordinate) && HasRunDownCardAtHand && (PlayerPosition.y > SelfPosition.y))
                     {
-                        // CONTINUE, YOU MIGHT HAVE TO REWRITE / CHANGE ALL OF THE X AND Y CHECKS BECAUSE X IS HORIZONTAL WHILE Y IS VERTICAL
+                        SheepData.handCard[RunDownCardIndex].Info.owner_ID = EnemyID;
+                        SheepData.handCard[RunDownCardIndex].Info.card = SheepData.handCard[RunDownCardIndex];
+                        SheepData.handCard[RunDownCardIndex].Info.Selection = (0, DifferenceInYCoordinate - 1); // Move 2 or 1 units down to be right above the player (1 grid above)
+                        NewCardPlayed(SheepData.handCard[RunDownCardIndex].Info);
+                        return;
                     }
-                    // If we are closer in the x coordinate and the player is roughly to the right of us then use a run right card in that direction unless our x position is aligned with that of the player
-                    // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
-                    // our allignment.
-                    else if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && !(PlayerPosition.x == SelfPosition.x) && HasRunRightCardAtHand && (PlayerPosition.x > SelfPosition.x))
+                    // If we are closer in the x coordinate and the player is roughly to the right of us then use a run right card in that direction!
+                    else if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && HasRunRightCardAtHand && (PlayerPosition.x > SelfPosition.x))
                     {
-                        data.playerData.handCard[RunDownCardIndex].Info.direction = (0, PlayerPosition.y - SelfPosition.y);
-                        data.playerData.handCard[RunDownCardIndex].Info.owner_ID = EnemyID;
-                        data.playerData.handCard[RunDownCardIndex].Info.card = data.playerData.handCard[RunDownCardIndex];
-                        NewCardPlayed(data.playerData.handCard[RunDownCardIndex].Info);
+                        SheepData.handCard[RunRightCardIndex].Info.owner_ID = EnemyID;
+                        SheepData.handCard[RunRightCardIndex].Info.card = SheepData.handCard[RunRightCardIndex];
+                        SheepData.handCard[RunRightCardIndex].Info.Selection = (DifferenceInXCoordinate - 1, 0); // Move 2 or 1 units right to be exactly to left of the player (1 grid to the left)
+                        NewCardPlayed(SheepData.handCard[RunRightCardIndex].Info);
+                        return;
                     }
-                    // If we are closer in the x coordinate and the player is roughly to the left of us then use a run left card in that direction unless our x position is aligned with that of the player
-                    // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
-                    // our allignment.
-                    else if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && !(PlayerPosition.x == SelfPosition.x) && HasRunLeftCardAtHand && (PlayerPosition.x < SelfPosition.x))
+                    // If we are closer in the x coordinate and the player is roughly to the left of us then use a run left card in that direction!
+                    else if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && HasRunLeftCardAtHand && (PlayerPosition.x < SelfPosition.x))
                     {
-
+                        SheepData.handCard[RunLeftCardIndex].Info.owner_ID = EnemyID;
+                        SheepData.handCard[RunLeftCardIndex].Info.card = SheepData.handCard[RunLeftCardIndex];
+                        SheepData.handCard[RunLeftCardIndex].Info.Selection = (-(DifferenceInXCoordinate - 1), 0); // Move 2 or 1 units left to be exactly to right of the player (1 grid to the right)
+                        NewCardPlayed(SheepData.handCard[RunLeftCardIndex].Info);
+                        return;
                     }
                     // If the distance difference is the same in both coordinates, we have the run top card and the player is roughly above us,
                     // then move up.
                     else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunTopCardAtHand && (PlayerPosition.y < SelfPosition.y))
                     {
-
+                        SheepData.handCard[RunTopCardIndex].Info.owner_ID = EnemyID;
+                        SheepData.handCard[RunTopCardIndex].Info.card = SheepData.handCard[RunTopCardIndex];
+                        SheepData.handCard[RunTopCardIndex].Info.Selection = (0, -(DifferenceInYCoordinate - 1)); // Move 2 or 1 units up to be right under the player (1 grid below)
+                        NewCardPlayed(SheepData.handCard[RunTopCardIndex].Info);
+                        return;
                     }
                     // If the distance difference is the same in both coordinates, we have the run down card and the player is roughly below us,
                     // then move down.
                     else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunDownCardAtHand && (PlayerPosition.y > SelfPosition.y))
                     {
-
+                        SheepData.handCard[RunDownCardIndex].Info.owner_ID = EnemyID;
+                        SheepData.handCard[RunDownCardIndex].Info.card = SheepData.handCard[RunDownCardIndex];
+                        SheepData.handCard[RunDownCardIndex].Info.Selection = (0, DifferenceInYCoordinate - 1); // Move 2 or 1 units down to be right above the player (1 grid above)
+                        NewCardPlayed(SheepData.handCard[RunDownCardIndex].Info);
+                        return;
                     }
                     // If the distance difference is the same in both coordinates, we have the run right card and the player is roughly to the right of us,
                     // then move right.
                     else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunRightCardAtHand && (PlayerPosition.x > SelfPosition.x))
                     {
-
+                        SheepData.handCard[RunRightCardIndex].Info.owner_ID = EnemyID;
+                        SheepData.handCard[RunRightCardIndex].Info.card = SheepData.handCard[RunRightCardIndex];
+                        SheepData.handCard[RunRightCardIndex].Info.Selection = (DifferenceInXCoordinate - 1, 0); // Move 2 or 1 units right to be exactly to left of the player (1 grid to the left)
+                        NewCardPlayed(SheepData.handCard[RunRightCardIndex].Info);
+                        return;
                     }
                     // If the distance difference is the same in both coordinates, we have the run left card and the player is roughly to the left of us,
                     // then move left.
                     else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunLeftCardAtHand && (PlayerPosition.x < SelfPosition.x))
                     {
-
+                        SheepData.handCard[RunLeftCardIndex].Info.owner_ID = EnemyID;
+                        SheepData.handCard[RunLeftCardIndex].Info.card = SheepData.handCard[RunLeftCardIndex];
+                        SheepData.handCard[RunLeftCardIndex].Info.Selection = (-(DifferenceInXCoordinate - 1), 0); // Move 2 or 1 units left be exactly to right of the player (1 grid to the right)
+                        NewCardPlayed(SheepData.handCard[RunLeftCardIndex].Info);
+                        return;
                     }
                     // If we, however, don't have the run card we need, then play the walk card instead!
                     else 
@@ -223,42 +240,74 @@ public class Sheep_Enemy : Enemy
                         // If we are closer in the y coordinate and the player is roughly above us then walk upwards.
                         if (DifferenceInYCoordinate < DifferenceInXCoordinate && PlayerPosition.y < SelfPosition.y)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (0, -1); // Move one unit up
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If we are closer in the y coordinate and the player is roughly below us then walk downwards.
                         else if (DifferenceInYCoordinate < DifferenceInXCoordinate && PlayerPosition.y > SelfPosition.y)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (0, 1); // Move one unit down
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If we are closer in the x coordinate and the player is roughly to the right of us then walk towards right.
                         else if (DifferenceInXCoordinate < DifferenceInYCoordinate && PlayerPosition.x > SelfPosition.x)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (1, 0); // Move one unit right
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If we are closer in the x coordinate and the player is roughly to the left of us then walk towards left.
                         else if (DifferenceInXCoordinate < DifferenceInYCoordinate && PlayerPosition.x < SelfPosition.x)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (-1, 0); // Move one unit left
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If the distance difference is the same in both coordinates and the player is roughly above us then walk upwards.
                         else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.y < SelfPosition.y)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (0, -1); // Move one unit up
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If the distance difference is the same in both coordinates and the player is roughly below us then walk downwards.
                         else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.y > SelfPosition.y)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (0, 1); // Move one unit down
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If the distance difference is the same in both coordinates and the player is roughly to the right of us then walk towards right.
                         else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.x > SelfPosition.x)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (1, 0); // Move one unit right
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If the distance difference is the same in both coordinates and the player is roughly to the left of us then walk towards left.
                         else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.x < SelfPosition.x)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (-1, 0); // Move one unit left
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                     }       
                 }
@@ -271,6 +320,11 @@ public class Sheep_Enemy : Enemy
             else if (HasRushAttackCardAtHand)
             {
                 // If we only have the rush attack card, then play it!
+                SheepData.handCard[RushAttackCardIndex].Info.owner_ID = EnemyID;
+                SheepData.handCard[RushAttackCardIndex].Info.card = SheepData.handCard[RushAttackCardIndex];
+                SheepData.handCard[RushAttackCardIndex].Info.Selection = PlayerPosition;
+                NewCardPlayed(SheepData.handCard[RushAttackCardIndex].Info);
+                return;
             }
             else
             {
@@ -289,57 +343,81 @@ public class Sheep_Enemy : Enemy
                     // If we have both types of cards and the distance to get into range is greater then 1 grid, then use a run card.
                     if (DifferenceInXCoordinate >= 5 || DifferenceInYCoordinate >= 5)
                     {
-                        // If we are closer in the y coordinate and the player is roughly above us then use a run top card in that direction unless our y position is aligned with that of the player
-                        // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
-                        // our allignment.
-                        if ((DifferenceInYCoordinate < DifferenceInXCoordinate) && !(PlayerPosition.y == SelfPosition.y) && HasRunTopCardAtHand && (PlayerPosition.y < SelfPosition.y))
+                        // If we are closer in the y coordinate and the player is roughly above us then use a run top card in that direction!
+                        if ((DifferenceInYCoordinate < DifferenceInXCoordinate) && HasRunTopCardAtHand && (PlayerPosition.y < SelfPosition.y))
                         {
-
+                            SheepData.handCard[RunTopCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[RunTopCardIndex].Info.card = SheepData.handCard[RunTopCardIndex];
+                            SheepData.handCard[RunTopCardIndex].Info.Selection = (0, -3); // We want to get as closer as we can so we run the maximum distance up.
+                            NewCardPlayed(SheepData.handCard[RunTopCardIndex].Info);
+                            return;
                         }
-                        // If we are closer in the y coordinate and the player is roughly below us then use a run down card in that direction unless our y position is aligned with that of the player
-                        // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
-                        // our allignment.
-                        else if ((DifferenceInYCoordinate < DifferenceInXCoordinate) && !(PlayerPosition.y == SelfPosition.y) && HasRunDownCardAtHand && (PlayerPosition.y > SelfPosition.y))
+                        // If we are closer in the y coordinate and the player is roughly below us then use a run down card in that direction!
+                        else if ((DifferenceInYCoordinate < DifferenceInXCoordinate) && HasRunDownCardAtHand && (PlayerPosition.y > SelfPosition.y))
                         {
-
+                            SheepData.handCard[RunDownCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[RunDownCardIndex].Info.card = SheepData.handCard[RunDownCardIndex];
+                            SheepData.handCard[RunDownCardIndex].Info.Selection = (0, 3); // We want to get as closer as we can so we run the maximum distance down.
+                            NewCardPlayed(SheepData.handCard[RunDownCardIndex].Info);
+                            return;
                         }
-                        // If we are closer in the x coordinate and the player is roughly to the right of us then use a run right card in that direction unless our x position is aligned with that of the player
-                        // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
-                        // our allignment.
-                        else if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && !(PlayerPosition.x == SelfPosition.x) && HasRunRightCardAtHand && (PlayerPosition.x > SelfPosition.x))
+                        // If we are closer in the x coordinate and the player is roughly to the right of us then use a run right card in that direction!
+                        else if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && HasRunRightCardAtHand && (PlayerPosition.x > SelfPosition.x))
                         {
-
+                            SheepData.handCard[RunRightCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[RunRightCardIndex].Info.card = SheepData.handCard[RunRightCardIndex];
+                            SheepData.handCard[RunRightCardIndex].Info.Selection = (3, 0); // We want to get as closer as we can so we run the maximum distance to the right.
+                            NewCardPlayed(SheepData.handCard[RunRightCardIndex].Info);
+                            return;
                         }
-                        // If we are closer in the x coordinate and the player is roughly to the left of us then use a run left card in that direction unless our x position is aligned with that of the player
-                        // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
-                        // our allignment.
-                        else if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && !(PlayerPosition.x == SelfPosition.x) && HasRunLeftCardAtHand && (PlayerPosition.x < SelfPosition.x))
+                        // If we are closer in the x coordinate and the player is roughly to the left of us then use a run left card in that direction!
+                        else if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && HasRunLeftCardAtHand && (PlayerPosition.x < SelfPosition.x))
                         {
-
+                            SheepData.handCard[RunLeftCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[RunLeftCardIndex].Info.card = SheepData.handCard[RunLeftCardIndex];
+                            SheepData.handCard[RunLeftCardIndex].Info.Selection = (-3, 0); // We want to get as closer as we can so we run the maximum distance to the left.
+                            NewCardPlayed(SheepData.handCard[RunLeftCardIndex].Info);
+                            return;
                         }
                         // If the distance difference is the same in both coordinates, we have the run top card and the player is roughly above us,
                         // then move up.
                         else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunTopCardAtHand && (PlayerPosition.y < SelfPosition.y))
                         {
-
+                            SheepData.handCard[RunTopCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[RunTopCardIndex].Info.card = SheepData.handCard[RunTopCardIndex];
+                            SheepData.handCard[RunTopCardIndex].Info.Selection = (0, -3); // We want to get as closer as we can so we run the maximum distance up.
+                            NewCardPlayed(SheepData.handCard[RunTopCardIndex].Info);
+                            return;
                         }
                         // If the distance difference is the same in both coordinates, we have the run down card and the player is roughly below us,
                         // then move down.
                         else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunDownCardAtHand && (PlayerPosition.y > SelfPosition.y))
                         {
-
+                            SheepData.handCard[RunDownCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[RunDownCardIndex].Info.card = SheepData.handCard[RunDownCardIndex];
+                            SheepData.handCard[RunDownCardIndex].Info.Selection = (0, 3); // We want to get as closer as we can so we run the maximum distance down.
+                            NewCardPlayed(SheepData.handCard[RunDownCardIndex].Info);
+                            return;
                         }
                         // If the distance difference is the same in both coordinates, we have the run right card and the player is roughly to the right of us,
                         // then move right.
                         else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunRightCardAtHand && (PlayerPosition.x > SelfPosition.x))
                         {
-
+                            SheepData.handCard[RunRightCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[RunRightCardIndex].Info.card = SheepData.handCard[RunRightCardIndex];
+                            SheepData.handCard[RunRightCardIndex].Info.Selection = (3, 0); // We want to get as closer as we can so we run the maximum distance to the right.
+                            NewCardPlayed(SheepData.handCard[RunRightCardIndex].Info);
+                            return;
                         }
                         // If the distance difference is the same in both coordinates, we have the run left card and the player is roughly to the left of us,
                         // then move left.
                         else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunLeftCardAtHand && (PlayerPosition.x < SelfPosition.x))
                         {
-
+                            SheepData.handCard[RunLeftCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[RunLeftCardIndex].Info.card = SheepData.handCard[RunLeftCardIndex];
+                            SheepData.handCard[RunLeftCardIndex].Info.Selection = (-3, 0); // We want to get as closer as we can so we run the maximum distance to the left.
+                            NewCardPlayed(SheepData.handCard[RunLeftCardIndex].Info);
+                            return;
                         }
                         // If we, however, don't have the run card we need, then play the walk card instead!
                         else 
@@ -347,42 +425,74 @@ public class Sheep_Enemy : Enemy
                             // If we are closer in the y coordinate and the player is roughly above us then walk upwards.
                             if (DifferenceInYCoordinate < DifferenceInXCoordinate && PlayerPosition.y < SelfPosition.y)
                             {
-
+                                SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                                SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                                SheepData.handCard[WalkCardIndex].Info.Selection = (0, -1); // Move one unit up
+                                NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                                return;
                             }
                             // If we are closer in the y coordinate and the player is roughly below us then walk downwards.
                             else if (DifferenceInYCoordinate < DifferenceInXCoordinate && PlayerPosition.y > SelfPosition.y)
                             {
-
+                                SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                                SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                                SheepData.handCard[WalkCardIndex].Info.Selection = (0, 1); // Move one unit down
+                                NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                                return;
                             }
                             // If we are closer in the x coordinate and the player is roughly to the right of us then walk towards right.
                             else if (DifferenceInXCoordinate < DifferenceInYCoordinate && PlayerPosition.x > SelfPosition.x)
                             {
-
+                                SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                                SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                                SheepData.handCard[WalkCardIndex].Info.Selection = (1, 0); // Move one unit right
+                                NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                                return;
                             }
                             // If we are closer in the x coordinate and the player is roughly to the left of us then walk towards left.
                             else if (DifferenceInXCoordinate < DifferenceInYCoordinate && PlayerPosition.x < SelfPosition.x)
                             {
-
+                                SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                                SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                                SheepData.handCard[WalkCardIndex].Info.Selection = (-1, 0); // Move one unit left
+                                NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                                return;
                             }
                             // If the distance difference is the same in both coordinates and the player is roughly above us then walk upwards.
                             else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.y < SelfPosition.y)
                             {
-
+                                SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                                SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                                SheepData.handCard[WalkCardIndex].Info.Selection = (0, -1); // Move one unit up
+                                NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                                return;
                             }
                             // If the distance difference is the same in both coordinates and the player is roughly below us then walk downwards.
                             else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.y > SelfPosition.y)
                             {
-
+                                SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                                SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                                SheepData.handCard[WalkCardIndex].Info.Selection = (0, 1); // Move one unit down
+                                NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                                return;
                             }
                             // If the distance difference is the same in both coordinates and the player is roughly to the right of us then walk towards right.
                             else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.x > SelfPosition.x)
                             {
-
+                                SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                                SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                                SheepData.handCard[WalkCardIndex].Info.Selection = (1, 0); // Move one unit right
+                                NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                                return;
                             }
                             // If the distance difference is the same in both coordinates and the player is roughly to the left of us then walk towards left.
                             else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.x < SelfPosition.x)
                             {
-
+                                SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                                SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                                SheepData.handCard[WalkCardIndex].Info.Selection = (-1, 0); // Move one unit left
+                                NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                                return;
                             }
                         }
                     }
@@ -392,99 +502,155 @@ public class Sheep_Enemy : Enemy
                         // If we are closer in the y coordinate and the player is roughly above us then walk upwards.
                         if (DifferenceInYCoordinate < DifferenceInXCoordinate && PlayerPosition.y < SelfPosition.y)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (0, -1); // Move one unit up
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If we are closer in the y coordinate and the player is roughly below us then walk downwards.
                         else if (DifferenceInYCoordinate < DifferenceInXCoordinate && PlayerPosition.y > SelfPosition.y)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (0, 1); // Move one unit down
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If we are closer in the x coordinate and the player is roughly to the right of us then walk towards right.
                         else if (DifferenceInXCoordinate < DifferenceInYCoordinate && PlayerPosition.x > SelfPosition.x)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (1, 0); // Move one unit right
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If we are closer in the x coordinate and the player is roughly to the left of us then walk towards left.
                         else if (DifferenceInXCoordinate < DifferenceInYCoordinate && PlayerPosition.x < SelfPosition.x)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (-1, 0); // Move one unit left
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If the distance difference is the same in both coordinates and the player is roughly above us then walk upwards.
                         else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.y < SelfPosition.y)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (0, -1); // Move one unit up
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If the distance difference is the same in both coordinates and the player is roughly below us then walk downwards.
                         else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.y > SelfPosition.y)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (0, 1); // Move one unit down
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If the distance difference is the same in both coordinates and the player is roughly to the right of us then walk towards right.
                         else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.x > SelfPosition.x)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (1, 0); // Move one unit to the right
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;   
                         }
                         // If the distance difference is the same in both coordinates and the player is roughly to the left of us then walk towards left.
                         else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.x < SelfPosition.x)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (-1, 0); // Move one unit to the left
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                     }
                 }
                 // Otherwise, play whatever movement card we have at hand!
                 else
                 {
-                    // If we are closer in the y coordinate and the player is roughly above us then use a run top card in that direction unless our y position is aligned with that of the player
-                    // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
-                    // our allignment.
-                    if ((DifferenceInYCoordinate < DifferenceInXCoordinate) && !(PlayerPosition.y == SelfPosition.y) && HasRunTopCardAtHand && (PlayerPosition.y < SelfPosition.y))
+                    // If we are closer in the y coordinate and the player is roughly above us then use a run top card in that direction!
+                    if ((DifferenceInYCoordinate < DifferenceInXCoordinate) && HasRunTopCardAtHand && (PlayerPosition.y < SelfPosition.y))
                     {
-
+                        SheepData.handCard[RunTopCardIndex].Info.owner_ID = EnemyID;
+                        SheepData.handCard[RunTopCardIndex].Info.card = SheepData.handCard[RunTopCardIndex];
+                        SheepData.handCard[RunTopCardIndex].Info.Selection = (0, -3); // We want to get as closer as we can so we run the maximum distance up.
+                        NewCardPlayed(SheepData.handCard[RunTopCardIndex].Info);
+                        return;
                     }
-                    // If we are closer in the y coordinate and the player is roughly below us then use a run down card in that direction unless our y position is aligned with that of the player
-                    // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
-                    // our allignment.
-                    else if ((DifferenceInYCoordinate < DifferenceInXCoordinate) && !(PlayerPosition.y == SelfPosition.y) && HasRunDownCardAtHand && (PlayerPosition.y > SelfPosition.y))
+                    // If we are closer in the y coordinate and the player is roughly below us then use a run down card in that direction!
+                    else if ((DifferenceInYCoordinate < DifferenceInXCoordinate) && HasRunDownCardAtHand && (PlayerPosition.y > SelfPosition.y))
                     {
-
+                        SheepData.handCard[RunDownCardIndex].Info.owner_ID = EnemyID;
+                        SheepData.handCard[RunDownCardIndex].Info.card = SheepData.handCard[RunDownCardIndex];
+                        SheepData.handCard[RunDownCardIndex].Info.Selection = (0, 3); // We want to get as closer as we can so we run the maximum distance down.
+                        NewCardPlayed(SheepData.handCard[RunDownCardIndex].Info);
+                        return;
                     }
-                    // If we are closer in the x coordinate and the player is roughly to the right of us then use a run right card in that direction unless our x position is aligned with that of the player
-                    // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
-                    // our allignment.
-                    else if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && !(PlayerPosition.x == SelfPosition.x) && HasRunRightCardAtHand && (PlayerPosition.x > SelfPosition.x))
+                    // If we are closer in the x coordinate and the player is roughly to the right of us then use a run right card in that direction!
+                    else if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && HasRunRightCardAtHand && (PlayerPosition.x > SelfPosition.x))
                     {
-
+                        SheepData.handCard[RunRightCardIndex].Info.owner_ID = EnemyID;
+                        SheepData.handCard[RunRightCardIndex].Info.card = SheepData.handCard[RunRightCardIndex];
+                        SheepData.handCard[RunRightCardIndex].Info.Selection = (3, 0); // We want to get as closer as we can so we run the maximum distance to the right.
+                        NewCardPlayed(SheepData.handCard[RunRightCardIndex].Info);
+                        return;
                     }
-                    // If we are closer in the x coordinate and the player is roughly to the left of us then use a run left card in that direction unless our x position is aligned with that of the player
-                    // because once we align an axis, the goal is to just get closer in the opposite axis and get in range to attack. We don't want to destroy
-                    // our allignment.
-                    else if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && !(PlayerPosition.x == SelfPosition.x) && HasRunLeftCardAtHand && (PlayerPosition.x < SelfPosition.x))
+                    // If we are closer in the x coordinate and the player is roughly to the left of us then use a run left card in that direction!
+                    else if ((DifferenceInXCoordinate < DifferenceInYCoordinate) && HasRunLeftCardAtHand && (PlayerPosition.x < SelfPosition.x))
                     {
-
+                        SheepData.handCard[RunLeftCardIndex].Info.owner_ID = EnemyID;
+                        SheepData.handCard[RunLeftCardIndex].Info.card = SheepData.handCard[RunLeftCardIndex];
+                        SheepData.handCard[RunLeftCardIndex].Info.Selection = (-3, 0); // We want to get as closer as we can so we run the maximum distance to the left.
+                        NewCardPlayed(SheepData.handCard[RunLeftCardIndex].Info);
+                        return;
                     }
                     // If the distance difference is the same in both coordinates, we have the run top card and the player is roughly above us,
                     // then move up.
                     else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunTopCardAtHand && (PlayerPosition.y < SelfPosition.y))
                     {
-
+                        SheepData.handCard[RunTopCardIndex].Info.owner_ID = EnemyID;
+                        SheepData.handCard[RunTopCardIndex].Info.card = SheepData.handCard[RunTopCardIndex];
+                        SheepData.handCard[RunTopCardIndex].Info.Selection = (0, -3); // We want to get as closer as we can so we run the maximum distance up.
+                        NewCardPlayed(SheepData.handCard[RunTopCardIndex].Info);
+                        return;
                     }
                     // If the distance difference is the same in both coordinates, we have the run down card and the player is roughly below us,
                     // then move down.
                     else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunDownCardAtHand && (PlayerPosition.y > SelfPosition.y))
                     {
-
+                        SheepData.handCard[RunDownCardIndex].Info.owner_ID = EnemyID;
+                        SheepData.handCard[RunDownCardIndex].Info.card = SheepData.handCard[RunDownCardIndex];
+                        SheepData.handCard[RunDownCardIndex].Info.Selection = (0, 3); // We want to get as closer as we can so we run the maximum distance down.
+                        NewCardPlayed(SheepData.handCard[RunDownCardIndex].Info);
+                        return;
                     }
                     // If the distance difference is the same in both coordinates, we have the run right card and the player is roughly to the right of us,
                     // then move right.
                     else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunRightCardAtHand && (PlayerPosition.x > SelfPosition.x))
                     {
-
+                        SheepData.handCard[RunRightCardIndex].Info.owner_ID = EnemyID;
+                        SheepData.handCard[RunRightCardIndex].Info.card = SheepData.handCard[RunRightCardIndex];
+                        SheepData.handCard[RunRightCardIndex].Info.Selection = (3, 0); // We want to get as closer as we can so we run the maximum distance to the right.
+                        NewCardPlayed(SheepData.handCard[RunRightCardIndex].Info);
+                        return;
                     }
                     // If the distance difference is the same in both coordinates, we have the run left card and the player is roughly to the left of us,
                     // move left.
                     else if (DifferenceInXCoordinate == DifferenceInYCoordinate && HasRunLeftCardAtHand && (PlayerPosition.x < SelfPosition.x))
                     {
-
+                        SheepData.handCard[RunLeftCardIndex].Info.owner_ID = EnemyID;
+                        SheepData.handCard[RunLeftCardIndex].Info.card = SheepData.handCard[RunLeftCardIndex];
+                        SheepData.handCard[RunLeftCardIndex].Info.Selection = (-3, 0); // We want to get as closer as we can so we run the maximum distance to the left.
+                        NewCardPlayed(SheepData.handCard[RunLeftCardIndex].Info);
+                        return;
                     }
                     // If we, however, don't have the run card we need, then play the walk card instead!
                     else 
@@ -492,42 +658,74 @@ public class Sheep_Enemy : Enemy
                         // If we are closer in the y coordinate and the player is roughly above us then walk upwards.
                         if (DifferenceInYCoordinate < DifferenceInXCoordinate && PlayerPosition.y < SelfPosition.y)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (0, -1); // Move one unit up
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If we are closer in the y coordinate and the player is roughly below us then walk downwards.
                         else if (DifferenceInYCoordinate < DifferenceInXCoordinate && PlayerPosition.y > SelfPosition.y)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (0, 1); // Move one unit down
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If we are closer in the x coordinate and the player is roughly to the right of us then walk towards right.
                         else if (DifferenceInXCoordinate < DifferenceInYCoordinate && PlayerPosition.x > SelfPosition.x)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (1, 0); // Move one unit to the right
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If we are closer in the x coordinate and the player is roughly to the left of us then walk towards left.
                         else if (DifferenceInXCoordinate < DifferenceInYCoordinate && PlayerPosition.x < SelfPosition.x)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (-1, 0); // Move one unit to the left
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If the distance difference is the same in both coordinates and the player is roughly above us then walk upwards.
                         else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.y < SelfPosition.y)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (0, -1); // Move one unit up
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If the distance difference is the same in both coordinates and the player is roughly below us then walk downwards.
                         else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.y > SelfPosition.y)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (0, 1); // Move one unit down
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If the distance difference is the same in both coordinates and the player is roughly to the right of us then walk towards right.
                         else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.x > SelfPosition.x)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (1, 0); // Move one unit right
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                         // If the distance difference is the same in both coordinates and the player is roughly to the left of us then walk towards left.
                         else if (DifferenceInXCoordinate == DifferenceInYCoordinate && PlayerPosition.x < SelfPosition.x)
                         {
-
+                            SheepData.handCard[WalkCardIndex].Info.owner_ID = EnemyID;
+                            SheepData.handCard[WalkCardIndex].Info.card = SheepData.handCard[WalkCardIndex];
+                            SheepData.handCard[WalkCardIndex].Info.Selection = (-1, 0); // Move one unit left
+                            NewCardPlayed(SheepData.handCard[WalkCardIndex].Info);
+                            return;
                         }
                     }
                 }
@@ -536,7 +734,6 @@ public class Sheep_Enemy : Enemy
             else
             {
                 // Discard a non movement card at hand!
-                DrawCard()
             }
         }
 
