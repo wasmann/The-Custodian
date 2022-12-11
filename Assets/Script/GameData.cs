@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class GameData : MonoBehaviour
 {
-    public static int health;
+    public static int health=10;
     public static List<Card> Deck;
-    public static int Energy;
+
+    public static int Energy=5;
     public static int worldLevelID;//the level ID on the world map
     public static int MaxCardsInHand;
 
@@ -19,9 +20,14 @@ public class GameData : MonoBehaviour
     }
 
     //static List<Hardware> hardwares;
-    private void Start()
+    private void Awake()
     {
+
         Deck = new List<Card>();
+        Deck.Add(GameObject.Instantiate(GameObject.Find("CardBank/Headbutt")).GetComponent<Headbutt>());
+        Deck.Add(GameObject.Instantiate(GameObject.Find("CardBank/Headbutt")).GetComponent<Headbutt>());
+        Deck.Add(GameObject.Instantiate(GameObject.Find("CardBank/Headbutt")).GetComponent<Headbutt>());
+        Deck.Add(GameObject.Instantiate(GameObject.Find("CardBank/Headbutt")).GetComponent<Headbutt>());
     }
 
 }

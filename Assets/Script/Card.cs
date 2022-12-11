@@ -71,4 +71,5 @@ public abstract class Card : MonoBehaviour
     {
         //Implement in UI
     }
+
 }

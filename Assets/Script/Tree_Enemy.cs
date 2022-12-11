@@ -5,10 +5,10 @@ using UnityEngine;
 public class Tree_Enemy : Enemy
 {
     public override string EnemyName { get { return "Tree"; } }
+
+    public List<Card> deck;
     public override List<Card> Deck {
         get {
-            List<Card> deck = new List<Card>();
-            deck.Add(new Photovoltaics_Card());
             return deck;
         }
     }
@@ -23,6 +23,8 @@ public class Tree_Enemy : Enemy
     {
         Card.InfoForActivate info = new Card.InfoForActivate();
         info.owner_ID = EnemyID;
+        info.card = deck[0];
+        BattleLevelDriver.NewCardPlayed(info);
     }
 
 }

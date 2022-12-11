@@ -97,3 +97,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ddb91a35039a4c4eb4a98641cb6c56a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deck:
+  - {fileID: 587181085401064015, guid: c6a01f799d35828479b4bb10fce7f526, type: 3}

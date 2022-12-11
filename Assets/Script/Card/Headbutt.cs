@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Headbutt_Card : Card
+public class Headbutt : Card
 {   
     public override string Name { get { return "Headbutt"; } }
     public override Rarity rarity { get { return Rarity.basic; } }

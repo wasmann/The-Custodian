@@ -15,33 +15,16 @@ public class Deck : MonoBehaviour
 
     public static void DrawCard()
     {
-        //TODO drawcard
         if(BattleData.playerData.drawPile.Count == 0)
         {
             RebuildDrawPile();
         }
 
-        Card card = BattleData.playerData.drawPile.First();
+        Card card = BattleData.playerData.drawPile[0];
         BattleData.playerData.drawPile.Remove(card);
-        BattleData.playerData.discardPile.Add(card);
+        BattleData.playerData.handCard.Add(card);
         UI.UpdateHandCard();
-        
     }
-
-    public static (List<Card>,List<Card>) StartingHandCards(int num)
-    {
-        // initialize battle deck
-
-        BattleData.playerData.drawPile = GameData.Deck;
-
-        List<Card> startingCards = new List<Card>();
-        for (int i = 0; i < 4; ++i)
-        {
-            DrawCard();
-        }
-        return (BattleData.playerData.drawPile, startingCards); 
-    }
-
 
     public static void RebuildDrawPile()
     {

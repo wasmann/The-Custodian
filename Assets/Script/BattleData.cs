@@ -10,6 +10,7 @@ public class BattleData : MonoBehaviour
 
     public static Card CardReadyToPlay;
     //public n* m Matrix environmentData;
+    public static List<Card> NewCard; //for duplication
 
     public Deck deck;
     
@@ -37,10 +38,11 @@ public class BattleData : MonoBehaviour
         public List<Card> discardPile;
         public List<Card> drawPile;
     }
-    public static List<int> NewCard; //for duplication
+    
 
     public static void BattleLevelInit(int battleLevelID)
     {
+        NewCard = new List<Card>();
         BattleLevelID = battleLevelID;
         LoadEnvironmentData();
         LoadEnermyData();
@@ -50,13 +52,15 @@ public class BattleData : MonoBehaviour
         
     }
     public static void LoadEnermyData(){
+        EnemyDataList = new Dictionary<int,EnemyData>();
         //use streamreader to load data. but for test ,just load tree
         EnemyData tree = new EnemyData();
         tree.obj= GameObject.Find("Tree");
         tree.position=new Vector2(9,9);
         tree.handCard = tree.obj.GetComponent<Tree_Enemy>().Deck;
+        tree.currentHealth=tree.obj.GetComponent<Tree_Enemy>().Health;
         tree.discardPile = new List<Card>();
-
+        EnemyDataList.Add(1,tree);
 
     } 
     public static void LoadPlayerData(){
@@ -64,11 +68,22 @@ public class BattleData : MonoBehaviour
         playerData.maxEnergy = GameData.Energy;
         playerData.currentHealth = playerData.maxHealth;
         playerData.currentEnergy = playerData.maxEnergy;
-        playerData.drawPile= new List<Card>();
+        playerData.drawPile = GameData.Deck;
         playerData.handCard= new List<Card>();
-        (playerData.drawPile,playerData.handCard)= Deck.StartingHandCards(4);
         playerData.discardPile = new List<Card>();
-    } 
+        StartingHandCards(3);
+        
+    }
+
+    public static void StartingHandCards(int num)
+    {
+        for(int i = 0; i < num; i++)
+        {
+            int randomNum = Random.Range(0, playerData.drawPile.Count);
+            playerData.handCard.Add(playerData.drawPile[randomNum]);
+            playerData.drawPile.RemoveAt(randomNum);      
+        }
+    }
 
     public bool CheckWinCondition()
     {

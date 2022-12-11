@@ -24,71 +24,107 @@ public class UI : MonoBehaviour
     const float TIME_LINE_SPEED = 1.0f;
     static string PREFAB_PATH = "Prefab/Card/";
 
-    static Vector3[,] pos;
-    static Vector3[] handcardPos;
-    static GameObject[,] timelineObj;
+    public static List<Vector3> HandCardPos;
+    public static Vector3[] TimeLinePos_Enemy=new Vector3[10];
+    public static Vector3[] TimeLinePos_Player = new Vector3[10];
+
+    static List<GameObject> timelineObj;
 
     static Vector3 mouseWorldPos;
     
     public static void LoadBattleBegin()
     {
-
+        timeline = GameObject.Find("TimeLine");
         custodian = GameObject.Find("Custodian");
-        var sliders = Object.FindObjectsOfType<Slider>();
-        health = sliders[0];
-        energy = sliders[1];
+        //var sliders = Object.FindObjectsOfType<Slider>();
+        //health = sliders[0];
+        //energy = sliders[1];
 
-        health.maxValue = BattleData.playerData.maxHealth;
-        energy.maxValue = BattleData.playerData.maxEnergy;
+        //health.maxValue = BattleData.playerData.maxHealth;
+        //energy.maxValue = BattleData.playerData.maxEnergy;
+
+        timelineObj = new List<GameObject>();
 
         UpdatePlayerData();
 
         //UpdateEnemyData();
 
-        InitPos();
+        InitTimeLinePos();
         InitHandcardPos();
 
-        timeline = GameObject.Find("TimeLine");
+        
 
         UpdateHandCard();
 
 
     }
-
-    public static void UpdateHandCard()// After drawing a new card, reorgnize the hand card(align right) and move a card from deck to hand at the most left side.
-    {
-        DestroyHandcard();
-
-        for (int i = 0; i < BattleData.playerData.handCard.Count; i++)
-        {
-            GameObject card = GameObject.Instantiate(Resources.Load(PREFAB_PATH + BattleData.playerData.handCard[i].Name) as GameObject,
-              handcardPos[i], Quaternion.identity);
-        }
-    }
-
     public static void MoveTimeLine()
     {
-        //move one timeslot
-        for (int i = 0; i < 2; ++i)
+        for(int i=0;i< timelineObj.Count; i++)
         {
-            for (int j = 0; j < TIME_LINE_LENGTH - 1; ++j)
+            if (timelineObj[i].transform.localPosition.x == TimeLinePos_Enemy[0].x && timelineObj[i].transform.localPosition.x == TimeLinePos_Player[0].x)
             {
-
-                if (j == TIME_LINE_LENGTH)
-                {
-                    Destroy(timelineObj[i, j].gameObject);
-
-                }
-                Destroy(timelineObj[i, j].gameObject);
-                timelineObj[i, j] = timelineObj[i, j + 1];
-                timelineObj[i, j] = Instantiate(timelineObj[i, j], timeline.transform.position + pos[i, j], Quaternion.identity);
-
-                if (j == 3)
-                    timelineObj[i, j].SetActive(true);
+                Destroy(timelineObj[i]);
+                timelineObj.RemoveAt(i);
+                continue;
+            }
+            timelineObj[i].transform.localPosition = timelineObj[i].transform.localPosition + new Vector3(-150f, 0,0);
+            if (timelineObj[i].transform.localPosition.x == TimeLinePos_Enemy[3].x)
+            {
+                timelineObj[i].SetActive(true);
             }
         }
-
     }
+    //public static void MoveTimeLine()
+    //{
+    //    //move one timeslot
+    //    for (int i = 0; i < 2; ++i)
+    //    {
+    //        for (int j = 0; j < TIME_LINE_LENGTH - 1; ++j)
+    //        {
+
+    //            if (j == TIME_LINE_LENGTH)
+    //            {
+    //                Destroy(timelineObj[i, j].gameObject);
+
+    //            }
+    //            Destroy(timelineObj[i, j].gameObject);
+    //            timelineObj[i, j] = timelineObj[i, j + 1];
+    //            timelineObj[i, j] = Instantiate(timelineObj[i, j], timeline.transform.position + pos[i, j], Quaternion.identity);
+
+    //            if (j == 3)
+    //                timelineObj[i, j].SetActive(true);
+    //        }
+    //    }
+
+    //public static void MoveTimeLine()
+    //{
+    //    for (int j = 0; j < TIME_LINE_LENGTH - 1; ++j)
+    //    {
+    //        if (j == TIME_LINE_LENGTH && j == 0)
+    //        {
+    //            Destroy(timelineObj[0, j].gameObject);
+    //            continue;
+    //        }
+    //        if (timelineObj[0, j + 1] != null)
+    //            timelineObj[0, j] = timelineObj[0, j + 1];
+    //        timelineObj[0, j].transform.position = TimeLinePos_Enemy[j];
+    //        if (j == 2)
+    //            timelineObj[0, j].SetActive(true);
+    //    }
+
+    //    for (int j = 0; j < TIME_LINE_LENGTH - 1; ++j)
+    //    {
+    //        if (j == TIME_LINE_LENGTH && j == 0)
+    //        {
+    //            Destroy(timelineObj[0, j].gameObject);
+    //            continue;
+    //        }
+    //        timelineObj[1, j] = timelineObj[1, j + 1];
+    //        timelineObj[1, j].transform.position = TimeLinePos_Player[j];
+    //    }
+    //}
+
 
 
     /*public static IEnumerator ShowNotation(List<GameObject> notion, Card.InfoForActivate info)
@@ -114,33 +150,64 @@ public class UI : MonoBehaviour
         yield return null;
     }*/
 
+    //public static void UpdateTimeLine(List<List<Card.InfoForActivate>> timeLineSlots)
+    //{// problem here , timeline OBJ is 2*10*N
+    //    Debug.Log("add card on timeline");
+    //    for (int i = 0; i < timeLineSlots.Count; ++i)
+    //    {
+    //        if (timeLineSlots[i] != null)
+    //        {
+    //            for (int j = 0; j < timeLineSlots[i].Count; ++j)
+    //            {
+    //                if (timeLineSlots[i][j].owner_ID == 0)
+    //                {
+    //                    timelineObj[1, i] = GameObject.Instantiate(Resources.Load("Prefab/CardOnTimeLine/" + timeLineSlots[i][j].card.Name) as GameObject, TimeLinePos_Player[i], Quaternion.identity);
+
+    //                }
+    //                else if (i <= 3)
+    //                { 
+    //                    //timelineObj[0, i] = Instantiate(Resources.Load("Prefab/CardOnTimeLine/" + timeLineSlots[i][j].card.Name) as GameObject, TimeLinePos_Enemy[i], Quaternion.identity);
+    //                    timelineObj[0, i] = GameObject.Instantiate(GameObject.Find("CardOnTimeLine/" + timeLineSlots[i][j].card.Name));
+    //                    timelineObj[0, i].transform.position = TimeLinePos_Enemy[i];
+    //                }
+    //                else
+    //                {
+    //                    timelineObj[0, i] = GameObject.Instantiate(Resources.Load("Prefab/CardOnTimeLine/" + timeLineSlots[i][j].card.Name) as GameObject, TimeLinePos_Enemy[i], Quaternion.identity);
+    //                    timelineObj[0, i].SetActive(false);
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
+
+
     public static void UpdateTimeLine(List<List<Card.InfoForActivate>> timeLineSlots)
     {
-        for (int i = 0; i < timeLineSlots.Count; ++i)
-        {
-            for (int j = 0; j < timeLineSlots[i].Count; ++j)
-            {
-                if (timeLineSlots[i][j].owner_ID == 0)
+        for (int i = 0; i < timeLineSlots.Count; i++) {
+            for (int j = 0; j < timeLineSlots[i].Count; j++) {
+                GameObject obj= Instantiate(Resources.Load("Prefab/CardOnTimeLine/" + timeLineSlots[i][j].card.Name) as GameObject);
+                obj.transform.SetParent(GameObject.Find("Canvas/TimeLine").transform);
+                obj.transform.localScale = new Vector3(20,20,0);
+                if(timeLineSlots[i][j].owner_ID == 0)
                 {
-                    timelineObj[1, i] = GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].card.Name) as GameObject,
-            timeline.transform.position + pos[1, i], Quaternion.identity);
-
+                    obj.transform.localPosition = TimeLinePos_Player[i];
                 }
-                else if (i <= 3)
+                else if (timeLineSlots[i][j].card.Speed <= 3)
                 {
-                    timelineObj[0, i] = GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].card.Name) as GameObject,
-            timeline.transform.position + pos[0, i], Quaternion.identity);
+                    obj.transform.localPosition = TimeLinePos_Enemy[i];
                 }
                 else
                 {
-                    timelineObj[0, i] = GameObject.Instantiate(Resources.Load(timeLineSlots[i][j].card.Name) as GameObject,
-            timeline.transform.position + pos[0, i], Quaternion.identity);
-                    timelineObj[0, i].SetActive(false);
+                    obj.transform.localPosition = TimeLinePos_Enemy[i];
+                    obj.SetActive(false);
                 }
-
+                timelineObj.Add(obj);
+               
             }
         }
     }
+
+
 
     public static void ShowDuplicationWin()
     {
@@ -149,13 +216,14 @@ public class UI : MonoBehaviour
 
     public static void UpdatePlayerData()
     {
-        health.value = BattleData.playerData.currentHealth;
-        energy.value = BattleData.playerData.currentEnergy;
+        //health.value = BattleData.playerData.currentHealth;
+        //energy.value = BattleData.playerData.currentEnergy;
         custodianPos = BattleData.playerData.position;
+        //TODO : change the player sprite to correct pos
 
     }
 
-    public void loadEnemyGameObject(List<string> enemyNames)
+    public static void loadEnemyGameObject(List<string> enemyNames)
     {
         for (int i = 0; i < enemyNames.Count; i++)
         {
@@ -169,64 +237,44 @@ public class UI : MonoBehaviour
 
     }
 
-    private static void InitPos()
+    private static void InitTimeLinePos()
     {
-
-        
-        timelineObj = new GameObject[2, TIME_LINE_LENGTH];
-
-        for (int i = 0; i < 2; ++i)
+        for (int i = 0; i < 10; i++)
         {
-            for (int j = 0; j < TIME_LINE_LENGTH; ++j)
-            {
-                timelineObj[i, j] = new GameObject();
-            }
+            TimeLinePos_Enemy[i] = new Vector3(150*i,-110,0);
         }
-
-        pos = new Vector3[2, TIME_LINE_LENGTH];
-        //one line under timeline for enemy, one line above for player, one line for duplication
-
-        float offsite = CARD_WIDTH * TIME_LINE_LENGTH / 2;
-        float heightOffsite = CARD_HEIGHT;
-
-        for (int i = 0; i < 2; ++i)
+        for (int i = 0; i < 10; i++)
         {
-            if (i != 0)
-            {
-                for (int j = 0; j < TIME_LINE_LENGTH; ++j)
-                {
-                    pos[i, j] = new Vector3(j * CARD_WIDTH - offsite, i * CARD_HEIGHT - heightOffsite + TIME_LINE_HEIGHT, 0);
-                }
-            }
-            else
-            {
-                for (int j = 0; j < TIME_LINE_LENGTH; ++j)
-                {
-                    pos[i, j] = new Vector3(j * CARD_WIDTH - offsite, i * CARD_HEIGHT - heightOffsite, 0);
-                }
-            }
-
+            TimeLinePos_Player[i] = new Vector3(150 * i, -230, 0);
         }
     }
-
+    public static void UpdateHandCard()
+    {
+        DestroyHandcard();
+        for (int i = 0; i < BattleData.playerData.handCard.Count; i++)
+        {
+            BattleData.playerData.handCard[i].gameObject.SetActive(true);
+            BattleData.playerData.handCard[i].transform.SetParent(GameObject.Find("Canvas/HandCard").transform);
+            BattleData.playerData.handCard[i].transform.localPosition = HandCardPos[i];
+            BattleData.playerData.handCard[i].transform.localScale = new Vector3(20,20,1);
+        }
+    }
     private static void InitHandcardPos()
     {
-        handcardPos = new Vector3[4];
-        handcardPos[0] = new Vector3(1, 0.7f, 100);
-        handcardPos[1] = new Vector3(1 - 2 * CARD_WIDTH, 0.7f, 100);
-        handcardPos[2] = new Vector3(1 - 4 * CARD_WIDTH, 0.7f, 100);
-        handcardPos[3] = new Vector3(1 - 6 * CARD_WIDTH, 0.7f, 100);
+        int handcardNum = BattleData.playerData.handCard.Count;
+        HandCardPos = new List<Vector3>();
+        for (int i = 0; i < handcardNum; i++)
+        {
+            HandCardPos.Add(new Vector3(400/(handcardNum-1)*i-200, 0f,0));
+        }
     }
 
     public static void DestroyHandcard()
     {
+        //just move the gameobjects away to somewhere;
         for (int i = 0; i < BattleData.playerData.handCard.Count; i++)
         {
-            Destroy(BattleData.playerData.handCard[i].gameObject);
+            BattleData.playerData.handCard[i].gameObject.SetActive(false);
         }
-        //Destroy(card1.gameObject);
-        //Destroy(card2.gameObject);
-        //Destroy(card3.gameObject);
-        //Destroy(card4.gameObject);
     }
 }

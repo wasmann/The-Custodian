@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Photovoltaics_Card : Card
+public class Photovoltaics : Card
 {
 
     public override string Name { get { return "Photovoltaics"; } }
@@ -29,8 +29,7 @@ public class Photovoltaics_Card : Card
             BattleData.EnemyData newData = BattleData.EnemyDataList[Info.owner_ID];
             newData.currentHealth +=2;
             BattleData.EnemyDataList[Info.owner_ID] = newData;
+            Debug.Log(newData.currentHealth);
         }
-
-
     }
 }
