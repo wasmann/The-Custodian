@@ -22,7 +22,7 @@ public class UI : MonoBehaviour
     const float CARD_WIDTH = 1;
     const float TIME_LINE_HEIGHT = 0.5f;
     const float TIME_LINE_SPEED = 1.0f;
-    static string PREFAB_PATH = "Prefab/Card/";
+    //static string PREFAB_PATH = "Prefab/Card/";
 
     public static List<Vector3> HandCardPos;
     public static Vector3[] TimeLinePos_Enemy=new Vector3[10];
@@ -36,12 +36,12 @@ public class UI : MonoBehaviour
     {
         timeline = GameObject.Find("TimeLine");
         custodian = GameObject.Find("Custodian");
-        //var sliders = Object.FindObjectsOfType<Slider>();
-        //health = sliders[0];
-        //energy = sliders[1];
+        var sliders = Object.FindObjectsOfType<Slider>();
+        health = sliders[0];
+        energy = sliders[1];
 
-        //health.maxValue = BattleData.playerData.maxHealth;
-        //energy.maxValue = BattleData.playerData.maxEnergy;
+        health.maxValue = BattleData.playerData.maxHealth;
+        energy.maxValue = BattleData.playerData.maxEnergy;
 
         timelineObj = new List<GameObject>();
 
@@ -216,8 +216,9 @@ public class UI : MonoBehaviour
 
     public static void UpdatePlayerData()
     {
-        //health.value = BattleData.playerData.currentHealth;
-        //energy.value = BattleData.playerData.currentEnergy;
+
+        health.value = BattleData.playerData.currentHealth;
+        energy.value = BattleData.playerData.currentEnergy;
         custodianPos = BattleData.playerData.position;
         //TODO : change the player sprite to correct pos
 
