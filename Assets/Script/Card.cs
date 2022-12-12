@@ -72,4 +72,10 @@ public abstract class Card : MonoBehaviour
         //Implement in UI
     }
 
+    void OnMouseDown()
+    {
+
+        this.Play();
+    }
+
 }
