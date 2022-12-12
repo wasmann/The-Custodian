@@ -373,6 +373,7 @@ GameObject:
   - component: {fileID: 169342391}
   - component: {fileID: 169342390}
   - component: {fileID: 169342393}
+  - component: {fileID: 169342394}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -466,6 +467,25 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
+--- !u!114 &169342394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169342389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac004cabd98f4e6499c49e243c1e346c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threshold: 3
+  speed: 3
+  border:
+  - 10
+  - -7
+  - 2
+  - -19
 --- !u!1001 &174346207
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4017,6 +4037,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1622414178}
   - component: {fileID: 1622414177}
+  - component: {fileID: 1622414179}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -4051,6 +4072,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1622414179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1622414176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 822addb068b042943be32c173f2f223a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemap: {fileID: 555236906}
 --- !u!4 &1627152952 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6044592206046575442, guid: ed207939700ac7d46a500b12ec125a37, type: 3}
