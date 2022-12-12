@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BattleData : MonoBehaviour
 {
+    public static int BattleLevelCount { get { return 6; } } // just a random nubmer.. to be changed later
     public static int BattleLevelID;
     public static Dictionary<int,EnemyData> EnemyDataList;
     public static PlayerData playerData;

@@ -7,20 +7,27 @@ public class WorldMap : MonoBehaviour
 {
     public int currentLevelID;
     public BattleLevelDriver battleLevelDriver;
-
-    [SerializeField]
-    Button[] levels;
+    public GameObject[] positions;
+    public GameObject buttonPrefab;
+    public GameObject buttonParent;
 
     private void Start()
     {
-        for(int i = 0; i < levels.Length; i++)
+        for(int i = 0; i < positions.Length; i++)
         {
-            levels[i].onClick.AddListener(() => LoadLevelScene(i + 1));
+            GameObject newButton = Instantiate(buttonPrefab, positions[i].transform);
+            if (i == 0)
+                newButton.GetComponent<LevelButton>().levelText.text = "Tutorial";
+            else
+                newButton.GetComponent<LevelButton>().levelText.text = "Level" + i.ToString();
+            newButton.GetComponent<Button>().onClick.AddListener(() => LoadLevelScene(i));
         }
     }
 
+
     public void LoadLevelScene(int id)
     {
+        Debug.Log("Load level" + id);
         currentLevelID = id;
         battleLevelDriver.BeginABattleLevel(id);
         battleLevelDriver.Paused = true;
