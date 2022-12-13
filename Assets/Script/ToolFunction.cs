@@ -10,9 +10,12 @@ public class ToolFunction : MonoBehaviour
     {
         return map.GetCellCenterWorld(new Vector3Int((int)cooridinate.x, (int)cooridinate.y, 0));
     }
+
+
+
+
     private void Awake()
     {
         map = GameObject.Find("Grid/Tilemap").GetComponent<Tilemap>();
-
     }
 }

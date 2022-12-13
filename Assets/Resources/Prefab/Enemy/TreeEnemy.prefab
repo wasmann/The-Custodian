@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6368719238958442218}
   - component: {fileID: -5834763850909946471}
   m_Layer: 0
-  m_Name: Tree
+  m_Name: TreeEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 128595294, guid: e59b472058b086640b8bd9a9f07a4dc4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -97,5 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ddb91a35039a4c4eb4a98641cb6c56a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyID: 0
   deck:
-  - {fileID: 587181085401064015, guid: c6a01f799d35828479b4bb10fce7f526, type: 3}
+  - {fileID: 8353357519568423419, guid: c6a01f799d35828479b4bb10fce7f526, type: 3}

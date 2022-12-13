@@ -39,7 +39,20 @@ public class Deck : MonoBehaviour
     }
 
     // Anything left?
+    public static Card FindCardInHand(List<Card> handcard,int CardID)
+    {
+        for(int i = 0; i < handcard.Count; i++)
+        {
+            if (handcard[i].ID == CardID)
+                return handcard[i];
+        }
+        return null;
+    }
 
+    public static void UpdateEnemyPiles(int ID,Card card)
+    {
+
+    }
 
 
 }

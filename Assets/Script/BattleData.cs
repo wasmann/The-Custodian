@@ -15,12 +15,12 @@ public class BattleData : MonoBehaviour
     public static List<Card> NewCard; //for duplication
 
     public Deck deck;//?????
-    public static Tilemap map;
     
 
     public struct EnemyData
     {
         public Vector2 position;
+        public Enemy enemy;//script
         public int maxHealth;
         public int currentHealth;
         public int ID;
@@ -28,7 +28,7 @@ public class BattleData : MonoBehaviour
         public List<Card> discardPile;
         public List<Card> drawPile;
         public GameObject obj;
-        public Enemy enemy;//script
+        
     }
 
     public struct PlayerData
@@ -46,7 +46,6 @@ public class BattleData : MonoBehaviour
 
     public static void BattleLevelInit(int battleLevelID)
     {
-        map = GameObject.Find("Grid/Tilemap").GetComponent<Tilemap>();
         NewCard = new List<Card>();
         BattleLevelID = battleLevelID;
         LoadEnvironmentData();
@@ -58,20 +57,38 @@ public class BattleData : MonoBehaviour
     }
     public static void LoadEnermyData(){
         EnemyDataList = new Dictionary<int,EnemyData>();
-        //use streamreader to load data. but for test ,just load tree
-        EnemyData tree = new EnemyData();
-        tree.obj= GameObject.Find("Tree");
-        tree.position=new Vector2(9,9);
-        tree.handCard = tree.obj.GetComponent<Tree_Enemy>().Deck;
-        tree.currentHealth=tree.obj.GetComponent<Tree_Enemy>().Health;
-        tree.discardPile = new List<Card>();
-        tree.enemy=tree.obj.GetComponent<Enemy>();
-        tree.enemy.EnemyID = 1;
+        //use streamreader to load data.
+        //Thefollowing code is hardcode for testing.
+
+        //EnemyData tree = new EnemyData();  
+        //tree.position=new Vector2(4,-1);
+        //tree.obj = GameObject.Find("TreeEnemy");
+        //tree.enemy= tree.obj.GetComponent<Tree_Enemy>();
+        //tree.enemy.EnemyID = 1;
+        //tree.currentHealth= tree.enemy.Health;
+        //tree.maxHealth = tree.enemy.Health;
+        //tree.drawPile = tree.enemy.CardsDeck;
+        //tree.handCard = new List<Card>();
+        //tree.discardPile = new List<Card>();
+        //StartingHandCards(1, tree.handCard, tree.drawPile, false);
         //EnemyDataList.Add(1,tree);
 
-    } 
+        EnemyData sheep = new EnemyData();
+        sheep.position = new Vector2(1,-7);
+        sheep.obj = GameObject.Find("SheepEnemy");
+        sheep.enemy = sheep.obj.GetComponent<SheepEnemy>();
+        sheep.enemy.EnemyID = 1;
+        sheep.currentHealth = sheep.enemy.Health;
+        sheep.maxHealth = sheep.enemy.Health;
+        sheep.drawPile = sheep.enemy.CardsDeck;
+        sheep.handCard = new List<Card>();
+        sheep.discardPile = new List<Card>();
+        StartingHandCards(3, sheep.handCard, sheep.drawPile, false);
+        EnemyDataList.Add(1, sheep);
+
+    }
     public static void LoadPlayerData(){
-        playerData.position = BattleData.map.CellToWorld(new Vector3Int(0, 0, 0));
+        playerData.position = new Vector2(0, 0);
         playerData.maxHealth = GameData.health;
         playerData.maxEnergy = GameData.Energy;
         playerData.currentHealth = playerData.maxHealth;
@@ -79,19 +96,20 @@ public class BattleData : MonoBehaviour
         playerData.drawPile = GameData.Deck;
         playerData.handCard= new List<Card>();
         playerData.discardPile = new List<Card>();
-        StartingHandCards(3);
+        StartingHandCards(4, playerData.handCard, playerData.drawPile,true);
         
     }
 
-    public static void StartingHandCards(int num)
+    public static void StartingHandCards(int num,List<Card> handcards,List<Card> drawPile,bool ShouldSetUI)
     {
         for(int i = 0; i < num; i++)
         {
-            int randomNum = Random.Range(0, playerData.drawPile.Count);
-            playerData.handCard.Add(playerData.drawPile[randomNum]);
-            playerData.drawPile.RemoveAt(randomNum);      
+            int randomNum = Random.Range(0, drawPile.Count);
+            handcards.Add(drawPile[randomNum]);
+            drawPile.RemoveAt(randomNum);      
         }
-        UI.SetOtherPilesInative();
+        if(ShouldSetUI)
+            UI.SetOtherPilesInative();
     }
 
     public bool CheckWinCondition()

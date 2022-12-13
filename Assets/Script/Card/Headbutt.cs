@@ -35,6 +35,8 @@ public class Headbutt : Card
                     BattleData.EnemyData data = BattleData.EnemyDataList[i];
                     data.currentHealth -= 3;
                     BattleData.EnemyDataList[i] = data;
+                    UI.UpdateEnemyData(i);
+                    return;
                 }
             }
         }
@@ -43,6 +45,7 @@ public class Headbutt : Card
             if (BattleData.playerData.position == Info.Selection[0] + BattleData.EnemyDataList[Info.owner_ID].position)
             {
                 BattleData.playerData.currentHealth -= 3;
+                UI.UpdatePlayerData();
             }
         }
     }

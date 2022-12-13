@@ -42,7 +42,7 @@ public class BattleLevelDriver : MonoBehaviour
         for (int i = 1; i < BattleData.EnemyDataList.Count + 1; i++)
         {
             BattleData.EnemyData enemy = BattleData.EnemyDataList[i];
-            enemy.obj.GetComponent<Enemy>().EnermyChooseACardToPlay();
+            enemy.obj.GetComponent<Enemy>().EnemyChooseACardToPlay();
         }
         UI.UpdateTimeLine(TimeLineSlots);
         while (!Paused && !BattleOver)
@@ -70,7 +70,7 @@ public class BattleLevelDriver : MonoBehaviour
                 if (info.owner_ID != 0)
                 {
                     BattleData.NewCard.Add(info.card);//for duplication
-                    BattleData.EnemyDataList[info.owner_ID].enemy.EnermyChooseACardToPlay();
+                    BattleData.EnemyDataList[info.owner_ID].enemy.EnemyChooseACardToPlay();
                     UI.UpdateTimeLine(TimeLineSlots);
                 }
             }
@@ -80,6 +80,8 @@ public class BattleLevelDriver : MonoBehaviour
 
     public static void NewCardPlayed(Card.InfoForActivate info)
     {
+        Debug.Log(info.card.name);
+
         TimeLineSlots[info.card.Speed].Add(info);
         if (info.card.Speed == 0)//instant
         {

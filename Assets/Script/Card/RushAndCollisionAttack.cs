@@ -5,7 +5,7 @@ using UnityEngine;
 public class RushAndCollisionAttack: Card
 {
 
-    public override string Name { get { return "Rush and Collision Attack"; } }
+    public override string Name { get { return "RushAndCollisionAttack"; } }
     public override Rarity rarity { get { return Rarity.basic; } }
     public override int Speed { get { return 5; } }
     public override int ID { get { return 7; } }

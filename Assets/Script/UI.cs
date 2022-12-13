@@ -47,6 +47,7 @@ public class UI : MonoBehaviour
         timelineObj = new List<GameObject>();
 
         UpdatePlayerData();
+        UpdateAllEnemyData();
 
         //UpdateEnemyData();
 
@@ -79,7 +80,6 @@ public class UI : MonoBehaviour
 
     public static void  ShowNotation(Card card)
     {
-        Debug.Log(card.RangeNotation);
         if (card.RangeNotation!="None")
         {
             for(int i = 0; i < card.Info.direction.Count; i++)
@@ -105,6 +105,11 @@ public class UI : MonoBehaviour
 
     public static void UpdateTimeLine(List<List<Card.InfoForActivate>> timeLineSlots)
     {
+        for (int i = 0; i < timelineObj.Count; i++)
+        {
+            Destroy(timelineObj[i]);
+        }
+        timelineObj.Clear();
         for (int i = 0; i < timeLineSlots.Count; i++) {
             for (int j = 0; j < timeLineSlots[i].Count; j++) {
                 GameObject obj= Instantiate(Resources.Load("Prefab/CardOnTimeLine/" + timeLineSlots[i][j].card.Name) as GameObject);
@@ -154,10 +159,16 @@ public class UI : MonoBehaviour
 
     public static void UpdateEnemyData(int ID)
     {
-        BattleData.EnemyDataList[ID].obj.transform.position= ToolFunction.FromCoorinateToWorld(BattleData.EnemyDataList[ID].obj.transform.position);
+        BattleData.EnemyDataList[ID].obj.transform.position= ToolFunction.FromCoorinateToWorld(BattleData.EnemyDataList[ID].position);
         
     }
-
+    public static void UpdateAllEnemyData()
+    {
+        for (int i = 1; i < BattleData.EnemyDataList.Count+1; i++)
+        {
+            UpdateEnemyData(i);
+        }
+    }
     private static void InitTimeLinePos()
     {
         for (int i = 0; i < 10; i++)

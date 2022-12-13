@@ -89,5 +89,5 @@ public abstract class Card : MonoBehaviour
         }
     }
 
-
+   
 }
