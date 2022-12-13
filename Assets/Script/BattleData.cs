@@ -91,6 +91,7 @@ public class BattleData : MonoBehaviour
             playerData.handCard.Add(playerData.drawPile[randomNum]);
             playerData.drawPile.RemoveAt(randomNum);      
         }
+        UI.SetOtherPilesInative();
     }
 
     public bool CheckWinCondition()

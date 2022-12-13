@@ -110,7 +110,6 @@ public class UI : MonoBehaviour
                 GameObject obj= Instantiate(Resources.Load("Prefab/CardOnTimeLine/" + timeLineSlots[i][j].card.Name) as GameObject);
                 obj.transform.SetParent(GameObject.Find("Canvas/TimeLine").transform);
                 obj.transform.localScale = new Vector3(20,20,0);
-                Debug.Log("s");
                 if(timeLineSlots[i][j].owner_ID == 0)
                 {
                     obj.transform.localPosition = TimeLinePos_Player[i];
@@ -172,7 +171,7 @@ public class UI : MonoBehaviour
     }
     public static void UpdateHandCard()
     {
-        DestroyHandcard();
+        SetOtherPilesInative();
         for (int i = 0; i < BattleData.playerData.handCard.Count; i++)
         {
             BattleData.playerData.handCard[i].gameObject.SetActive(true);
@@ -191,12 +190,16 @@ public class UI : MonoBehaviour
         }
     }
 
-    public static void DestroyHandcard()
+    public static void SetOtherPilesInative()
     {
         //just move the gameobjects away to somewhere;
-        for (int i = 0; i < BattleData.playerData.handCard.Count; i++)
+        for (int i = 0; i < BattleData.playerData.discardPile.Count; i++)
         {
-            BattleData.playerData.handCard[i].gameObject.SetActive(false);
+            BattleData.playerData.discardPile[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < BattleData.playerData.drawPile.Count; i++)
+        {
+            BattleData.playerData.drawPile[i].gameObject.SetActive(false);
         }
     }
 }

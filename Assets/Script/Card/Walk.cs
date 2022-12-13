@@ -10,7 +10,6 @@ public class Walk : Card
     public override int ID { get { return 1; } }
     public override IEnumerator Play()
     {
-
         Info.direction.Add(BattleData.playerData.position + new Vector2(1, 0));
         Info.direction.Add(BattleData.playerData.position + new Vector2(-1, 0));
         Info.direction.Add(BattleData.playerData.position + new Vector2(0, -1));

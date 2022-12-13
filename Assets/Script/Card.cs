@@ -43,8 +43,9 @@ public abstract class Card : MonoBehaviour
         {
             BattleData.playerData.handCard.Remove(this);
             BattleData.playerData.discardPile.Add(this);// need test
-            UI.UpdateHandCard();
             BattleLevelDriver.NewCardPlayed(this.Info);
+            Deck.DrawCard();
+
         }
         else
         {
@@ -72,6 +73,7 @@ public abstract class Card : MonoBehaviour
     {
         if (BattleData.AbleToPalyCard == true)
         {
+            ReSetTarget();
             BattleData.PlayingACard = true;
             BattleData.AbleToPalyCard = false;
             Info = new InfoForActivate();

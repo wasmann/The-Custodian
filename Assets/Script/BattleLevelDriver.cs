@@ -62,7 +62,10 @@ public class BattleLevelDriver : MonoBehaviour
             foreach (Card.InfoForActivate info in currentCards)
             {
                 if (info.owner_ID == 0)
+                {
                     BattleData.AbleToPalyCard = true;
+                }
+                
                 info.card.Activate(info);
                 if (info.owner_ID != 0)
                 {

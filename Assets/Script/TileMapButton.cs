@@ -7,8 +7,7 @@ public class TileMapButton : MonoBehaviour
 {
     public static Tilemap map;
     private static Card card;
-    private static bool Selectable=false;
-    // Update is called once per frame
+    private static bool Selectable = false;
     void Start()
     {
         map = GameObject.Find("Grid/Tilemap").GetComponent<Tilemap>();
