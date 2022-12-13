@@ -24,10 +24,10 @@ public class GameData : MonoBehaviour
     {
 
         Deck = new List<Card>();
-        Deck.Add(GameObject.Instantiate(GameObject.Find("CardBank/Headbutt")).GetComponent<Headbutt>());
-        Deck.Add(GameObject.Instantiate(GameObject.Find("CardBank/Headbutt")).GetComponent<Headbutt>());
-        Deck.Add(GameObject.Instantiate(GameObject.Find("CardBank/Headbutt")).GetComponent<Headbutt>());
-        Deck.Add(GameObject.Instantiate(GameObject.Find("CardBank/Headbutt")).GetComponent<Headbutt>());
+        Deck.Add(GameObject.Instantiate(GameObject.Find("CardBank/RunUp")).GetComponent<RunUp>());
+        Deck.Add(GameObject.Instantiate(GameObject.Find("CardBank/Walk")).GetComponent<Walk>());
+        Deck.Add(GameObject.Instantiate(GameObject.Find("CardBank/RunDown")).GetComponent<RunDown>());
+        Deck.Add(GameObject.Instantiate(GameObject.Find("CardBank/RunLeft")).GetComponent<RunLeft>());
     }
 
 }

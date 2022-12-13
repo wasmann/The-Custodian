@@ -42,7 +42,7 @@ public class BattleLevelDriver : MonoBehaviour
         for (int i = 1; i < BattleData.EnemyDataList.Count + 1; i++)
         {
             BattleData.EnemyData enemy = BattleData.EnemyDataList[i];
-            enemy.obj.GetComponent<Enemy>().EnermyChooseACardToPlay(enemy.ID);
+            enemy.obj.GetComponent<Enemy>().EnermyChooseACardToPlay();
         }
         UI.UpdateTimeLine(TimeLineSlots);
         while (!Paused && !BattleOver)
@@ -61,12 +61,13 @@ public class BattleLevelDriver : MonoBehaviour
 
             foreach (Card.InfoForActivate info in currentCards)
             {
-                //TODO: pick out player's card and activate it first.
+                if (info.owner_ID == 0)
+                    BattleData.AbleToPalyCard = true;
                 info.card.Activate(info);
                 if (info.owner_ID != 0)
                 {
                     BattleData.NewCard.Add(info.card);//for duplication
-                    BattleData.EnemyDataList[info.owner_ID].obj.GetComponent<Enemy>().EnermyChooseACardToPlay(info.owner_ID);
+                    BattleData.EnemyDataList[info.owner_ID].enemy.EnermyChooseACardToPlay();
                     UI.UpdateTimeLine(TimeLineSlots);
                 }
             }
@@ -76,6 +77,7 @@ public class BattleLevelDriver : MonoBehaviour
 
     public static void NewCardPlayed(Card.InfoForActivate info)
     {
+        TimeLineSlots[info.card.Speed].Add(info);
         if (info.card.Speed == 0)//instant
         {
             info.card.Activate(info);
@@ -83,7 +85,7 @@ public class BattleLevelDriver : MonoBehaviour
         }
         if (info.card.Speed <= 3)
             UI.UpdateTimeLine(TimeLineSlots);
-        TimeLineSlots[info.card.Speed].Add(info);
+        
     }
 
     public IEnumerable Pause()

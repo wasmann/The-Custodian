@@ -8,8 +8,8 @@ public abstract class Enemy : MonoBehaviour
     public abstract string EnemyName { get; }
     public abstract List<Card> Deck { get; }
     public abstract int Health { get; }
-    public abstract int EnemyID { get; set; }
+    public int EnemyID;
 
-    public abstract void EnermyChooseACardToPlay(int ID); 
+    public abstract void EnermyChooseACardToPlay(); 
 
 }

@@ -14,12 +14,7 @@ public class Tree_Enemy : Enemy
     }
     public override int Health { get { return 5; } }
 
-    public override int EnemyID { 
-        get { return 1; }
-        set { EnemyID = value; }
-    }
-
-    public override void EnermyChooseACardToPlay(int ID)
+    public override void EnermyChooseACardToPlay()
     {
         Card.InfoForActivate info = new Card.InfoForActivate();
         info.owner_ID = EnemyID;

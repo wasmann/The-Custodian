@@ -2,18 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RushAndCollisionAttack_Card : Card
+public class RushAndCollisionAttack: Card
 {
 
     public override string Name { get { return "Rush and Collision Attack"; } }
     public override Rarity rarity { get { return Rarity.basic; } }
     public override int Speed { get { return 5; } }
     public override int ID { get { return 7; } }
-    public override int TargetNum { get { return 1; } set { } }
 
     public override IEnumerator Play()
     {
-        Info.owner_ID = 0;
         BattleData.playerData.currentEnergy -= 1;
         Info.direction.Add(BattleData.playerData.position + new Vector2(1, 0));
         Info.direction.Add(BattleData.playerData.position + new Vector2(2, 0));
@@ -36,16 +34,14 @@ public class RushAndCollisionAttack_Card : Card
 
         Info.otherInfo.Add(BattleData.playerData.position.x.ToString());
         Info.otherInfo.Add(BattleData.playerData.position.y.ToString());
+        yield return new WaitForSeconds(0.1f);
+        // BattleData.CardReadyToPlay = this;
+        UI.ShowNotation(this);
+        TileMapButton.MakeSelectable(this);
 
-        Notation.Add(this.transform.Find("RangeNotation").gameObject);
-        Notation.Add(this.transform.Find("SelectionNotation").gameObject);
-        //better to design two notation
-
-       // BattleData.CardReadyToPlay = this;
-        //UI.ShowNotation(Notation,Info);
-        //assign the functionality to grids in info.direction
         yield return new WaitUntil(() => TargetNum == 0);
-        //disable the grid selection function
+        TileMapButton.MakeUnSelectable();
+        BattleData.PlayingACard = false;
         UpdateData(0, ID, Info);
     }
 
@@ -65,6 +61,7 @@ public class RushAndCollisionAttack_Card : Card
                     BattleData.EnemyData data = BattleData.EnemyDataList[i];
                     data.currentHealth -= 2 + Distance;
                     BattleData.EnemyDataList[i] = data;
+                    UI.UpdateEnemyData(data.ID);
                 }
             }
             if (moveDir.x > 0)
@@ -75,6 +72,7 @@ public class RushAndCollisionAttack_Card : Card
                 BattleData.playerData.position = Info.Selection[0] - new Vector2(0, 1);
             else
                 BattleData.playerData.position = Info.Selection[0] - new Vector2(0, -1);
+            UI.UpdatePlayerData();
         }
 
         else
@@ -85,16 +83,32 @@ public class RushAndCollisionAttack_Card : Card
 
             int Distance = (int)moveDir.magnitude - 1;
 
-            if (BattleData.playerData.position == Info.Selection[0]+oriPos)
+            if (BattleData.playerData.position == Info.Selection[0] + oriPos)
+            {
                 BattleData.playerData.currentHealth -= 2 + Distance;
+                UI.UpdatePlayerData();
+            }
 
             BattleData.EnemyData newData = BattleData.EnemyDataList[Info.owner_ID];
             if (moveDir.x > 0)
             {
                 newData.position += Info.Selection[0];
                 BattleData.EnemyDataList[Info.owner_ID] = newData;
+                UI.UpdateEnemyData(newData.ID);
             }
 
         }
+    }
+
+    private void Start()
+    {
+        TargetNum = 1;
+        RangeNotation = "MovementNotation";
+        SelectionNotation = "ArrowSelection";
+
+    }
+    public override void ReSetTarget()
+    {
+        TargetNum = 1;
     }
 }

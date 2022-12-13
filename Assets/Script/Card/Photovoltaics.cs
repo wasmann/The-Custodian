@@ -9,7 +9,6 @@ public class Photovoltaics : Card
     public override Rarity rarity { get { return Rarity.basic; } }
     public override int Speed { get { return 3; } }
     public override int ID { get { return 8; } }
-    public override int TargetNum { get { return 0; } set { } }
     public override IEnumerator Play()
     {
         Info.owner_ID = 0;
@@ -29,7 +28,10 @@ public class Photovoltaics : Card
             BattleData.EnemyData newData = BattleData.EnemyDataList[Info.owner_ID];
             newData.currentHealth +=2;
             BattleData.EnemyDataList[Info.owner_ID] = newData;
-            Debug.Log(newData.currentHealth);
         }
+    }
+    public override void ReSetTarget()
+    {
+        TargetNum = 0;
     }
 }

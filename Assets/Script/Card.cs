@@ -10,9 +10,10 @@ public abstract class Card : MonoBehaviour
     public abstract string Name { get; }
     public abstract Rarity rarity { get; }
     public abstract int Speed { get; }
-    public abstract int TargetNum { get; set; }
 
-    public List<GameObject> Notation;
+    public int TargetNum;
+    public string RangeNotation;
+    public string SelectionNotation;
 
     public InfoForActivate Info;
 
@@ -55,7 +56,7 @@ public abstract class Card : MonoBehaviour
     }
 
     public abstract void Activate(InfoForActivate Info);
-
+    public abstract void ReSetTarget();
 
     public static bool Contain(List<Card> cards,int ID)
     {
@@ -67,15 +68,24 @@ public abstract class Card : MonoBehaviour
         return false;
     }
 
-    public void MakeSelectable(InfoForActivate info)
-    {
-        //Implement in UI
-    }
-
     void OnMouseDown()
     {
-
-        this.Play();
+        if (BattleData.AbleToPalyCard == true)
+        {
+            BattleData.PlayingACard = true;
+            BattleData.AbleToPalyCard = false;
+            Info = new InfoForActivate();
+            Info.owner_ID = 0;
+            Info.direction = new List<Vector2>();
+            Info.Selection = new List<Vector2>();
+            Info.card = this;
+            StartCoroutine(Play());
+        }
+        else
+        {
+            Debug.Log("Another card is now ready to play");
+        }
     }
+
 
 }

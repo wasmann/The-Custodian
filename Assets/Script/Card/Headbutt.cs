@@ -8,21 +8,19 @@ public class Headbutt : Card
     public override Rarity rarity { get { return Rarity.basic; } }
     public override int Speed { get { return 4; } }
     public override int ID { get { return 6; } }
-    public override int TargetNum { get { return 1; } set { } }
     public override IEnumerator Play()
     {
-        Info.owner_ID = 0;
+
         Info.direction.Add(BattleData.playerData.position + new Vector2(1, 0));
         Info.direction.Add(BattleData.playerData.position + new Vector2(-1, 0));
         Info.direction.Add(BattleData.playerData.position + new Vector2(0, -1));
         Info.direction.Add(BattleData.playerData.position + new Vector2(0, 1));
-        Notation.Add(this.transform.Find("RangeNotation").gameObject);
-        Notation.Add(this.transform.Find("SelectionNotation").gameObject);
-        //BattleData.CardReadyToPlay=this;
-        //UI.ShowNotation(Notation,Info);
-        //assign the functionality to grids in info.direction
+        yield return new WaitForSeconds(0.1f);
+        UI.ShowNotation(this);
+        TileMapButton.MakeSelectable(this);
         yield return new WaitUntil(() => TargetNum == 0);
-        //disable the grid selection function
+        TileMapButton.MakeUnSelectable();
+        BattleData.PlayingACard = false;
         UpdateData(0, ID, Info);
     }
 
@@ -47,5 +45,17 @@ public class Headbutt : Card
                 BattleData.playerData.currentHealth -= 3;
             }
         }
+    }
+
+    private void Start()
+    {
+        TargetNum = 1;
+        RangeNotation = "AttackNotation";
+        SelectionNotation = "AttackSelection";
+
+    }
+    public override void ReSetTarget()
+    {
+        TargetNum = 1;
     }
 }
