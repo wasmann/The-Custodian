@@ -12,6 +12,7 @@ public abstract class Enemy : MonoBehaviour
     public abstract int HandCardNum { get; }
     public int EnemyID;
 
+    public Discard dicardManager;
     public abstract void EnemyChooseACardToPlay(); 
 
     public void UpdatePiles(Card card)
@@ -29,5 +30,9 @@ public abstract class Enemy : MonoBehaviour
         data.drawPile.RemoveAt(0);
     }
 
+    private void Start()
+    {
+        dicardManager = GameObject.Find("GameManager").GetComponent<Discard>();
+    }
 
 }

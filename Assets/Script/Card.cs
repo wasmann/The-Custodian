@@ -14,6 +14,7 @@ public abstract class Card : MonoBehaviour
     public int TargetNum;
     public string RangeNotation;
     public string SelectionNotation;
+    public string Effect;
 
     public InfoForActivate Info;
 
@@ -89,5 +90,8 @@ public abstract class Card : MonoBehaviour
         }
     }
 
-   
+   public static void Discard_Enemy(Card card)
+   {
+        
+   }
 }

@@ -112,6 +112,10 @@ public class UI : MonoBehaviour
         timelineObj.Clear();
         for (int i = 0; i < timeLineSlots.Count; i++) {
             for (int j = 0; j < timeLineSlots[i].Count; j++) {
+                if (timeLineSlots[i][j].card.Name == "Discard")
+                {
+                    continue;
+                }
                 GameObject obj= Instantiate(Resources.Load("Prefab/CardOnTimeLine/" + timeLineSlots[i][j].card.Name) as GameObject);
                 obj.transform.SetParent(GameObject.Find("Canvas/TimeLine").transform);
                 obj.transform.localScale = new Vector3(20,20,0);
