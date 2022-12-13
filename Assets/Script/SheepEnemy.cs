@@ -645,7 +645,7 @@ public class SheepEnemy : Enemy
                         return;
                     }
                     // If we, however, don't have the run card we need, then play the walk card instead!
-                    else
+                    else if (HasWalkCardAtHand)
                     {
                         // If we are closer in the y coordinate and the player is roughly above us then walk upwards.
                         if (DifferenceInYCoordinate < DifferenceInXCoordinate && PlayerPosition.y < SelfPosition.y &&HasWalkCardAtHand)
@@ -719,6 +719,10 @@ public class SheepEnemy : Enemy
                             UpdatePiles(info.card);
                             return;
                         }
+                    }
+                    else
+                    {
+                        // Discard a card!
                     }
                 }
             }
