@@ -3919,7 +3919,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4685025229613478865, guid: e977003ddd698ff4cae594f41b2a5523, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8513868332959421398, guid: e977003ddd698ff4cae594f41b2a5523, type: 3}
       propertyPath: m_RootOrder
@@ -4275,6 +4275,7 @@ GameObject:
   - component: {fileID: 1677132431}
   - component: {fileID: 1677132434}
   - component: {fileID: 1677132435}
+  - component: {fileID: 1677132436}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4348,6 +4349,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65953398036247140ba02fb8b1dc8a50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1677132436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677132430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52e787f1caead0e439aea8d78c5a3fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetNum: 0
+  RangeNotation: 
+  SelectionNotation: 
+  Effect: 
 --- !u!224 &1756404687 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7243228659323090682, guid: 938f93ade0a58cb4783e8ffecb98027b, type: 3}

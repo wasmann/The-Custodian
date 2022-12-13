@@ -68,6 +68,7 @@ public class SheepEnemy : Enemy
 
         Card.InfoForActivate info = new Card.InfoForActivate();
         info.owner_ID = EnemyID;
+        info.otherInfo = new List<string>();
         info.Selection = new List<Vector2>();
 
         // Check which cards we have and set the correct flags
@@ -302,7 +303,16 @@ public class SheepEnemy : Enemy
                 // If we are more than 1 grid away, discard a card other than the headbutt card and try to get a movement card or the rush attack card.
                 else // if (DifferenceInXCoordinate != 1 || DifferenceInYCoordinate != 1)
                 {
-                    Debug.Log("???");
+                    for(int i = 0; i < BattleData.EnemyDataList[EnemyID].handCard.Count; i++)
+                    {
+                        if (BattleData.EnemyDataList[EnemyID].handCard[i].ID != 6)
+                        {
+                            info.otherInfo.Add(BattleData.EnemyDataList[EnemyID].handCard[i].ID + "");
+                            break;
+                        }
+                    }
+                    info.card = dicardManager;
+                    BattleLevelDriver.NewCardPlayed(info);
                     return;
                 }
             }
@@ -318,7 +328,11 @@ public class SheepEnemy : Enemy
             }
             else
             {
-                Debug.Log("HERERERER!");
+                Debug.Log("Discard");
+
+                info.otherInfo.Add(BattleData.EnemyDataList[EnemyID].handCard[0].ID + "");
+                info.card = dicardManager;
+                BattleLevelDriver.NewCardPlayed(info);
                 return;
                 // If we have neither attack card, then discard a card and try to get the headbutt card or rush attack card!
             }
@@ -722,16 +736,24 @@ public class SheepEnemy : Enemy
                     }
                     else
                     {
-                        // Discard a card!
+                        Debug.Log("Discard");
+                        info.otherInfo.Add(BattleData.EnemyDataList[EnemyID].handCard[0].ID + "");
+                        info.card = dicardManager;
+                        BattleLevelDriver.NewCardPlayed(info);
+                        return;
+
                     }
                 }
             }
             // If we don't have any movement cards, discard one of the cards at hand to try to get a movement card.
             else
             {
-                Debug.Log("Discard case");
+                Debug.Log("Discard");
+
+                info.otherInfo.Add(BattleData.EnemyDataList[EnemyID].handCard[0].ID + "");
+                info.card = dicardManager;
+                BattleLevelDriver.NewCardPlayed(info);
                 return;
-                // Discard a non movement card at hand!
             }
         }
         Debug.Log("What");
