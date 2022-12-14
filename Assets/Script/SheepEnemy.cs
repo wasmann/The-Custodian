@@ -284,7 +284,7 @@ public class SheepEnemy : Enemy
                 if (HasWalkCardAtHand && (HasRunTopCardAtHand || HasRunDownCardAtHand || HasRunLeftCardAtHand || HasRunRightCardAtHand))
                 {
                     // If we have both types of cards and the distance to get into range is greater then 1 grid, then use a run card.
-                    if (DifferenceInXCoordinate >= 5 || DifferenceInYCoordinate >= 5)
+                    if (DifferenceInXCoordinate >= 5 && DifferenceInYCoordinate >= 5)
                     {
                         // If we are closer in the y coordinate or aligned in the x coordinate and the player is roughly or exactly above us then use a run top card in that direction!
                         if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && HasRunTopCardAtHand && (PlayerPosition.y > SelfPosition.y))
