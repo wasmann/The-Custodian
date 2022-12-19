@@ -19,7 +19,6 @@ public class SheepEnemy : Enemy
 
     public override int HandCardNum { get { return 3; } }
 
-
     const int WALKCARDID = 1;
     const int RUNTOPCARDID = 2;
     const int RUNDOWNCARDID = 3;
@@ -43,35 +42,86 @@ public class SheepEnemy : Enemy
     bool PlayerIsToTheRight = false;
     bool PlayerIsToTheLeft = false;
 
+    // This function resets the flags to their initial state.
+    private void resetFlags()
+    {
+        HasWalkCardAtHand = false;
+        HasRunTopCardAtHand = false;
+        HasRunDownCardAtHand = false;
+        HasRunLeftCardAtHand = false;
+        HasRunRightCardAtHand = false;
+        HasHeadbuttCardAtHand = false;
+        HasRushAttackCardAtHand = false;
+        HasPhotosynthesisCardAtHand = false;
+
+        PlayerIsAbove = false;
+        PlayerIsBelow = false;
+        PlayerIsToTheLeft = false;
+        PlayerIsToTheRight = false;
+    }
+
+    // This function discards the card with the given ID.
+    private void Discard(Card.InfoForActivate info, int cardID)
+    {
+        for(int i = 0; i < BattleData.EnemyDataList[EnemyID].handCard.Count; i++)
+        {
+            if (BattleData.EnemyDataList[EnemyID].handCard[i].ID != cardID)
+            {
+                info.otherInfo.Add(BattleData.EnemyDataList[EnemyID].handCard[i].ID + "");
+                break;
+            }
+        }
+        info.card = dicardManager;
+        BattleLevelDriver.NewCardPlayed(info);
+    }
+
+    // This function plays the chosen card.
+    private void Play(Card.InfoForActivate info, int cardID, BattleData.EnemyData SheepData, 
+                      Vector2 ActionTarget)
+    {   
+        info.card = Deck.FindCardInHand(SheepData.handCard, cardID);
+        info.Selection.Add(ActionTarget);
+        BattleLevelDriver.NewCardPlayed(info);
+        UpdatePiles(info.card);
+    }
+
     // This function follows the logic detailed below:
     // Are we in range?
-    // If yes, do we have the headbutt attack card or rush attack?
-    // We have both.
-    // If we are 1 grid away from the player, use the headbutt card. Otherwise, use rush attack.
-    // We have the headbutt attack card.
-    // If we are 1 grid away, use the card.
-    // If we are more than 1 grid away, discard a card other than the headbutt card and try to get a movement card or the rush attack card.
-    // We have the rush attack card.
-    // Use the card.
-    // We have neither.
-    // Discard a card and try to get the headbutt card or rush attack card.
-    // If no, try to move into range
-    // Do we have a movement card?
-    // If yes, play it!
-    // If no, discard one of the cards at hand to get a movement card.
-    // TO DO: In the next updates, make the direction random and consider factors such as obstacles etc.
+        // If yes, do we have the headbutt attack card or rush attack?
+            // We have both.
+                // If we are 1 grid away from the player, use the headbutt card. Otherwise, 
+                // use rush attack.
+            // We have the headbutt attack card.
+                // If we are 1 grid away, use the card.
+            // If we are more than 1 grid away, discard a card other than the headbutt card 
+            // and try to get a movement card or the rush attack card.
+            // We have the rush attack card.
+                // Use the card.
+            // We have neither.
+                // Discard a card and try to get the headbutt card or rush attack card.
+        // If no, try to move into range
+            // Do we have a movement card?
+                // If yes, play it!
+                // If no, discard one of the cards at hand to get a movement card.
+
+    // TO DO: In the next updates, make the direction random and consider factors such as 
+    // obstacles etc.
     public override void EnemyChooseACardToPlay()
     {
         resetFlags();
+
         BattleData.EnemyData SheepData = BattleData.EnemyDataList[EnemyID];
         Vector2 PlayerPosition = BattleData.playerData.position;
         Vector2 SelfPosition = SheepData.position;
-        Vector2 DifferenceVector = PlayerPosition - SelfPosition;
+
+        // Calculate these values once in order to optimize the code and make it more readable.
         float DifferenceInXCoordinate = Math.Abs(PlayerPosition.x - SelfPosition.x);
         float DifferenceInYCoordinate = Math.Abs(PlayerPosition.y - SelfPosition.y);
+
         Debug.Log("Player Position: " + PlayerPosition);
         Debug.Log("Sheep Position: " + SelfPosition);
 
+        // Information required to play the cards will be stored in this struct.
         Card.InfoForActivate info = new Card.InfoForActivate();
         info.owner_ID = EnemyID;
         info.otherInfo = new List<string>();
@@ -80,39 +130,38 @@ public class SheepEnemy : Enemy
         // Check which cards we have and set the correct flags
         for (var i = 0; i < SheepData.handCard.Count; ++i)
         {
-            //Debug.Log(SheepData.handCard[i].ID);
             if (SheepData.handCard[i].ID == WALKCARDID) {
                 HasWalkCardAtHand = true;
-                Debug.Log("Walk card");
+                Debug.Log("Sheep has the walk card");
             }
             else if (SheepData.handCard[i].ID == RUNTOPCARDID) { 
                 HasRunTopCardAtHand = true;
-                Debug.Log("Run top card");
+                Debug.Log("Sheep has the run top card");
             }
             else if (SheepData.handCard[i].ID == RUNDOWNCARDID)
             {
                 HasRunDownCardAtHand = true;
-                Debug.Log("Run down card");
+                Debug.Log("Sheep has the run down card");
             }
             else if (SheepData.handCard[i].ID == RUNLEFTCARDID)
             {
                 HasRunLeftCardAtHand = true;
-                Debug.Log("Run left card");
+                Debug.Log("Sheep has the run left card");
             }
             else if (SheepData.handCard[i].ID == RUNRIGHTCARDID)
             {
                 HasRunRightCardAtHand = true;
-                Debug.Log("Run right card");
+                Debug.Log("Sheep has the run right card");
             }
             else if (SheepData.handCard[i].ID == HEADBUTTCARDID)
             {
                 HasHeadbuttCardAtHand = true;
-                Debug.Log("Headbutt card");
+                Debug.Log("Sheep has the headbutt card");
             }
             else if (SheepData.handCard[i].ID == RUSHATTACKCARDID)
             {
                 HasRushAttackCardAtHand = true;
-                Debug.Log("Rush attack card");
+                Debug.Log("Sheep has the rush attack card");
             }
         }
 
@@ -120,58 +169,54 @@ public class SheepEnemy : Enemy
         if (PlayerPosition.y > SelfPosition.y)
         {
             PlayerIsAbove = true;
+            Debug.Log("Player is roughly above sheep.");
         }
         // Is the player rougly below us?
         else // if (PlayerPosition.y < SelfPosition.y)
         {
             PlayerIsBelow = true;
+            Debug.Log("Player is roughly below sheep.");
         }
 
         // Is the player roughly to the right of us?
         if (PlayerPosition.x > SelfPosition.x)
         {
             PlayerIsToTheRight = true;
+            Debug.Log("Player is roughly to the right of sheep.");
         }
         // Is the player rougly to the left of us?
         else // if (PlayerPosition.x < SelfPosition.x)
         {
             PlayerIsToTheLeft = true;
+            Debug.Log("Player is roughly to the left of sheep.");
         }
 
         // Are we in range?
-        // If the enemy is directly , at most, 3 grid units to the right, left, above or below the enemy,
-        // then the enemy is within range. We check if we are aligned in our x or y axis to make sure we
-        // are not at a diagonal position to the player.
-        if ((PlayerPosition.x == SelfPosition.x && DifferenceInYCoordinate <= 3) || (PlayerPosition.y == SelfPosition.y && DifferenceInXCoordinate <= 3))
+        // If the enemy is directly, at most, 3 grid units to the right, left, above or below the 
+        // enemy, then the enemy is within range. We check if we are aligned in our x or y axis 
+        // to make sure we are not at a diagonal position to the player.
+        if ((PlayerPosition.x == SelfPosition.x && DifferenceInYCoordinate <= 3) ||
+            (PlayerPosition.y == SelfPosition.y && DifferenceInXCoordinate <= 3))
         {
-            Debug.Log("In range!");
+            Debug.Log("Sheep is in range!");
             if (HasHeadbuttCardAtHand && HasRushAttackCardAtHand)
             {
                 // If we are 1 grid away from the player, use the headbutt card.
                 if (DifferenceInXCoordinate == 1 || DifferenceInYCoordinate == 1)
                 {
-                    info.card = Deck.FindCardInHand(SheepData.handCard, HEADBUTTCARDID);
-                    info.Selection.Add(PlayerPosition-SelfPosition);
-                    BattleLevelDriver.NewCardPlayed(info);
-                    UpdatePiles(info.card);
+                    Play(info, HEADBUTTCARDID, SheepData, PlayerPosition - SelfPosition);
                     return;
                 }
                 // Otherwise, use rush attack as it does more damage.
                 else // if (DifferenceInXCoordinate != 1 || DifferenceInYCoordinate != 1)
                 {
-                    info.card = Deck.FindCardInHand(SheepData.handCard, RUSHATTACKCARDID);
-                    info.Selection.Add(PlayerPosition - SelfPosition);
-                    BattleLevelDriver.NewCardPlayed(info);
-                    UpdatePiles(info.card);
+                    Play(info, RUSHATTACKCARDID, SheepData, PlayerPosition - SelfPosition);
                     return;
                 }
             }
             else if (HasRushAttackCardAtHand)
             {
-                info.card = Deck.FindCardInHand(SheepData.handCard, RUSHATTACKCARDID);
-                info.Selection.Add(PlayerPosition - SelfPosition);
-                BattleLevelDriver.NewCardPlayed(info);
-                UpdatePiles(info.card);
+                Play(info, RUSHATTACKCARDID, SheepData, PlayerPosition - SelfPosition);
                 return;
             }
             else if (HasHeadbuttCardAtHand)
@@ -179,53 +224,35 @@ public class SheepEnemy : Enemy
                 // If we are 1 grid away, use the card.
                 if (DifferenceInXCoordinate == 1 || DifferenceInYCoordinate == 1)
                 {
-                    info.card = Deck.FindCardInHand(SheepData.handCard, HEADBUTTCARDID);
-                    info.Selection.Add(PlayerPosition - SelfPosition);
-                    BattleLevelDriver.NewCardPlayed(info);
-                    UpdatePiles(info.card);
+                    Play(info, HEADBUTTCARDID, SheepData, PlayerPosition - SelfPosition);
                     return;
                 }
                 // If we are more than 1 grid away but we have a movement card, then try to use it!
-                else if (HasWalkCardAtHand || HasRunTopCardAtHand || HasRunDownCardAtHand || HasRunLeftCardAtHand || HasRunRightCardAtHand)
+                else if (HasWalkCardAtHand || HasRunTopCardAtHand ||
+                         HasRunDownCardAtHand || HasRunLeftCardAtHand || HasRunRightCardAtHand)
                 {
                     // If we are closer in the y coordinate or aligned in the x coordinate and the player is roughly or exactly above us then use a run top card in that direction!
                     if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && HasRunTopCardAtHand && (PlayerPosition.y > SelfPosition.y))
-                    //if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && HasRunTopCardAtHand && (PlayerPosition.y < SelfPosition.y))
                     { 
-                        info.card = Deck.FindCardInHand(SheepData.handCard, RUNTOPCARDID);
-                        info.Selection.Add(new Vector2(0, (DifferenceInYCoordinate - 1)));
-                        //info.Selection.Add(new Vector2(0, -(DifferenceInYCoordinate - 1)));
-                        BattleLevelDriver.NewCardPlayed(info);
-                        UpdatePiles(info.card);
+                        Play(info, RUNTOPCARDID, SheepData, new Vector2(0, (DifferenceInYCoordinate - 1)));
                         return;
                     }
                     // If we are closer in the y coordinate or aligned in the x coordinate and the player is roughly or exactly below us then use a run down card in that direction!
                     else if ((DifferenceInYCoordinate < DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && HasRunDownCardAtHand && (PlayerPosition.y < SelfPosition.y))
-                    //else if ((DifferenceInYCoordinate < DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && HasRunDownCardAtHand && (PlayerPosition.y > SelfPosition.y))
                     {
-                        info.card = Deck.FindCardInHand(SheepData.handCard, RUNDOWNCARDID);
-                        info.Selection.Add(new Vector2(0, -(DifferenceInYCoordinate - 1)));
-                        //info.Selection.Add(new Vector2(0, DifferenceInYCoordinate - 1));
-                        BattleLevelDriver.NewCardPlayed(info);
-                        UpdatePiles(info.card);
+                        Play(info, RUNDOWNCARDID, SheepData, new Vector2(0, -(DifferenceInYCoordinate - 1)));
                         return;
                     }
                     // If we are closer in the x coordinate or aligned in the y coordinate and the player is roughly or exactly to the right of us then use a run right card in that direction!
                     else if ((DifferenceInXCoordinate <= DifferenceInYCoordinate || PlayerPosition.y == SelfPosition.y) && HasRunRightCardAtHand && (PlayerPosition.x > SelfPosition.x))
                     {
-                        info.card = Deck.FindCardInHand(SheepData.handCard, RUNRIGHTCARDID);
-                        info.Selection.Add(new Vector2(DifferenceInXCoordinate - 1, 0));
-                        BattleLevelDriver.NewCardPlayed(info);
-                        UpdatePiles(info.card);
+                        Play(info, RUNRIGHTCARDID, SheepData, new Vector2(DifferenceInXCoordinate - 1, 0));
                         return;
                     }
                     // If we are closer in the x coordinate or aligned in the y coordinate and the player is roughly or exactly to the left of us then use a run left card in that direction!
                     else if ((DifferenceInXCoordinate <= DifferenceInYCoordinate || PlayerPosition.y == SelfPosition.y) && HasRunLeftCardAtHand && (PlayerPosition.x < SelfPosition.x))
                     {
-                        info.card = Deck.FindCardInHand(SheepData.handCard, RUNLEFTCARDID);
-                        info.Selection.Add(new Vector2(-(DifferenceInXCoordinate - 1), 0));
-                        BattleLevelDriver.NewCardPlayed(info);
-                        UpdatePiles(info.card);
+                        Play(info, RUNLEFTCARDID, SheepData, new Vector2(-(DifferenceInXCoordinate - 1), 0));
                         return;
                     }
                     // If we, however, don't have the run card we need, then play the walk card instead!
@@ -233,74 +260,40 @@ public class SheepEnemy : Enemy
                     {
                         // If we are closer in the y coordinate or aligned in the x coordinate and the player is roughly or exactly above us then walk upwards.
                         if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && PlayerPosition.y > SelfPosition.y && HasWalkCardAtHand)
-                        //if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && PlayerPosition.y < SelfPosition.y && HasWalkCardAtHand)
                         {
-                            info.card = Deck.FindCardInHand(SheepData.handCard, WALKCARDID);
-                            info.Selection.Add(new Vector2(0, 1));
-                            //info.Selection.Add(new Vector2(0, -1));
-                            BattleLevelDriver.NewCardPlayed(info);
-                            UpdatePiles(info.card);
+                            Play(info, WALKCARDID, SheepData, new Vector2(0, 1));
                             return;
                         }
                         // If we are closer in the y coordinate or aligned in the x coordinate and the player is roughly or exactly below us then walk downwards.
                         else if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && PlayerPosition.y < SelfPosition.y && HasWalkCardAtHand)
-                        //else if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && PlayerPosition.y > SelfPosition.y && HasWalkCardAtHand)
                         {
-                            info.card = Deck.FindCardInHand(SheepData.handCard, WALKCARDID);
-                            info.Selection.Add(new Vector2(0, -1));
-                            //info.Selection.Add(new Vector2(0, 1));
-                            BattleLevelDriver.NewCardPlayed(info);
-                            UpdatePiles(info.card);
+                            Play(info, WALKCARDID, SheepData, new Vector2(0, -1));
                             return;
                         }
                         // If we are closer in the x coordinate or aligned in the y coordinate and the player is roughly or exactly to the right of us then walk towards right.
                         else if ((DifferenceInXCoordinate <= DifferenceInYCoordinate || PlayerPosition.y == SelfPosition.y) && PlayerPosition.x > SelfPosition.x && HasWalkCardAtHand)
                         {
-                            info.card = Deck.FindCardInHand(SheepData.handCard, WALKCARDID);
-                            info.Selection.Add(new Vector2(1, 0));
-                            BattleLevelDriver.NewCardPlayed(info);
-                            UpdatePiles(info.card);
+                            Play(info, WALKCARDID, SheepData, new Vector2(1, 0));
                             return;
                         }
                         // If we are closer in the x coordinate or aligned in the y coordinate and the player is roughly or exactly to the left of us then walk towards left.
                         else if ((DifferenceInXCoordinate <= DifferenceInYCoordinate || PlayerPosition.y == SelfPosition.y) && PlayerPosition.x < SelfPosition.x && HasWalkCardAtHand)
                         {
-                            info.card = Deck.FindCardInHand(SheepData.handCard, WALKCARDID);
-                            info.Selection.Add(new Vector2(-1, 0));
-                            BattleLevelDriver.NewCardPlayed(info);
-                            UpdatePiles(info.card);
+                            Play(info, WALKCARDID, SheepData, new Vector2(-1, 0));
                             return;
                         }
                     }
                     // If we are more than 1 grid away, discard a card other than the headbutt card and try to get a movement card or the rush attack card.
                     else
                     {
-                        for(int i = 0; i < BattleData.EnemyDataList[EnemyID].handCard.Count; i++)
-                        {
-                            if (BattleData.EnemyDataList[EnemyID].handCard[i].ID != HEADBUTTCARDID)
-                            {
-                                info.otherInfo.Add(BattleData.EnemyDataList[EnemyID].handCard[i].ID + "");
-                                break;
-                            }
-                        }
-                        info.card = dicardManager;
-                        BattleLevelDriver.NewCardPlayed(info);
+                        Discard(info, HEADBUTTCARDID);
                         return;   
                     }
                 }
                 // If we are more than 1 grid away, discard a card other than the headbutt card and try to get a movement card or the rush attack card.
                 else // if (DifferenceInXCoordinate != 1 || DifferenceInYCoordinate != 1)
                 {
-                    for(int i = 0; i < BattleData.EnemyDataList[EnemyID].handCard.Count; i++)
-                    {
-                        if (BattleData.EnemyDataList[EnemyID].handCard[i].ID != HEADBUTTCARDID)
-                        {
-                            info.otherInfo.Add(BattleData.EnemyDataList[EnemyID].handCard[i].ID + "");
-                            break;
-                        }
-                    }
-                    info.card = dicardManager;
-                    BattleLevelDriver.NewCardPlayed(info);
+                    Discard(info, HEADBUTTCARDID);
                     return;
                 }
             }
@@ -309,42 +302,26 @@ public class SheepEnemy : Enemy
             {
                 // If we are closer in the y coordinate or aligned in the x coordinate and the player is roughly or exactly above us then use a run top card in that direction!
                 if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && HasRunTopCardAtHand && (PlayerPosition.y > SelfPosition.y))
-                //if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && HasRunTopCardAtHand && (PlayerPosition.y < SelfPosition.y))
                 { 
-                    info.card = Deck.FindCardInHand(SheepData.handCard, RUNTOPCARDID);
-                    info.Selection.Add(new Vector2(0, (DifferenceInYCoordinate - 1)));
-                    //info.Selection.Add(new Vector2(0, -(DifferenceInYCoordinate - 1)));
-                    BattleLevelDriver.NewCardPlayed(info);
-                    UpdatePiles(info.card);
+                    Play(info, RUNTOPCARDID, SheepData, new Vector2(0, (DifferenceInYCoordinate - 1)));
                     return;
                 }
                 // If we are closer in the y coordinate or aligned in the x coordinate and the player is roughly or exactly below us then use a run down card in that direction!
                 else if ((DifferenceInYCoordinate < DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && HasRunDownCardAtHand && (PlayerPosition.y < SelfPosition.y))
-                //else if ((DifferenceInYCoordinate < DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && HasRunDownCardAtHand && (PlayerPosition.y > SelfPosition.y))
                 {
-                    info.card = Deck.FindCardInHand(SheepData.handCard, RUNDOWNCARDID);
-                    info.Selection.Add(new Vector2(0, -(DifferenceInYCoordinate - 1)));
-                    //info.Selection.Add(new Vector2(0, DifferenceInYCoordinate - 1));
-                    BattleLevelDriver.NewCardPlayed(info);
-                    UpdatePiles(info.card);
+                    Play(info, RUNDOWNCARDID, SheepData, new Vector2(0, -(DifferenceInYCoordinate - 1)));
                     return;
                 }
                 // If we are closer in the x coordinate or aligned in the y coordinate and the player is roughly or exactly to the right of us then use a run right card in that direction!
                 else if ((DifferenceInXCoordinate <= DifferenceInYCoordinate || PlayerPosition.y == SelfPosition.y) && HasRunRightCardAtHand && (PlayerPosition.x > SelfPosition.x))
                 {
-                    info.card = Deck.FindCardInHand(SheepData.handCard, RUNRIGHTCARDID);
-                    info.Selection.Add(new Vector2(DifferenceInXCoordinate - 1, 0));
-                    BattleLevelDriver.NewCardPlayed(info);
-                    UpdatePiles(info.card);
+                    Play(info, RUNRIGHTCARDID, SheepData, new Vector2(DifferenceInXCoordinate - 1, 0));
                     return;
                 }
                 // If we are closer in the x coordinate or aligned in the y coordinate and the player is roughly or exactly to the left of us then use a run left card in that direction!
                 else if ((DifferenceInXCoordinate <= DifferenceInYCoordinate || PlayerPosition.y == SelfPosition.y) && HasRunLeftCardAtHand && (PlayerPosition.x < SelfPosition.x))
                 {
-                    info.card = Deck.FindCardInHand(SheepData.handCard, RUNLEFTCARDID);
-                    info.Selection.Add(new Vector2(-(DifferenceInXCoordinate - 1), 0));
-                    BattleLevelDriver.NewCardPlayed(info);
-                    UpdatePiles(info.card);
+                    Play(info, RUNLEFTCARDID, SheepData, new Vector2(-(DifferenceInXCoordinate - 1), 0));
                     return;
                 }
                 // If we, however, don't have the run card we need, then play the walk card instead!
@@ -352,66 +329,51 @@ public class SheepEnemy : Enemy
                 {
                     // If we are closer in the y coordinate or aligned in the x coordinate and the player is roughly or exactly above us then walk upwards.
                     if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && PlayerPosition.y > SelfPosition.y && HasWalkCardAtHand)
-                    //if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && PlayerPosition.y < SelfPosition.y && HasWalkCardAtHand)
                     {
-                        info.card = Deck.FindCardInHand(SheepData.handCard, WALKCARDID);
-                        info.Selection.Add(new Vector2(0, 1));
-                        //info.Selection.Add(new Vector2(0, -1));
-                        BattleLevelDriver.NewCardPlayed(info);
-                        UpdatePiles(info.card);
+                        Play(info, WALKCARDID, SheepData, new Vector2(0, 1));
                         return;
                     }
                     // If we are closer in the y coordinate or aligned in the x coordinate and the player is roughly or exactly below us then walk downwards.
                     else if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && PlayerPosition.y < SelfPosition.y && HasWalkCardAtHand)
-                    //else if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && PlayerPosition.y > SelfPosition.y && HasWalkCardAtHand)
                     {
-                        info.card = Deck.FindCardInHand(SheepData.handCard, WALKCARDID);
-                        info.Selection.Add(new Vector2(0, -1));
-                        //info.Selection.Add(new Vector2(0, 1));
-                        BattleLevelDriver.NewCardPlayed(info);
-                        UpdatePiles(info.card);
+                        Play(info, WALKCARDID, SheepData, new Vector2(0, -1));
                         return;
                     }
                     // If we are closer in the x coordinate or aligned in the y coordinate and the player is roughly or exactly to the right of us then walk towards right.
                     else if ((DifferenceInXCoordinate <= DifferenceInYCoordinate || PlayerPosition.y == SelfPosition.y) && PlayerPosition.x > SelfPosition.x && HasWalkCardAtHand)
                     {
-                        info.card = Deck.FindCardInHand(SheepData.handCard, WALKCARDID);
-                        info.Selection.Add(new Vector2(1, 0));
-                        BattleLevelDriver.NewCardPlayed(info);
-                        UpdatePiles(info.card);
+                        Play(info, WALKCARDID, SheepData, new Vector2(1, 0));
                         return;
                     }
                     // If we are closer in the x coordinate or aligned in the y coordinate and the player is roughly or exactly to the left of us then walk towards left.
                     else if ((DifferenceInXCoordinate <= DifferenceInYCoordinate || PlayerPosition.y == SelfPosition.y) && PlayerPosition.x < SelfPosition.x && HasWalkCardAtHand)
                     {
-                        info.card = Deck.FindCardInHand(SheepData.handCard, WALKCARDID);
-                        info.Selection.Add(new Vector2(-1, 0));
-                        BattleLevelDriver.NewCardPlayed(info);
-                        UpdatePiles(info.card);
+                        Play(info, WALKCARDID, SheepData, new Vector2(-1, 0));
                         return;
                     }
                 }
             }
             else
             {
-                Debug.Log("Discard");
-
-                info.otherInfo.Add(BattleData.EnemyDataList[EnemyID].handCard[0].ID + "");
-                info.card = dicardManager;
-                BattleLevelDriver.NewCardPlayed(info);
+                Debug.Log("Discarding to try to get the headbutt card or rush attack card!");
+                // If we have neither attack card, then discard a card and try to get the headbutt 
+                // card or rush attack card!
+                // We discard the first card on our hand!
+                Discard(info, SheepData.handCard[0].ID);
                 return;
-                // If we have neither attack card, then discard a card and try to get the headbutt card or rush attack card!
             }
         }
         // If we are not in range, try to move into range!
         else
         {
-            Debug.Log("Not in range!");
+            Debug.Log("Sheep is not in range!");
             // Do we have a movement card?
-            if (HasWalkCardAtHand || HasRunTopCardAtHand || HasRunDownCardAtHand || HasRunLeftCardAtHand || HasRunRightCardAtHand)
+            if (HasWalkCardAtHand || HasRunTopCardAtHand || HasRunDownCardAtHand || 
+                HasRunLeftCardAtHand || HasRunRightCardAtHand)
             {
                 // Do we have both the walk and run cards?
-                if (HasWalkCardAtHand && (HasRunTopCardAtHand || HasRunDownCardAtHand || HasRunLeftCardAtHand || HasRunRightCardAtHand))
+                if (HasWalkCardAtHand && (HasRunTopCardAtHand || HasRunDownCardAtHand || 
+                    HasRunLeftCardAtHand || HasRunRightCardAtHand))
                 {
                     // If we have both types of cards and the distance to get into range is greater then 1 grid, then use a run card.
                     if ((DifferenceInXCoordinate >= 5 || DifferenceInYCoordinate >= 5) && !(DifferenceInXCoordinate == 1 || DifferenceInYCoordinate == 1))
@@ -674,82 +636,64 @@ public class SheepEnemy : Enemy
                 // Otherwise, play whatever movement card we have at hand!
                 else
                 {
-                    Debug.Log("Play whatever movement card we have at hand!");
                     // If we are closer in the y coordinate or aligned in the x coordinate and the player is roughly or exactly above us then use a run top card in that direction!
                     if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && HasRunTopCardAtHand && (PlayerPosition.y > SelfPosition.y))
-                    //if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && HasRunTopCardAtHand && (PlayerPosition.y < SelfPosition.y))
                     {
-                        info.card = Deck.FindCardInHand(SheepData.handCard, RUNTOPCARDID);
+                        Vector2 movementVector;
                         if (DifferenceInYCoordinate < 3)
                         {
-                            info.Selection.Add(new Vector2(0, DifferenceInYCoordinate));
+                            movementVector = new Vector2(0, DifferenceInYCoordinate);
                         }
                         else // if (DifferenceInYCoordinate >= 3)
                         {
-                            info.Selection.Add(new Vector2(0, 3));
+                            movementVector = new Vector2(0, 3);
                         }
-                        //DifferenceInYCoordinate < 3 ? info.Selection.Add(new Vector2(0, DifferenceInYCoordinate)) : info.Selection.Add(new Vector2(0, 3));
-                        //info.Selection.Add(new Vector2(0, 3));
-                        //info.Selection.Add(new Vector2(0, -3));
-                        BattleLevelDriver.NewCardPlayed(info);
-                        UpdatePiles(info.card);
+                        Play(info, RUNTOPCARDID, SheepData, movementVector);
                         return;
                     }
                     // If we are closer in the y coordinate or aligned in the x coordinate and the player is roughly or exactly below us then use a run down card in that direction!
                     else if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && HasRunDownCardAtHand && (PlayerPosition.y < SelfPosition.y))
-                    //else if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && HasRunDownCardAtHand && (PlayerPosition.y > SelfPosition.y))
                     {
-                        info.card = Deck.FindCardInHand(SheepData.handCard, RUNDOWNCARDID);
+                        Vector2 movementVector;
                         if (DifferenceInYCoordinate < 3)
                         {
-                            info.Selection.Add(new Vector2(0, -DifferenceInYCoordinate));
+                            movementVector = new Vector2(0, -DifferenceInYCoordinate);
                         }
                         else // if (DifferenceInYCoordinate >= 3)
                         {
-                            info.Selection.Add(new Vector2(0, -3));
+                            movementVector = new Vector2(0, -3);
                         }
-                        //DifferenceInYCoordinate < 3 ? info.Selection.Add(new Vector2(0, -DifferenceInYCoordinate)) : info.Selection.Add(new Vector2(0, -3));
-                        //info.Selection.Add(new Vector2(0, -3));
-                        //info.Selection.Add(new Vector2(0, 3));
-                        Debug.Log("Updated info.Selection value:" + info.Selection[0]);
-                        BattleLevelDriver.NewCardPlayed(info);
-                        UpdatePiles(info.card);
+                        Play(info, RUNDOWNCARDID, SheepData, movementVector);
                         return;
                     }
                     // If we are closer in the x coordinate or aligned in the y coordinate and the player is roughly or exactly to the right of us then use a run right card in that direction!
                     else if ((DifferenceInXCoordinate <= DifferenceInYCoordinate || PlayerPosition.y == SelfPosition.y) && HasRunRightCardAtHand && (PlayerPosition.x > SelfPosition.x))
                     {
-                        info.card = Deck.FindCardInHand(SheepData.handCard, RUNRIGHTCARDID);
+                        Vector2 movementVector;
                         if (DifferenceInXCoordinate < 3)
                         {
-                            info.Selection.Add(new Vector2(DifferenceInXCoordinate, 0));
+                            movementVector = new Vector2(DifferenceInXCoordinate, 0);
                         }
                         else // if (DifferenceInXCoordinate >= 3)
                         {
-                            info.Selection.Add(new Vector2(3, 0));
+                            movementVector = new Vector2(3, 0);
                         }
-                        //DifferenceInXCoordinate < 3 ? info.Selection.Add(new Vector2(DifferenceInXCoordinate, 0)) : info.Selection.Add(new Vector2(3, 0));
-                        //info.Selection.Add(new Vector2(3, 0));
-                        BattleLevelDriver.NewCardPlayed(info);
-                        UpdatePiles(info.card);
+                        Play(info, RUNRIGHTCARDID, SheepData, movementVector);
                         return;
                     }
                     // If we are closer in the x coordinate or aligned in the y coordinate and the player is roughly or exactly to the left of us then use a run left card in that direction!
                     else if ((DifferenceInXCoordinate <= DifferenceInYCoordinate || PlayerPosition.y == SelfPosition.y) && HasRunLeftCardAtHand && (PlayerPosition.x < SelfPosition.x))
                     {
-                        info.card = Deck.FindCardInHand(SheepData.handCard, RUNLEFTCARDID);
+                        Vector2 movementVector;
                         if (DifferenceInXCoordinate < 3)
                         {
-                            info.Selection.Add(new Vector2(-DifferenceInXCoordinate, 0));
+                            movementVector = new Vector2(-DifferenceInXCoordinate, 0);
                         }
                         else // if (DifferenceInXCoordinate >= 3)
                         {
-                            info.Selection.Add(new Vector2(-3, 0));
+                            movementVector = new Vector2(-3, 0);
                         }
-                        //DifferenceInXCoordinate < 3 ? info.Selection.Add(new Vector2(-DifferenceInXCoordinate, 0)) : info.Selection.Add(new Vector2(-3, 0));
-                        //info.Selection.Add(new Vector2(-3, 0));
-                        BattleLevelDriver.NewCardPlayed(info);
-                        UpdatePiles(info.card);
+                        Play(info, RUNLEFTCARDID, SheepData, movementVector);
                         return;
                     }
                     // If we, however, don't have the run card we need, then play the walk card instead!
@@ -757,83 +701,53 @@ public class SheepEnemy : Enemy
                     {
                         // If we are closer in the y coordinate or aligned in the x coordinate and the player is roughly or exactly above us then walk upwards.
                         if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && PlayerPosition.y > SelfPosition.y)
-                        //if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && PlayerPosition.y < SelfPosition.y)
                         {
-                            info.card = Deck.FindCardInHand(SheepData.handCard, WALKCARDID);
-                            info.Selection.Add(new Vector2(0, 1));
-                            //info.Selection.Add(new Vector2(0, -1));
-                            BattleLevelDriver.NewCardPlayed(info);
-                            UpdatePiles(info.card);
+                            Play(info, WALKCARDID, SheepData, new Vector2(0, 1));
                             return;
                         }
                         // If we are closer in the y coordinate or aligned in the x coordinate and the player is roughly or exactly below us then walk downwards.
                         else if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && PlayerPosition.y < SelfPosition.y)
-                        //else if ((DifferenceInYCoordinate <= DifferenceInXCoordinate || PlayerPosition.x == SelfPosition.x) && PlayerPosition.y > SelfPosition.y)
                         {
-                            info.card = Deck.FindCardInHand(SheepData.handCard, WALKCARDID);
-                            info.Selection.Add(new Vector2(0, -1));
-                            //info.Selection.Add(new Vector2(0, 1));
-                            BattleLevelDriver.NewCardPlayed(info);
-                            UpdatePiles(info.card);
+                            Play(info, WALKCARDID, SheepData, new Vector2(0, -1));
                             return;
                         }
                         // If we are closer in the x coordinate or aligned in the y coordinate and the player is roughly or exactly to the right of us then walk towards right.
                         else if ((DifferenceInXCoordinate <= DifferenceInYCoordinate || PlayerPosition.y == SelfPosition.y) && PlayerPosition.x > SelfPosition.x)
                         {
-                            info.card = Deck.FindCardInHand(SheepData.handCard, WALKCARDID);
-                            info.Selection.Add(new Vector2(1, 0));
-                            BattleLevelDriver.NewCardPlayed(info);
-                            UpdatePiles(info.card);
+                            Play(info, WALKCARDID, SheepData, new Vector2(1, 0));
                             return;
                         }
                         // If we are closer in the x coordinate or aligned in the y coordinate and the player is roughly or exactly to the left of us then walk towards left.
                         else if ((DifferenceInXCoordinate <= DifferenceInYCoordinate || PlayerPosition.y == SelfPosition.y) && PlayerPosition.x < SelfPosition.x)
                         {
-                            info.card = Deck.FindCardInHand(SheepData.handCard, WALKCARDID);
-                            info.Selection.Add(new Vector2(-1, 0));
-                            BattleLevelDriver.NewCardPlayed(info);
-                            UpdatePiles(info.card);
+                            Play(info, WALKCARDID, SheepData, new Vector2(-1, 0));
                             return;
                         }
                     }
+                    // There may be a case where although we have a movement card at hand, we 
+                    // shouldn't play it. Then, we simply discard to try to get another movement
+                    // card.
                     else
                     {
-                        Debug.Log("Discard");
-                        info.otherInfo.Add(BattleData.EnemyDataList[EnemyID].handCard[0].ID + "");
-                        info.card = dicardManager;
-                        BattleLevelDriver.NewCardPlayed(info);
+                        Debug.Log("Discarding to try to get another movement card we can play");
+                        // We discard the first card on our hand!
+                        Discard(info, SheepData.handCard[0].ID);
                         return;
-
                     }
                 }
             }
-            // If we don't have any movement cards, discard one of the cards at hand to try to get a movement card.
+            // If we don't have any movement cards, discard one of the cards at hand to try to get 
+            // a movement card.
             else
             {
-                Debug.Log("Discard");
-
-                info.otherInfo.Add(BattleData.EnemyDataList[EnemyID].handCard[0].ID + "");
-                info.card = dicardManager;
-                BattleLevelDriver.NewCardPlayed(info);
+                Debug.Log("Discarding to try to get a movement card!");
+                // We discard the first card on our hand!
+                Discard(info, SheepData.handCard[0].ID);
                 return;
             }
         }
-        Debug.Log("What");
-    }
-    private void resetFlags()
-    {
-        HasWalkCardAtHand = false;
-        HasRunTopCardAtHand = false;
-        HasRunDownCardAtHand = false;
-        HasRunLeftCardAtHand = false;
-        HasRunRightCardAtHand = false;
-        HasHeadbuttCardAtHand = false;
-        HasRushAttackCardAtHand = false;
-        HasPhotosynthesisCardAtHand = false;
-
-        PlayerIsAbove = false;
-        PlayerIsBelow = false;
-        PlayerIsToTheLeft = false;
-        PlayerIsToTheRight = false;
+        // Getting this might be caused by a bug or in case of player and sheep getting on top of
+        // each other, it is the defined behavior.
+        Debug.Log("No action was taken!");
     }
 }
