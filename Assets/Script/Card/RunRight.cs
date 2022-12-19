@@ -19,7 +19,7 @@ public class RunRight : Card
         TileMapButton.MakeSelectable(this);
         yield return new WaitUntil(() => TargetNum == 0);
         TileMapButton.MakeUnSelectable();
-        BattleData.PlayingACard = false;
+        //BattleData.PlayingACard = false;
         UpdateData(0, ID, Info);
     }
 

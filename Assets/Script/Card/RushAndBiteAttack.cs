@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RushAndCollisionAttack: Card
+public class RushAndBiteAttack : Card
 {
 
-    public override string Name { get { return "RushAndCollisionAttack"; } }
-    public override Rarity rarity { get { return Rarity.basic; } }
-    public override int Speed { get { return 5; } }
-    public override int ID { get { return 7; } }
+    public override string Name { get { return "RushAndBiteAttack"; } }
+    public override Rarity rarity { get { return Rarity.common; } }
+    public override int Speed { get { return 6; } }
+    public override int ID { get { return 16; } }
 
     public override IEnumerator Play()
     {
@@ -42,13 +42,14 @@ public class RushAndCollisionAttack: Card
 
         yield return new WaitUntil(() => TargetNum == 0);
         TileMapButton.MakeUnSelectable();
-       // BattleData.PlayingACard = false;
+        // BattleData.PlayingACard = false;
         UpdateData(0, ID, Info);
     }
 
     public override void Activate(InfoForActivate Info)
     {
-        if (Info.owner_ID == 0) {
+        if (Info.owner_ID == 0)
+        {
             Vector2 oriPos = BattleData.playerData.position;
 
             Vector2 moveDir = Info.Selection[0];
@@ -57,10 +58,10 @@ public class RushAndCollisionAttack: Card
 
             for (int i = 1; i < BattleData.EnemyDataList.Count + 1; i++)
             {
-                if (BattleData.EnemyDataList[i].position == Info.Selection[0]+oriPos)
+                if (BattleData.EnemyDataList[i].position == Info.Selection[0] + oriPos)
                 {
                     BattleData.EnemyData data = BattleData.EnemyDataList[i];
-                    data.currentHealth -= 2 + Distance;
+                    data.currentHealth -= 3 + Distance;
                     BattleData.EnemyDataList[i] = data;
                     UI.UpdateEnemyData(i);
                 }
@@ -86,13 +87,15 @@ public class RushAndCollisionAttack: Card
 
             if (BattleData.playerData.position == Info.Selection[0] + oriPos)
             {
-                BattleData.playerData.currentHealth -= 2 + Distance;
+                BattleData.playerData.currentHealth -= 3 + Distance;
                 UI.UpdatePlayerData();
-            }        
+            }
+
             BattleData.EnemyData newData = BattleData.EnemyDataList[Info.owner_ID];
             newData.position += Info.Selection[0] - Info.Selection[0] / Info.Selection[0].magnitude;
             BattleData.EnemyDataList[Info.owner_ID] = newData;
             UI.UpdateEnemyData(Info.owner_ID);
+
 
         }
     }

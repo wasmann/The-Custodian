@@ -2,28 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RunLeft: Card
-{   public override string Name { get { return "RunLeft"; } }
-    public override Rarity rarity { get { return Rarity.basic; } }
-    public override int Speed { get { return 3; } }
-    public override int ID { get { return 4; } }
+public class EscapeInstinct : Card
+{
+    public override string Name { get { return "EscapeInstinct"; } }
+    public override Rarity rarity { get { return Rarity.legendary   ; } }
+    public override int Speed { get { return 1; } }
+    public override int ID { get { return 17; } }
     public override IEnumerator Play()
     {
-        //here need more implementation about "not allowing to walk on occupied grid"
+        BattleData.playerData.currentEnergy -= 1;
+        UI.UpdatePlayerData();
+        Info.direction.Add(BattleData.playerData.position + new Vector2(1, 0));
         Info.direction.Add(BattleData.playerData.position + new Vector2(-1, 0));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(-2, 0));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(-3, 0));
+        Info.direction.Add(BattleData.playerData.position + new Vector2(0, -1));
+        Info.direction.Add(BattleData.playerData.position + new Vector2(0, 1));
         yield return new WaitForSeconds(0.1f);
         UI.ShowNotation(this);
         TileMapButton.MakeSelectable(this);
         yield return new WaitUntil(() => TargetNum == 0);
         TileMapButton.MakeUnSelectable();
-       // BattleData.PlayingACard = false;
+        //BattleData.PlayingACard = false;
         UpdateData(0, ID, Info);
     }
 
     public override void Activate(InfoForActivate Info)
     {
+        int random = (int)Random.Range(1, 3);
+        Info.Selection[0] *=random;
         if (Info.owner_ID == 0)
         {
             BattleData.playerData.position += Info.Selection[0];
@@ -37,7 +42,6 @@ public class RunLeft: Card
             UI.UpdateEnemyData(Info.owner_ID);
         }
     }
-
     private void Start()
     {
         TargetNum = 1;
@@ -45,9 +49,9 @@ public class RunLeft: Card
         SelectionNotation = "ArrowSelection";
 
     }
+
     public override void ReSetTarget()
     {
         TargetNum = 1;
     }
-
 }

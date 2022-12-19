@@ -20,6 +20,7 @@ public abstract class Card : MonoBehaviour
 
     public enum Rarity
     {
+        trash,
         basic,
         common,
         rare,
@@ -75,7 +76,7 @@ public abstract class Card : MonoBehaviour
         if (BattleData.AbleToPalyCard == true)
         {
             ReSetTarget();
-            BattleData.PlayingACard = true;
+           // BattleData.PlayingACard = true;
             BattleData.AbleToPalyCard = false;
             Info = new InfoForActivate();
             Info.owner_ID = 0;
@@ -89,9 +90,4 @@ public abstract class Card : MonoBehaviour
             Debug.Log("Another card is now ready to play");
         }
     }
-
-   public static void Discard_Enemy(Card card)
-   {
-        
-   }
 }

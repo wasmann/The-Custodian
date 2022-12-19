@@ -23,12 +23,12 @@ public class BattleData : MonoBehaviour
         public Enemy enemy;//script
         public int maxHealth;
         public int currentHealth;
-        public int ID;
+        //public int ID;
         public List<Card> handCard;
         public List<Card> discardPile;
         public List<Card> drawPile;
         public GameObject obj;
-        
+        public BuffAndDebuff.Buff buff;        
     }
 
     public struct PlayerData
@@ -41,6 +41,7 @@ public class BattleData : MonoBehaviour
         public List<Card> handCard;
         public List<Card> discardPile;
         public List<Card> drawPile;
+        public BuffAndDebuff.Buff buff;
     }
     
 
