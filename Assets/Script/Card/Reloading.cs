@@ -2,17 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Reloading : MonoBehaviour
+public class Reloading : Card
 {
-    // Start is called before the first frame update
-    void Start()
+    public override string Name { get { return "Reloading"; } }
+    public override Rarity rarity { get { return Rarity.trash; } }
+    public override int Speed { get { return 3; } }
+    public override int ID { get { return 20; } }
+    public override IEnumerator Play()
     {
-        
+        Info.owner_ID = 0;
+        yield return new WaitForSeconds(0.1f);
+        UpdateData(0, ID, Info);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Activate(InfoForActivate Info)
     {
-        
+        if (Info.owner_ID == 0)
+        {
+            //TODO:show animation 
+            Debug.Log("player reloading");
+        }
+        else
+        {
+            BattleData.EnemyData data = BattleData.EnemyDataList[Info.owner_ID];
+            data.buff.Bullet = true;
+            BattleData.EnemyDataList[Info.owner_ID] = data;
+            UI.UpdateEnemyData(Info.owner_ID);
+            Debug.Log("");
+        }
+    }
+    public override void ReSetTarget()
+    {
+        TargetNum = 0;
     }
 }
