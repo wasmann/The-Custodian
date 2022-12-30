@@ -39,7 +39,7 @@ public class Deck : MonoBehaviour
     }
 
     // Anything left?
-    public static Card FindCardInHand(List<Card> handcard,int CardID)
+    public static Card FindCardInHand(List<Card> handcard, int CardID)
     {
         for(int i = 0; i < handcard.Count; i++)
         {
