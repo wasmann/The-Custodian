@@ -3901,6 +3901,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbe9b3dc4728a5b45a218392a68c2dc8, type: 3}
+--- !u!1 &1274371744 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6047702001210631393, guid: 10c871bf3a39da44d9ecf535712aa426, type: 3}
+  m_PrefabInstance: {fileID: 6047702002432047681}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1274371749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274371744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c39896436823d47b6e876ff20d9df7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyID: 0
+  dicardManager: {fileID: 0}
+  deck: []
 --- !u!4 &1331792321 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3155985619896615189, guid: 62635bc6fb77e0a49af0b734481b9c96, type: 3}
@@ -5268,6 +5288,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6047702001210631392, guid: 10c871bf3a39da44d9ecf535712aa426, type: 3}
+      propertyPath: m_Animations.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6047702001210631392, guid: 10c871bf3a39da44d9ecf535712aa426, type: 3}
+      propertyPath: m_Animations.Array.data[6]
+      value: 
+      objectReference: {fileID: 7400000, guid: 070f03e5129cfe642a3eb2d69cef5daa, type: 2}
+    - target: {fileID: 6047702001210631392, guid: 10c871bf3a39da44d9ecf535712aa426, type: 3}
+      propertyPath: m_Animations.Array.data[7]
+      value: 
+      objectReference: {fileID: 7400000, guid: af7836a0c97d90641acfeda5a0669d96, type: 2}
     - target: {fileID: 6047702001210631393, guid: 10c871bf3a39da44d9ecf535712aa426, type: 3}
       propertyPath: m_Name
       value: GoodLabWorker
