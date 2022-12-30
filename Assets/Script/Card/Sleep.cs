@@ -11,7 +11,6 @@ public class Sleep : Card
     public override int ID { get { return 10; } }
     public override IEnumerator Play()
     {
-        Info.owner_ID = 0;
         yield return new WaitForSeconds(0.1f);
         UpdateData(0, ID, Info);
     }

@@ -10,6 +10,9 @@ public class BuffAndDebuff : MonoBehaviour
         public int Frozen;
         public bool Fear;
         public bool Courage;
+        public int Shield;
+        public bool Bullet;
+        public int ReverseEle;
    }
 
    public static Buff CreateANewState()
@@ -19,6 +22,9 @@ public class BuffAndDebuff : MonoBehaviour
         returnValue.Frozen = 0;
         returnValue.Fear = false;
         returnValue.Courage = false;
+        returnValue.Shield = 0;
+        returnValue.ReverseEle = 0;
+        returnValue.Bullet = true;
         return returnValue;
    }
 

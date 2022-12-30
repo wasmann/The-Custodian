@@ -65,14 +65,7 @@ public class RushAndCollisionAttack: Card
                     UI.UpdateEnemyData(i);
                 }
             }
-            if (moveDir.x > 0)
-                BattleData.playerData.position = Info.Selection[0] - new Vector2(-1, 0);
-            else if (moveDir.x < 0)
-                BattleData.playerData.position = Info.Selection[0] - new Vector2(1, 0);
-            else if (moveDir.y < 0)
-                BattleData.playerData.position = Info.Selection[0] - new Vector2(0, 1);
-            else
-                BattleData.playerData.position = Info.Selection[0] - new Vector2(0, -1);
+            BattleData.playerData.position += Info.Selection[0] - Info.Selection[0] / Info.Selection[0].magnitude;
             UI.UpdatePlayerData();
         }
 
@@ -93,6 +86,7 @@ public class RushAndCollisionAttack: Card
             newData.position += Info.Selection[0] - Info.Selection[0] / Info.Selection[0].magnitude;
             BattleData.EnemyDataList[Info.owner_ID] = newData;
             UI.UpdateEnemyData(Info.owner_ID);
+            //Ui.UpdateEnemyData(newData.ID)
 
         }
     }

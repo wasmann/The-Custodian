@@ -72,6 +72,11 @@ public class GunShoot : Card
                 || BattleData.playerData.position == Info.Selection[0] * 4 + BattleData.EnemyDataList[Info.owner_ID].position
                 || BattleData.playerData.position == Info.Selection[0] * 5 + BattleData.EnemyDataList[Info.owner_ID].position)
             {
+                BattleData.EnemyData data = BattleData.EnemyDataList[Info.owner_ID];
+                data.buff.Bullet = false;
+                BattleData.EnemyDataList[Info.owner_ID] = data;
+                UI.UpdateEnemyData(Info.owner_ID);
+
                 BattleData.playerData.buff.Frozen += 4;
                 UI.UpdatePlayerData();
             }
