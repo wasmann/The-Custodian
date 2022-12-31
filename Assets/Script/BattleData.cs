@@ -9,6 +9,7 @@ public class BattleData : MonoBehaviour
     public static int BattleLevelID;
     public static Dictionary<int,EnemyData> EnemyDataList;
     public static PlayerData playerData;
+    public static EnvironmentData enviromentData;
 
     public static bool PlayingACard = false;//When the player plays a card, set Busy to true, when that card is activated, set this to false
     public static bool AbleToPalyCard = true;
@@ -31,6 +32,10 @@ public class BattleData : MonoBehaviour
         public BuffAndDebuff.Buff buff;        
     }
 
+    public struct EnvironmentData
+    {
+        
+    }
     public struct PlayerData
     {
         public Vector2 position;
