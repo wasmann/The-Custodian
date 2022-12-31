@@ -477,6 +477,12 @@ public class SheepEnemy : Enemy
                                        DifferenceInXCoordinate, DifferenceInYCoordinate);
                     if (PlayedACard) { return; }
                 }
+                Debug.Log("Discarding to try to get an attack card or movement card we can use!");
+                // If we have neither attack card or a useful movement card, then discard a card 
+                // and try to get the headbutt card or rush attack card!
+                // We discard the first card on our hand!
+                Discard(info, SheepData.handCard[0].ID);
+                return;
             }
             else
             {
