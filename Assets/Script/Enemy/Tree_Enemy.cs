@@ -7,6 +7,7 @@ public class Tree_Enemy : Enemy
     public override string EnemyName { get { return "Tree"; } }
 
     public List<Card> deck;
+    public override int AttackMaxRange { get { return 0; } }
     public override List<Card> CardsDeck
     {
         get {

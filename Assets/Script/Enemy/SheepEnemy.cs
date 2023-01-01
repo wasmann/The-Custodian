@@ -17,6 +17,7 @@ public class SheepEnemy : Enemy
     }
     public override int Health { get { return 5; } }
 
+    public override int AttackMaxRange { get { return 3; } }
     public override int HandCardNum { get { return 3; } }
 
     const int WALKCARDID = 1;

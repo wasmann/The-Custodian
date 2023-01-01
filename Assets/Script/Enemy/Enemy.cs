@@ -8,7 +8,7 @@ public abstract class Enemy : MonoBehaviour
     public abstract string EnemyName { get; }
     public abstract List<Card> CardsDeck { get; }
     public abstract int Health { get; }
-
+    public abstract int AttackMaxRange { get; }
     public abstract int HandCardNum { get; }
     public int EnemyID;
 

@@ -23,6 +23,7 @@ public class AlfaSolder : Enemy
     }
     public override int Health { get { return 8; } }
 
+    public override int AttackMaxRange { get { return 5; } }
     public override int HandCardNum { get { return 2; } }
 
 
@@ -422,14 +423,14 @@ public class AlfaSolder : Enemy
                     if (disx <= 5) 
                         info.Selection.Add(BattleData.playerData.position - BattleData.EnemyDataList[EnemyID].position);
                     else
-                        info.Selection.Add(new Vector2(Mathf.Abs(BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x)/ (BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x)*5,0));
+                        info.Selection.Add(new Vector2(Mathf.Sign(BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x) * 5,0));
                 }
                 else
                 {
                     if (disy <= 5)
                         info.Selection.Add(BattleData.playerData.position - BattleData.EnemyDataList[EnemyID].position);
                     else
-                        info.Selection.Add(new Vector2(0,Mathf.Abs(BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y) / (BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y) * 5));
+                        info.Selection.Add(new Vector2(0, Mathf.Sign(BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y) * 5));
                     
                 }
                 break;
@@ -452,9 +453,9 @@ public class AlfaSolder : Enemy
                 if (state.AlignOrNot)
                 {
                     if(BattleData.playerData.position.x== BattleData.EnemyDataList[EnemyID].position.x)
-                        info.Selection.Add(new Vector2(Mathf.Abs(BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x) / (BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x) * 5, 0));
+                        info.Selection.Add(new Vector2(Mathf.Sign(BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x) * 5, 0));
                     else
-                        info.Selection.Add(new Vector2(0, Mathf.Abs(BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y) / (BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y) * 5));
+                        info.Selection.Add(new Vector2(0, Mathf.Sign(BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y) * 5));
                 }
                 else//random dash
                 {
