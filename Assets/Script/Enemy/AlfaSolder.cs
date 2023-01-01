@@ -168,7 +168,7 @@ public class AlfaSolder : Enemy
             state.ObsticalInBetween = false;
         //Injured
         if (BattleData.EnemyDataList[EnemyID].currentHealth <= (BattleData.EnemyDataList[EnemyID].maxHealth / 3))
-            state.Injured = (int)(1 - BattleData.EnemyDataList[EnemyID].currentHealth / (BattleData.EnemyDataList[EnemyID].maxHealth / 3)) * 2 + 1;
+            state.Injured = (int)(1 - BattleData.EnemyDataList[EnemyID].currentHealth / (BattleData.EnemyDataList[EnemyID].maxHealth / 2)) * 2 + 1;
         else
             state.Injured = 0;
         //Loaded
