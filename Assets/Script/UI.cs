@@ -22,14 +22,23 @@ public class UI : MonoBehaviour
     const float CARD_WIDTH = 1;
     const float TIME_LINE_HEIGHT = 0.5f;
     const float TIME_LINE_SPEED = 1.0f;
+
     //static string PREFAB_PATH = "Prefab/Card/";
 
+    //card
     public static List<Vector3> HandCardPos;
-    public static Vector3[] TimeLinePos_Enemy=new Vector3[10];
+    public static Vector3[] TimeLinePos_Enemy = new Vector3[10];
     public static Vector3[] TimeLinePos_Player = new Vector3[10];
 
     static List<GameObject> timelineObj;
     static GameObject NotationList;
+
+    //pause
+    static GameObject pauseButton;
+    public static bool isPaused = false;
+
+    //duplication
+    static GameObject duplicationPanel;
 
     static Vector3 mouseWorldPos;
     
@@ -45,6 +54,9 @@ public class UI : MonoBehaviour
         energy.maxValue = BattleData.playerData.maxEnergy;
 
         timelineObj = new List<GameObject>();
+
+        pauseButton = GameObject.Find("PauseButton");
+        duplicationPanel = GameObject.Find("DuplicationPanel");
 
         UpdatePlayerData();
         UpdateAllEnemyData();
@@ -78,7 +90,7 @@ public class UI : MonoBehaviour
 
 
 
-    public static void  ShowNotation(Card card)
+    public static void ShowNotation(Card card)
     {
         if (card.RangeNotation!="None")
         {
@@ -142,7 +154,22 @@ public class UI : MonoBehaviour
 
     public static void ShowDuplicationWin()
     {
-
+        int i = 0, j = 0;
+        foreach(Card card in BattleData.NewCard)
+        {
+            
+            GameObject obj = Instantiate(Resources.Load("Prefab/CardOnTimeLine/" + card.Name) as GameObject);
+            obj.transform.SetParent(GameObject.Find("Canvas/DuplicationPanel").transform);
+            obj.transform.localScale = new Vector3(20, 20, 0);
+            if (i >= 7)
+            {
+                i = 0;
+                j++;
+            }
+            obj.transform.localPosition = new Vector3(10 * i, 5*j, 0);
+            i++;
+        }
+        duplicationPanel.SetActive(true);
     }
 
     public static void UpdatePlayerData()
@@ -215,6 +242,26 @@ public class UI : MonoBehaviour
         for (int i = 0; i < BattleData.playerData.drawPile.Count; i++)
         {
             BattleData.playerData.drawPile[i].gameObject.SetActive(false);
+        }
+    }
+
+    public static void Pause()
+    {
+        if (isPaused)
+        {
+            //Child 1 is continue, 0 is pause
+            pauseButton.transform.GetChild(0).gameObject.SetActive(false);
+            pauseButton.transform.GetChild(1).gameObject.SetActive(true);
+            //duplicationPanel.SetActive(false);
+            isPaused = false;
+        }
+        else
+        {
+            
+            pauseButton.transform.GetChild(0).gameObject.SetActive(true);
+            pauseButton.transform.GetChild(1).gameObject.SetActive(false);
+            //duplicationPanel.SetActive(true);
+            isPaused = true;
         }
     }
 }

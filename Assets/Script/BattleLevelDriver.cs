@@ -93,11 +93,24 @@ public class BattleLevelDriver : MonoBehaviour
         
     }
 
+    public void PauseButton()
+    {
+        if (Paused)
+        {       
+            UI.Pause();
+            Paused = false;
+        }
+        else
+        {
+            UI.Pause();
+            Pause();
+            Paused = true;
+        }
+    }
     public IEnumerable Pause()
     {
-        Paused = true;
         UI.ShowDuplicationWin();
-        yield return new WaitUntil(() => Paused == false);
+        yield return new WaitUntil(() => UI.isPaused == false);
     }
 
 }
