@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 public class BattleData : MonoBehaviour
 {
@@ -62,11 +63,23 @@ public class BattleData : MonoBehaviour
         LoadEnermyData();
         LoadPlayerData();       
     }
-    public static void LoadEnvironmentData(){
-        //string path = "Assets/Resources/BattleLevel"+ BattleLevelID+".txt";
-        //StreamReader reader = new StreamReader(path);
-
+    public static void LoadEnvironmentData()
+    {
+        enviromentData = new Dictionary<Vector2, EnvironmentType>();
+        string path = "Assets/Scenes/SceneDoc/BattleLevel" + BattleLevelID + ".txt";
+        StreamReader reader = new StreamReader(path);
+        string line;
+        while ((line = reader.ReadLine()) != null)
+        {
+            string[] split = line.Split(',');          
+            EnvironmentType environmentType = (EnvironmentType)System.Enum.Parse(typeof(EnvironmentType), split[2]);
+            enviromentData.Add(new Vector2(int.Parse(split[0]), int.Parse(split[1])), environmentType);
+        }
+        reader.Close();
+        Debug.Log(enviromentData.Count);
+        Debug.Log(enviromentData.ElementAt(0).Value);
     }
+
     public static void LoadEnermyData(){
         EnemyDataList = new Dictionary<int,EnemyData>();
         //use streamreader to load data.

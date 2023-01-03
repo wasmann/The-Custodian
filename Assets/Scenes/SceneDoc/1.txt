@@ -1,3 +1,0 @@
-Custodian;6,7
-Tree_Enemy;9;9
-Sheep;6;3
