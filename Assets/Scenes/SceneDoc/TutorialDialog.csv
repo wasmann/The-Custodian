@@ -1,0 +1,7 @@
+﻿Mark,Index,Sprite,Position,Content,next,Effect
+#,0,dog,right,hello,1,
+#,1,dog,right,hellooo,2,
+&,2,dog,right,kill,4,
+&,3,dog,right,not kill,4,
+#,4,dog,right,that,5,
+END,5,,,,,
