@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -9,7 +10,7 @@ public class BattleData : MonoBehaviour
     public static int BattleLevelID;
     public static Dictionary<int,EnemyData> EnemyDataList;
     public static PlayerData playerData;
-    public static EnvironmentData enviromentData;
+    public static Dictionary<Vector2, EnvironmentType> enviromentData;
 
     public static bool PlayingACard = false;//When the player plays a card, set Busy to true, when that card is activated, set this to false
     public static bool AbleToPalyCard = true;
@@ -32,9 +33,12 @@ public class BattleData : MonoBehaviour
         public BuffAndDebuff.Buff buff;        
     }
 
-    public struct EnvironmentData
+
+    public enum EnvironmentType
     {
-        
+        Normal,
+        Wall,
+        //exit or electric wall
     }
     public struct PlayerData
     {
@@ -59,7 +63,9 @@ public class BattleData : MonoBehaviour
         LoadPlayerData();       
     }
     public static void LoadEnvironmentData(){
-        
+        //string path = "Assets/Resources/BattleLevel"+ BattleLevelID+".txt";
+        //StreamReader reader = new StreamReader(path);
+
     }
     public static void LoadEnermyData(){
         EnemyDataList = new Dictionary<int,EnemyData>();

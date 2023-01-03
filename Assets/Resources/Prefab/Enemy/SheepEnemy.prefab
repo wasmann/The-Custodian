@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8513868332959421398}
   - component: {fileID: 1725811539159297383}
-  - component: {fileID: -9019365017657069146}
+  - component: {fileID: 1892873114027435294}
   m_Layer: 0
   m_Name: SheepEnemy
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-9019365017657069146
+--- !u!114 &1892873114027435294
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,17 +94,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 4685025229613478865}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bacf83609d8ef43d8a6658f05bb2edb8, type: 3}
+  m_Script: {fileID: 11500000, guid: c42346a9de2edb44b8f7f5de35a72538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyID: 0
+  dicardManager: {fileID: 0}
   deck:
-  - {fileID: 5555948564461383796, guid: ac82a44a23ade7a48a04bc55f7d7a5ef, type: 3}
-  - {fileID: 5548770778976309130, guid: 7d6f41183133ce74baec9abbbe207fdd, type: 3}
-  - {fileID: -5185716202077271366, guid: ed207939700ac7d46a500b12ec125a37, type: 3}
-  - {fileID: -1092769037879275544, guid: 22868cfde19bd9b4790b440276571bc5, type: 3}
-  - {fileID: -384530743234587299, guid: 7092f2b104cc9b2478cd6add6aa3d3c9, type: 3}
+  - {fileID: 3551649005920662421, guid: 1135a9ca0db55084e8ecd6d9d82ddc5e, type: 3}
+  - {fileID: 3551649005920662421, guid: 1135a9ca0db55084e8ecd6d9d82ddc5e, type: 3}
+  - {fileID: 3551649005920662421, guid: 1135a9ca0db55084e8ecd6d9d82ddc5e, type: 3}
   - {fileID: 3544785245646529011, guid: b29d4f9075af85e4cba7f9f431e34919, type: 3}
-  - {fileID: 3551649005920662421, guid: 1135a9ca0db55084e8ecd6d9d82ddc5e, type: 3}
-  - {fileID: 3551649005920662421, guid: 1135a9ca0db55084e8ecd6d9d82ddc5e, type: 3}
-  - {fileID: 3551649005920662421, guid: 1135a9ca0db55084e8ecd6d9d82ddc5e, type: 3}
+  - {fileID: -384530743234587299, guid: 7092f2b104cc9b2478cd6add6aa3d3c9, type: 3}
+  - {fileID: -1092769037879275544, guid: 22868cfde19bd9b4790b440276571bc5, type: 3}
+  - {fileID: -5185716202077271366, guid: ed207939700ac7d46a500b12ec125a37, type: 3}
+  - {fileID: 5548770778976309130, guid: 7d6f41183133ce74baec9abbbe207fdd, type: 3}
+  - {fileID: 5555948564461383796, guid: ac82a44a23ade7a48a04bc55f7d7a5ef, type: 3}

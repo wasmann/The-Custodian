@@ -20,6 +20,8 @@ public class GoodLabWorkerEnemy : Enemy
 
     public override int HandCardNum { get { return 3; } }
 
+    public override int AttackMaxRange => throw new System.NotImplementedException();
+
     public override void EnemyChooseACardToPlay()
     {
         throw new System.NotImplementedException();
