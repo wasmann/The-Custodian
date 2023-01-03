@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Walk : Card
 {
+    [SerializeField] private AudioSource walk;
     public override string Name { get { return "Walk"; } }
     public override Rarity rarity { get { return Rarity.basic; } }
     public override int Speed { get { return 2; } }
@@ -25,6 +26,7 @@ public class Walk : Card
 
     public override void Activate(InfoForActivate Info)
     {
+        walk.Play();
         if (Info.owner_ID == 0)
         {
             BattleData.playerData.position += Info.Selection[0];
