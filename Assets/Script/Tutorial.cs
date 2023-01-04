@@ -28,6 +28,7 @@ public class Tutorial : MonoBehaviour
 
     private void Awake()
     {
+        //Time.timeScale = 0;
         imageDic["Custodian"] = sprites[0];
         imageDic["dog"] = sprites[1];
         imageDic["GoodLabWorker"] = sprites[2];
@@ -38,6 +39,7 @@ public class Tutorial : MonoBehaviour
     {
         ReadText(dialogDataFile);
         ShowDialogRow();
+        
     }
 
     // Update is called once per frame
@@ -115,9 +117,10 @@ public class Tutorial : MonoBehaviour
         {
             GameObject button = Instantiate(optionButton, optionGroup);
             button.GetComponentInChildren<TMP_Text>().text = cells[4];
-            button.GetComponent<Button>().onClick.AddListener(delegate {
+            button.GetComponent<Button>().onClick.AddListener(delegate
+            {
                 OnOptionClick(int.Parse(cells[5]));
-                });
+            });
             GenerateOption(_index + 1);
         }
         

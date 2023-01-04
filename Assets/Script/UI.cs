@@ -57,6 +57,7 @@ public class UI : MonoBehaviour
 
         pauseButton = GameObject.Find("PauseButton");
         duplicationPanel = GameObject.Find("DuplicationPanel");
+        duplicationPanel.SetActive(false);
 
         UpdatePlayerData();
         UpdateAllEnemyData();
@@ -150,28 +151,6 @@ public class UI : MonoBehaviour
         }
     }
 
-
-
-    public static void ShowDuplicationWin()
-    {
-        int i = 0, j = 0;
-        foreach(Card card in BattleData.NewCard)
-        {
-            
-            GameObject obj = Instantiate(Resources.Load("Prefab/CardOnTimeLine/" + card.Name) as GameObject);
-            obj.transform.SetParent(GameObject.Find("Canvas/DuplicationPanel").transform);
-            obj.transform.localScale = new Vector3(20, 20, 0);
-            if (i >= 7)
-            {
-                i = 0;
-                j++;
-            }
-            obj.transform.localPosition = new Vector3(10 * i, 5*j, 0);
-            i++;
-        }
-        duplicationPanel.SetActive(true);
-    }
-
     public static void UpdatePlayerData()
     {
         health.value = BattleData.playerData.currentHealth;
@@ -245,6 +224,34 @@ public class UI : MonoBehaviour
         }
     }
 
+    public static void ShowDuplicationWin()
+    {
+        duplicationPanel.SetActive(true);
+        Vector3 initpos = new Vector3(-0.4f, 0.06f, 0);
+        int i = 0, j = 0;
+        foreach (Card card in BattleData.NewCard)
+        {
+
+            GameObject obj = Instantiate(Resources.Load("Prefab/CardOnTimeLine/" + card.Name) as GameObject, duplicationPanel.transform);
+            //obj.transform.SetParent(GameObject.Find("Canvas/DuplicationPanel").transform);
+            obj.transform.localScale = new Vector3(0.03f, 0.03f, 0);
+            if (i >= 7)
+            {
+                i = 0;
+                j++;
+            }
+            obj.transform.localPosition = new Vector3(initpos.x + 0.1f * i, initpos.y + 0.05f * j, 0);
+            i++;
+        }
+    }
+
+    public static void DestroyDuplicationWin()
+    {
+        for (int i = 0; i < duplicationPanel.transform.childCount; ++i)
+        {
+            Destroy(duplicationPanel.transform.GetChild(i).gameObject);
+        }
+    }
     public static void Pause()
     {
         if (isPaused)
@@ -254,14 +261,18 @@ public class UI : MonoBehaviour
             pauseButton.transform.GetChild(1).gameObject.SetActive(true);
             //duplicationPanel.SetActive(false);
             isPaused = false;
+            DestroyDuplicationWin();
+            duplicationPanel.SetActive(false);
+            Time.timeScale = 1;
         }
         else
         {
-            
+            Time.timeScale = 0;
             pauseButton.transform.GetChild(0).gameObject.SetActive(true);
             pauseButton.transform.GetChild(1).gameObject.SetActive(false);
             //duplicationPanel.SetActive(true);
             isPaused = true;
+            ShowDuplicationWin();
         }
     }
 }

@@ -15,7 +15,7 @@ public class BattleData : MonoBehaviour
 
     public static bool PlayingACard = false;//When the player plays a card, set Busy to true, when that card is activated, set this to false
     public static bool AbleToPalyCard = true;
-    public static List<Card> NewCard; //for duplication
+    public static HashSet<Card> NewCard; //for duplication
 
     public Deck deck;//?????
     
@@ -57,7 +57,7 @@ public class BattleData : MonoBehaviour
 
     public static void BattleLevelInit(int battleLevelID)
     {
-        NewCard = new List<Card>();
+        NewCard = new HashSet<Card>();
         BattleLevelID = battleLevelID;
         LoadEnvironmentData();
         LoadEnermyData();

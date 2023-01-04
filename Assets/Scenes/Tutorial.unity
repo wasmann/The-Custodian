@@ -761,6 +761,7 @@ GameObject:
   m_Component:
   - component: {fileID: 241987538}
   - component: {fileID: 241987539}
+  - component: {fileID: 241987540}
   m_Layer: 0
   m_Name: TutorialManager
   m_TagString: Untagged
@@ -810,6 +811,23 @@ MonoBehaviour:
   nextButton: {fileID: 789291272}
   optionButton: {fileID: 2073798464200572016, guid: 291a3ddafd54f2345bb9e3f26ca1eac4, type: 3}
   optionGroup: {fileID: 427540939}
+--- !u!320 &241987540
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241987537}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: aea60744020a2ac40895e4abcb5345ea, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings: []
+  m_ExposedReferences:
+    m_References: []
 --- !u!1001 &246942063
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1010,7 +1028,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -236, y: -150.4}
+  m_AnchoredPosition: {x: -218.4, y: -75.3}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &432424492
@@ -4334,6 +4352,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c39896436823d47b6e876ff20d9df7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyID: 0
+  dicardManager: {fileID: 0}
+  deck: []
 --- !u!212 &1274371751 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 6047702001210631394, guid: 10c871bf3a39da44d9ecf535712aa426, type: 3}
@@ -4449,11 +4470,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8513868332959421398, guid: e977003ddd698ff4cae594f41b2a5523, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: -36.86
       objectReference: {fileID: 0}
     - target: {fileID: 8513868332959421398, guid: e977003ddd698ff4cae594f41b2a5523, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -13
+      value: -15.99
       objectReference: {fileID: 0}
     - target: {fileID: 8513868332959421398, guid: e977003ddd698ff4cae594f41b2a5523, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4803,7 +4824,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -24, y: -213.7}
+  m_AnchoredPosition: {x: 3.6, y: -143.1}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1738650636
@@ -5219,6 +5240,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Attribute
       objectReference: {fileID: 0}
+    - target: {fileID: 690145474870422778, guid: 9e23e3fb06330184da8a8fc953400fa7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e23e3fb06330184da8a8fc953400fa7, type: 3}
 --- !u!1001 &738324030321194308
@@ -5275,6 +5300,10 @@ PrefabInstance:
     - target: {fileID: 738324030659096855, guid: 81768c1e2e36df148bd41cd914c0dd1d, type: 3}
       propertyPath: m_Name
       value: Hound
+      objectReference: {fileID: 0}
+    - target: {fileID: 738324030659096855, guid: 81768c1e2e36df148bd41cd914c0dd1d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81768c1e2e36df148bd41cd914c0dd1d, type: 3}
@@ -5352,6 +5381,10 @@ PrefabInstance:
     - target: {fileID: 8038234949398596062, guid: 6fc3d6b50a9d81f44a84a98ac1585595, type: 3}
       propertyPath: m_RootOrder
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8561676782934583782, guid: 6fc3d6b50a9d81f44a84a98ac1585595, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8561676782934583783, guid: 6fc3d6b50a9d81f44a84a98ac1585595, type: 3}
       propertyPath: m_TargetGraphic
@@ -5491,6 +5524,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Botwheel
       objectReference: {fileID: 0}
+    - target: {fileID: 3163938837566994492, guid: b0d733e52e50b2d4d9859e8ab3077c30, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0d733e52e50b2d4d9859e8ab3077c30, type: 3}
 --- !u!1001 &3874017836662844028
@@ -5502,11 +5539,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3874017835167516094, guid: 7d771defd979fc34e949d2c9e70ee02e, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3874017835167516094, guid: 7d771defd979fc34e949d2c9e70ee02e, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3874017835167516094, guid: 7d771defd979fc34e949d2c9e70ee02e, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -5519,6 +5556,10 @@ PrefabInstance:
     - target: {fileID: 3874017835954523681, guid: 7d771defd979fc34e949d2c9e70ee02e, type: 3}
       propertyPath: m_Name
       value: Armor
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874017835954523681, guid: 7d771defd979fc34e949d2c9e70ee02e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3874017835954523682, guid: 7d771defd979fc34e949d2c9e70ee02e, type: 3}
       propertyPath: m_Pivot.x
@@ -5712,7 +5753,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7942968914624154529, guid: b0ea4bec94ce90140a798bd1fdb74381, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0ea4bec94ce90140a798bd1fdb74381, type: 3}
@@ -5726,6 +5767,10 @@ PrefabInstance:
     - target: {fileID: 5897357612881873681, guid: 568a80fd5fc350b4eab76ead4ae781eb, type: 3}
       propertyPath: m_Name
       value: EvilLabWorker
+      objectReference: {fileID: 0}
+    - target: {fileID: 5897357612881873681, guid: 568a80fd5fc350b4eab76ead4ae781eb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5897357612881873685, guid: 568a80fd5fc350b4eab76ead4ae781eb, type: 3}
       propertyPath: m_RootOrder
@@ -5795,6 +5840,10 @@ PrefabInstance:
     - target: {fileID: 6047702001210631393, guid: 10c871bf3a39da44d9ecf535712aa426, type: 3}
       propertyPath: m_Name
       value: GoodLabWorker
+      objectReference: {fileID: 0}
+    - target: {fileID: 6047702001210631393, guid: 10c871bf3a39da44d9ecf535712aa426, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6047702001210631395, guid: 10c871bf3a39da44d9ecf535712aa426, type: 3}
       propertyPath: m_RootOrder
@@ -5897,6 +5946,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stormhead
       objectReference: {fileID: 0}
+    - target: {fileID: 6502979706173651868, guid: 1d354b408c22ea64cb7c83a7aab7cc8c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d354b408c22ea64cb7c83a7aab7cc8c, type: 3}
 --- !u!1001 &7243228657837223221
@@ -5908,11 +5961,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7243228658168597767, guid: 938f93ade0a58cb4783e8ffecb98027b, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7243228658168597767, guid: 938f93ade0a58cb4783e8ffecb98027b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7243228658692594832, guid: 938f93ade0a58cb4783e8ffecb98027b, type: 3}
       propertyPath: m_LocalScale.y
@@ -6017,6 +6070,10 @@ PrefabInstance:
     - target: {fileID: 7243228659323090683, guid: 938f93ade0a58cb4783e8ffecb98027b, type: 3}
       propertyPath: m_Name
       value: Energy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7243228659323090683, guid: 938f93ade0a58cb4783e8ffecb98027b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 938f93ade0a58cb4783e8ffecb98027b, type: 3}

@@ -93,7 +93,7 @@ public class BattleLevelDriver : MonoBehaviour
         
     }
 
-    public void PauseButton()
+   /* public void PauseButton()
     {
         if (Paused)
         {       
@@ -111,6 +111,6 @@ public class BattleLevelDriver : MonoBehaviour
     {
         UI.ShowDuplicationWin();
         yield return new WaitUntil(() => UI.isPaused == false);
-    }
+    }*/
 
 }
