@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DoubleJump : Card
 {
+    [SerializeField] private AudioSource Audio;
     public override string Name { get { return "DoubleJump"; } }
     public override Rarity rarity { get { return Rarity.rare; } }
     public override int Speed { get { return 5; } }
@@ -33,6 +34,7 @@ public class DoubleJump : Card
 
     public override void Activate(InfoForActivate Info)
     {
+        Audio.Play();
         if (Info.owner_ID == 0)
         {
             BattleData.playerData.position += Info.Selection[0];

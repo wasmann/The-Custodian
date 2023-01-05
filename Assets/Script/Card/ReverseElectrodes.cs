@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ReverseElectrodes : Card
 {
+    [SerializeField] private AudioSource Audio;
     public override string Name { get { return "ReverseElectrodes"; } }
     public override Rarity rarity { get { return Rarity.epic; } }
     public override int Speed { get { return 5; } }
@@ -19,6 +20,7 @@ public class ReverseElectrodes : Card
 
     public override void Activate(InfoForActivate Info)
     {
+        Audio.Play();
         if (Info.owner_ID == 0)
         {
             BattleData.playerData.buff.ReverseEle += 1;

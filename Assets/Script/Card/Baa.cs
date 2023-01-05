@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Baa : Card
 {
+    [SerializeField] private AudioSource Audio;
     public override string Name { get { return "Baa"; } }
     public override Rarity rarity { get { return Rarity.trash; } }
     public override int Speed { get { return 3; } }
@@ -23,6 +24,7 @@ public class Baa : Card
         }
         else
         {
+            Audio.Play();
             //TODO:show animation 
             Debug.Log("sheep baa");
         }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class RushAndBiteAttack : Card
 {
 
+    [SerializeField] private AudioSource Audio;
     public override string Name { get { return "RushAndBiteAttack"; } }
     public override Rarity rarity { get { return Rarity.common; } }
     public override int Speed { get { return 6; } }
@@ -79,6 +80,7 @@ public class RushAndBiteAttack : Card
 
         else
         {
+            Audio.Play();
             Vector2 oriPos = BattleData.EnemyDataList[Info.owner_ID].position;
 
             Vector2 moveDir = Info.Selection[0];

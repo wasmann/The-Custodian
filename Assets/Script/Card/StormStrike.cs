@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class StormStrike : Card
 {
+    [SerializeField] private AudioSource Audio;
     public override string Name { get { return "StormStrike"; } }
     public override Rarity rarity { get { return Rarity.legendary; } }
     public override int Speed { get { return 8; } }
@@ -19,6 +20,7 @@ public class StormStrike : Card
 
     public override void Activate(InfoForActivate Info)
     {
+        Audio.Play();
         List<Vector2> range = new List<Vector2>();
         range.Add(new Vector2(1, 0));
         range.Add(new Vector2(0, 1));

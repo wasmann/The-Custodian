@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Barking : Card
 {
+    [SerializeField] private AudioSource Audio;
     public override string Name { get { return "Barking"; } }
     public override Rarity rarity { get { return Rarity.common; } }
     public override int Speed { get { return 3; } }
@@ -67,6 +68,7 @@ public class Barking : Card
         }
         else
         {
+            Audio.Play();
             BattleData.EnemyData data = BattleData.EnemyDataList[Info.owner_ID];
             data.buff.Courage = true;
             BattleData.EnemyDataList[Info.owner_ID] = data;

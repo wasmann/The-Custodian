@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EscapeInstinct : Card
 {
+    [SerializeField] private AudioSource Audio;
     public override string Name { get { return "EscapeInstinct"; } }
     public override Rarity rarity { get { return Rarity.legendary   ; } }
     public override int Speed { get { return 1; } }
@@ -36,6 +37,7 @@ public class EscapeInstinct : Card
         }
         else
         {
+            Audio.Play();
             BattleData.EnemyData newData = BattleData.EnemyDataList[Info.owner_ID];
             newData.position += Info.Selection[0];
             BattleData.EnemyDataList[Info.owner_ID] = newData;

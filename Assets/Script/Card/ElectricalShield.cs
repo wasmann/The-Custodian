@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ElectricalShield : Card
 {
+    [SerializeField] private AudioSource Audio;
     public override string Name { get { return "ElectricalShield"; } }
     public override Rarity rarity { get { return Rarity.common; } }
     public override int Speed { get { return 4; } }
@@ -25,6 +26,7 @@ public class ElectricalShield : Card
 
     public override void Activate(InfoForActivate Info)
     {
+        Audio.Play();
         if (Info.owner_ID == 0)
         {
             BattleData.playerData.buff.Shield = 3;

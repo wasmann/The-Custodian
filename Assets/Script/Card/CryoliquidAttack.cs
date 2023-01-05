@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CryoliquidAttack : Card
 {
+    [SerializeField] private AudioSource Audio;
     public override string Name { get { return "CryoliquidAttack"; } }
     public override Rarity rarity { get { return Rarity.rare; } }
     public override int Speed { get { return 4; } }
@@ -32,6 +33,7 @@ public class CryoliquidAttack : Card
 
     public override void Activate(InfoForActivate Info)
     {
+        Audio.Play();
         Info.Selection[0].Normalize();
         if (Info.owner_ID == 0)
         {

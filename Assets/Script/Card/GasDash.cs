@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GasDash : Card
 {
+    [SerializeField] private AudioSource Audio;
     public override string Name { get { return "GasDash"; } }
     public override Rarity rarity { get { return Rarity.rare; } }
     public override int Speed { get { return 3; } }
@@ -45,6 +46,7 @@ public class GasDash : Card
 
     public override void Activate(InfoForActivate Info)
     {
+        Audio.Play();
         //TODO : should check environment first! need more implementation
         List<Vector2> path = new List<Vector2>();
         Vector2 normalVec = Info.Selection[0] / Info.Selection[0].magnitude;

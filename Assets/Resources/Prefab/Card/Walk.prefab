@@ -103,7 +103,7 @@ MonoBehaviour:
   RangeNotation: 
   SelectionNotation: 
   Effect: 
-  walk: {fileID: -383906213352359515}
+  Audio: {fileID: -383906213352359515}
 --- !u!61 &-2023369160138807109
 BoxCollider2D:
   m_ObjectHideFlags: 0
