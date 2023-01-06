@@ -1,7 +1,30 @@
 ﻿Mark,Index,Sprite,Position,Content,next,Effect
-#,0,dog,right,hello,1,
-#,1,dog,right,hellooo,2,
-&,2,dog,right,kill,4,
-&,3,dog,right,not kill,4,
-#,4,dog,right,that,5,
-END,5,,,,,
+#,0,,,Robot system start,1,
+*,1,,,Robot armor activate;  Energy charged,2,1
+*,2,,,Card deck initialized,3,2
+*,3,,,Card deck initialized,4,3
+#,4,,,A card shows its range; energy cost; and speed,5,
+#,5,,,Card speed represents how many time slots it takes from initialization to effect,6,
+*,6,,,Card speed represents how many time slots it takes from initialization to effect,7,3
+#,7,,,Card speed represents how many time slots it takes from initialization to effect,8,
+*,8,,,Prediction system activate,9,4
+*,9,,,The custodian can predict enemy's movements within three time slots.,10,3
+#,10,,,The custodian can predict enemy's movements within three time slots.,11,
+#,11,,,Of course; Custodian's own movements are always displayed on timeline slots.,12,
+*,12,,,When a card is played; it will be initialized on the corresponding slots according to its speed,13,3
+#,13,,,When a card is played; it will be initialized on the corresponding slots according to its speed,14,
+*,14,,,Cards move following the timeline slots…,15,3
+#,15,,,Cards move following the timeline slots…,16,
+*,16,,,When the card reaches 0; it makes an effect!,17,5
+#,17,,,When the card reaches 0; it makes an effect!,18,
+*,18,,,Here comes a sheep…,19,6
+&,19,,,attack the sheep,99,
+&,20,,,observe a few seconds,22,
+*,21,,,…,99,7
+*,22,,,…,23,8
+#,23,,,When a card is played by the enemy; custodian can use his power to duplicate the card and add it to his own deck!,24,
+*,24,,,Click the pause button,25,9
+#,25,,,It shows all the cards played by the enemy that you can duplicate.,26,
+*,26,,,The duplicated card will be added to your deck; not your handcard!,27,3
+#,27,,,Try to have a battle!,99,
+END,99,,,,,
