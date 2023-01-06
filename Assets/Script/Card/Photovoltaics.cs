@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Photovoltaics : Card
 {
+    [SerializeField] private AudioSource Audio;
 
     public override string Name { get { return "Photovoltaics"; } }
     public override Rarity rarity { get { return Rarity.basic; } }
@@ -17,7 +18,8 @@ public class Photovoltaics : Card
 
     public override void Activate(InfoForActivate Info)
     {
-        if(Info.owner_ID == 0)
+        Audio.Play();
+        if (Info.owner_ID == 0)
         {
             BattleData.playerData.currentEnergy += 1;
             BattleData.playerData.currentHealth += 2;

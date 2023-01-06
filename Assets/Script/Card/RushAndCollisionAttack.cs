@@ -5,6 +5,7 @@ using UnityEngine;
 public class RushAndCollisionAttack: Card
 {
 
+    [SerializeField] private AudioSource Audio;
     public override string Name { get { return "RushAndCollisionAttack"; } }
     public override Rarity rarity { get { return Rarity.basic; } }
     public override int Speed { get { return 5; } }
@@ -48,6 +49,7 @@ public class RushAndCollisionAttack: Card
 
     public override void Activate(InfoForActivate Info)
     {
+        Audio.Play();
         if (Info.owner_ID == 0) {
             Vector2 oriPos = BattleData.playerData.position;
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Reloading : Card
 {
+    [SerializeField] private AudioSource Audio;
     public override string Name { get { return "Reloading"; } }
     public override Rarity rarity { get { return Rarity.trash; } }
     public override int Speed { get { return 3; } }
@@ -24,6 +25,7 @@ public class Reloading : Card
         }
         else
         {
+            Audio.Play();
             BattleData.EnemyData data = BattleData.EnemyDataList[Info.owner_ID];
             data.buff.Bullet = true;
             BattleData.EnemyDataList[Info.owner_ID] = data;

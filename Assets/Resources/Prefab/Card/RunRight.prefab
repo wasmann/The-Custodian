@@ -103,6 +103,7 @@ MonoBehaviour:
   RangeNotation: 
   SelectionNotation: 
   Effect: 
+  Audio: {fileID: -4667163882273360046}
 --- !u!61 &-6033086842783863372
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -140,7 +141,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RunLeft: Card
-{   public override string Name { get { return "RunLeft"; } }
+{
+    [SerializeField] private AudioSource Audio; public override string Name { get { return "RunLeft"; } }
     public override Rarity rarity { get { return Rarity.basic; } }
     public override int Speed { get { return 3; } }
     public override int ID { get { return 4; } }
@@ -24,6 +25,7 @@ public class RunLeft: Card
 
     public override void Activate(InfoForActivate Info)
     {
+        Audio.Play();
         if (Info.owner_ID == 0)
         {
             BattleData.playerData.position += Info.Selection[0];

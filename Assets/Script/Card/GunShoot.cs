@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GunShoot : Card
 {
+    [SerializeField] private AudioSource Audio;
     public override string Name { get { return "GunShoot"; } }
     public override Rarity rarity { get { return Rarity.common; } }
     public override int Speed { get { return 5; } }
@@ -43,6 +44,7 @@ public class GunShoot : Card
 
     public override void Activate(InfoForActivate Info)
     {
+        Audio.Play();
         Info.Selection[0].Normalize();
         if (Info.owner_ID == 0)
         {

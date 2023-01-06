@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RunDown : Card
 {
+    [SerializeField] private AudioSource Audio;
     public override string Name { get { return "RunDown"; } }
     public override Rarity rarity { get { return Rarity.basic; } }
     public override int Speed { get { return 3; } }
@@ -25,6 +26,7 @@ public class RunDown : Card
 
     public override void Activate(InfoForActivate Info)
     {
+        Audio.Play();
         if (Info.owner_ID == 0)
         {
             BattleData.playerData.position += Info.Selection[0];

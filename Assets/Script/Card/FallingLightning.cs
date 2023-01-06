@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FallingLightning : Card
 {
+    [SerializeField] private AudioSource Audio;
     public override string Name { get { return "FallingLightning"; } }
     public override Rarity rarity { get { return Rarity.common; } }
     public override int Speed { get { return 3; } }
@@ -12,26 +13,16 @@ public class FallingLightning : Card
     {
 
         //NEED TO WRITE A FUNCTION TO ADD DIAMOND RANGE
-        Info.direction.Add(BattleData.playerData.position + new Vector2(1, 0));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(2, 0));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(3, 0));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(4, 0));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(5, 0));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(-1, 0));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(-2, 0));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(-3, 0));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(-4, 0));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(-5, 0));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(0, -1));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(0, -2));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(0, -3));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(0, -4));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(0, -5));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(0, 1));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(0, 2));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(0, 3));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(0, 4));
-        Info.direction.Add(BattleData.playerData.position + new Vector2(0, 5));
+        for (int i = -5; i <= 5; i++)
+        {
+            for (int j = -5; j <= 5; j++)
+            {
+                if (Mathf.Abs(i) + Mathf.Abs(j) <= 5 && (i != 0 && j != 0))
+                {
+                    Info.direction.Add(BattleData.playerData.position + new Vector2(i, j));
+                }
+            }
+        }
 
         ///TODO!!!!!!!!!!!!!!!!!!!!!!!
         ///
@@ -46,6 +37,7 @@ public class FallingLightning : Card
 
     public override void Activate(InfoForActivate Info)
     {
+        Audio.Play();
         int random = (int)Random.Range(0, 10);
         if(random >= 70)
         {

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CallReinforcement : Card
 {
+    [SerializeField] private AudioSource Audio;
     public override string Name { get { return "CallReinforcement"; } }
     public override Rarity rarity { get { return Rarity.trash; } }
     public override int Speed { get { return 10; } }
@@ -16,6 +17,7 @@ public class CallReinforcement : Card
 
     public override void Activate(InfoForActivate Info)
     {
+        Audio.Play();
         if (Info.owner_ID == 0)
         {
             //TODO:show animation 
