@@ -31,7 +31,7 @@ public class UI : MonoBehaviour
     public static Vector3[] TimeLinePos_Player = new Vector3[10];
 
     static List<GameObject> timelineObj;
-    static GameObject NotationList;
+    public static GameObject NotationList;
 
     //pause
     static GameObject pauseButton;
@@ -61,8 +61,6 @@ public class UI : MonoBehaviour
 
         UpdatePlayerData();
         UpdateAllEnemyData();
-
-        //UpdateEnemyData();
 
         InitTimeLinePos();
         InitHandcardPos();
@@ -98,15 +96,13 @@ public class UI : MonoBehaviour
             for(int i = 0; i < card.Info.direction.Count; i++)
             {
                 GameObject notation= GameObject.Instantiate(Resources.Load("Prefab/Notation/" + card.RangeNotation) as GameObject);
+
                 notation.transform.position = ToolFunction.FromCoorinateToWorld(card.Info.direction[i]);
                 notation.transform.SetParent(NotationList.transform);
             }
         }
-        if (card.SelectionNotation != "None")
-        {
-            //ToDo 
-        }
     }
+
     public static void DeleteNotation()
     {
         foreach (Transform child in NotationList.transform)
