@@ -30,6 +30,7 @@ public class EscapeInstinct : Card
     {
         int random = (int)Random.Range(1, 3);
         Info.Selection[0] *=random;
+        StartCoroutine(Animate(Info.animator));
         if (Info.owner_ID == 0)
         {
             BattleData.playerData.position += Info.Selection[0];
@@ -43,6 +44,12 @@ public class EscapeInstinct : Card
             BattleData.EnemyDataList[Info.owner_ID] = newData;
             UI.UpdateEnemyData(Info.owner_ID);
         }
+    }
+    public IEnumerator Animate(Animator animator)
+    {
+        animator.SetBool("Walk", true);
+        yield return new WaitForSeconds(0);
+        animator.SetBool("Walk", false);
     }
     private void Start()
     {

@@ -8,6 +8,8 @@ public class RunLeft: Card
     public override Rarity rarity { get { return Rarity.basic; } }
     public override int Speed { get { return 3; } }
     public override int ID { get { return 4; } }
+
+    public Animator Animator;
     public override IEnumerator Play()
     {
         //here need more implementation about "not allowing to walk on occupied grid"
@@ -26,6 +28,7 @@ public class RunLeft: Card
     public override void Activate(InfoForActivate Info)
     {
         Audio.Play();
+        StartCoroutine(Animate(Info.animator));
         if (Info.owner_ID == 0)
         {
             BattleData.playerData.position += Info.Selection[0];
@@ -38,6 +41,13 @@ public class RunLeft: Card
             BattleData.EnemyDataList[Info.owner_ID] = newData;
             UI.UpdateEnemyData(Info.owner_ID);
         }
+    }
+    private IEnumerator Animate(Animator animator)
+    {
+        animator.SetBool("Run", true);
+        yield return new WaitForSeconds(1);
+        animator.SetBool("Run", false);
+
     }
 
     private void Start()

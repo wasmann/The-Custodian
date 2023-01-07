@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,6 +36,9 @@ public abstract class Card : MonoBehaviour
         public Card card;
         public List<Vector2> Selection;
         public List<string> otherInfo;
+        public Animator animator;
+        public int animationSeconds;
+        public String animationParameter;
     }
 
     public abstract IEnumerator Play();
@@ -80,6 +84,7 @@ public abstract class Card : MonoBehaviour
             BattleData.AbleToPalyCard = false;
             Info = new InfoForActivate();
             Info.owner_ID = 0;
+            Info.animator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
             Info.direction = new List<Vector2>();
             Info.Selection = new List<Vector2>();
             Info.card = this;

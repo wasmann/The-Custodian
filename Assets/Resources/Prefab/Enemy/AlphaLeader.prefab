@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3163938837566994492
+--- !u!1 &6502979706173651868
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3163938837566994464}
-  - component: {fileID: 3163938837566994465}
-  - component: {fileID: 3163938837566994466}
-  - component: {fileID: 3163938837566994467}
+  - component: {fileID: 6502979706173651840}
+  - component: {fileID: 6502979706173651841}
+  - component: {fileID: 6502979706173651870}
+  - component: {fileID: 6502979706173651871}
   m_Layer: 0
-  m_Name: Botwheel
+  m_Name: AlphaLeader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3163938837566994464
+--- !u!4 &6502979706173651840
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3163938837566994492}
+  m_GameObject: {fileID: 6502979706173651868}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.78, y: -6.89, z: 1}
+  m_LocalPosition: {x: 2.85, y: -3.04, z: 1.2112466}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &3163938837566994465
+--- !u!212 &6502979706173651841
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3163938837566994492}
+  m_GameObject: {fileID: 6502979706173651868}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -75,48 +75,28 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 1935109165, guid: cc9116b21b3681a4583db85d14d6f4c1, type: 3}
+  m_Sprite: {fileID: 1900971980, guid: 80e74a567080dd14cbbb0c9994cbbc19, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.65625, y: 0.8125}
+  m_Size: {x: 0.8333333, y: 2.0416667}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!111 &3163938837566994466
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3163938837566994492}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: c2ee385a6d2b6be49b16474412c0cc86, type: 2}
-  - {fileID: 7400000, guid: 0f67524f57fa687429b9e85ab312da16, type: 2}
-  - {fileID: 7400000, guid: d23eda6f72f30ed459997580ce762def, type: 2}
-  - {fileID: 7400000, guid: 58d17e0cc84fc7a4a9b5fbced552e465, type: 2}
-  - {fileID: 7400000, guid: 38d370fcf80367740a497d38e8d5b328, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
---- !u!95 &3163938837566994467
+--- !u!95 &6502979706173651870
 Animator:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3163938837566994492}
+  m_GameObject: {fileID: 6502979706173651868}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8bcd683d55fd5964bbf37c86f3bd4ae0, type: 2}
+  m_Controller: {fileID: 9100000, guid: 08c7699366968094ea5127dec237c2f3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -126,3 +106,23 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!111 &6502979706173651871
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6502979706173651868}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: ef6d294ff51485644a2651df239799f7, type: 2}
+  - {fileID: 7400000, guid: 445d94978eabfa04ab7b85c0eaf37064, type: 2}
+  - {fileID: 7400000, guid: 679cf49f9a593f24897eb70366057cc9, type: 2}
+  - {fileID: 7400000, guid: c2379a32d6a2b58458e473ccf398101b, type: 2}
+  - {fileID: 7400000, guid: aaa542e991fe4ef41879ca43bfdb367e, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0

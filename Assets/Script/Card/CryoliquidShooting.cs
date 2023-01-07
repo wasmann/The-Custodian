@@ -47,6 +47,7 @@ public class CryoliquidShooting : Card
     public override void Activate(InfoForActivate Info)
     {
         Audio.Play();
+        StartCoroutine(Animate(Info.animator));
         Info.Selection[0].Normalize();
         if (Info.owner_ID == 0)
         {
@@ -80,6 +81,12 @@ public class CryoliquidShooting : Card
         }
     }
 
+    public IEnumerator Animate(Animator animator)
+    {
+        animator.SetBool("Shooting", true);
+        yield return new WaitForSeconds(0);
+        animator.SetBool("Shooting", false);
+    }
     private void Start()
     {
         TargetNum = 1;

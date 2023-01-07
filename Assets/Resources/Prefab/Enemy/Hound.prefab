@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 738324030659096851}
   - component: {fileID: 738324030659096850}
-  - component: {fileID: 738324030659096849}
   - component: {fileID: 738324030659096848}
+  - component: {fileID: 8769645141708974722}
   m_Layer: 0
   m_Name: Hound
   m_TagString: Untagged
@@ -86,27 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!111 &738324030659096849
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 738324030659096855}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: 975f9276dc4adb04fab25c33e446e6fc, type: 2}
-  - {fileID: 7400000, guid: 9def298340cfa3e45a1f5166cfc07137, type: 2}
-  - {fileID: 7400000, guid: 0c4d44f3ad32f664999584de65f72152, type: 2}
-  - {fileID: 7400000, guid: d1428042d41d35241bcde93f4b090ede, type: 2}
-  - {fileID: 7400000, guid: 526c58468549f5b4da90c057394b946d, type: 2}
-  - {fileID: 7400000, guid: 08490d9298170e34ba5d8bff517a5bf8, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!95 &738324030659096848
 Animator:
   serializedVersion: 4
@@ -127,3 +106,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8769645141708974722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738324030659096855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ad2b7f754bece04db525df61572b799, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyID: 0
+  dicardManager: {fileID: 0}
+  Animator: {fileID: 738324030659096848}
+  deck: []
+  CloseEnemyID: 0
+  EnemyToAttackID: 0

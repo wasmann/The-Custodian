@@ -9,6 +9,8 @@ public class AlfaSolder : Enemy
 {
     public override string EnemyName { get { return "AlfaSolder"; } }
 
+    public Animator Animator;
+
     public List<Card> deck;
     public override List<Card> CardsDeck
     {
@@ -283,6 +285,7 @@ public class AlfaSolder : Enemy
     {
         Card.InfoForActivate info = new Card.InfoForActivate();
         info.owner_ID = EnemyID;
+        info.animator = Animator;
         UpdateState();
         UpdateWeight();
         List<List<float>> BehaviourUtility;

@@ -68,6 +68,7 @@ public class Barking : Card
         }
         else
         {
+            StartCoroutine(Animate(Info.animator));
             Audio.Play();
             BattleData.EnemyData data = BattleData.EnemyDataList[Info.owner_ID];
             data.buff.Courage = true;
@@ -95,6 +96,12 @@ public class Barking : Card
                 UI.UpdatePlayerData();
             }
         }
+    }
+    public IEnumerator Animate(Animator animator)
+    {
+        animator.SetBool("Bark", true);
+        yield return new WaitForSeconds(0);
+        animator.SetBool("Bark", false);
     }
     public override void ReSetTarget()
     {

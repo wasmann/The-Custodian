@@ -34,6 +34,7 @@ public class CryoliquidAttack : Card
     public override void Activate(InfoForActivate Info)
     {
         Audio.Play();
+        StartCoroutine(Animate(Info.animator));
         Info.Selection[0].Normalize();
         if (Info.owner_ID == 0)
         {
@@ -70,6 +71,12 @@ public class CryoliquidAttack : Card
                 UI.UpdatePlayerData();
             }
         }
+    }
+    public IEnumerator Animate(Animator animator)
+    {
+        animator.SetBool("Attack", true);
+        yield return new WaitForSeconds(0);
+        animator.SetBool("Attack", false);
     }
 
     private void Start()

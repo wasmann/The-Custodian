@@ -21,6 +21,7 @@ public class StormStrike : Card
     public override void Activate(InfoForActivate Info)
     {
         Audio.Play();
+        StartCoroutine(Animate(Info.animator));
         List<Vector2> range = new List<Vector2>();
         range.Add(new Vector2(1, 0));
         range.Add(new Vector2(0, 1));
@@ -91,6 +92,13 @@ public class StormStrike : Card
                 UI.UpdatePlayerData();
             }
         }
+    }
+
+    public IEnumerator Animate(Animator animator)
+    {
+        animator.SetBool("Attack", true);
+        yield return new WaitForSeconds(0);
+        animator.SetBool("Attack", false);
     }
     public override void ReSetTarget()
     {

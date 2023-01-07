@@ -50,6 +50,7 @@ public class RushAndCollisionAttack: Card
     public override void Activate(InfoForActivate Info)
     {
         Audio.Play();
+        StartCoroutine(Animate(Info.animator));
         if (Info.owner_ID == 0) {
             Vector2 oriPos = BattleData.playerData.position;
 
@@ -93,6 +94,13 @@ public class RushAndCollisionAttack: Card
         }
     }
 
+    private IEnumerator Animate(Animator animator)
+    {
+        animator.SetBool("Run", true);
+        yield return new WaitForSeconds(1);
+        animator.SetBool("Run", false);
+
+    }
     private void Start()
     {
         TargetNum = 1;

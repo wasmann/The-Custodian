@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,14 +113,14 @@ TextureImporter:
         width: 37
         height: 29
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dbe143e700182d149910f16ab2b6c3bb
-      internalID: 1571989639
+      spriteID: 9c4a17681a5b6924f8df419db8648c94
+      internalID: 1173645572
       vertices: []
       indices: 
       edges: []
@@ -134,14 +134,14 @@ TextureImporter:
         width: 60
         height: 29
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca285c1b1981941469bdc103694f88bf
-      internalID: -1363811899
+      spriteID: a75b3d86538dbf643afc8fb8753cc9fa
+      internalID: 903075407
       vertices: []
       indices: 
       edges: []
@@ -150,40 +150,19 @@ TextureImporter:
       name: cyber prisoner Light attack slash-Sheet_2
       rect:
         serializedVersion: 2
-        x: 138
+        x: 137
         y: 0
-        width: 40
+        width: 59
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.44213372, y: 0.49999985}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e3dc0a96c78126e499277123d17ec4be
-      internalID: 2085110802
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cyber prisoner Light attack slash-Sheet_3
-      rect:
-        serializedVersion: 2
-        x: 178
-        y: 2
-        width: 14
-        height: 29
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6b9304d5d6f4e344fa8de9406a0eea2b
-      internalID: 1953746334
+      spriteID: 6dbed86861dc4dc49bb0a5c5b63346cf
+      internalID: 1871385014
       vertices: []
       indices: 
       edges: []
@@ -194,17 +173,17 @@ TextureImporter:
         serializedVersion: 2
         x: 202
         y: 0
-        width: 47
+        width: 57
         height: 30
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 76973670632863146ab66ab8019b73b1
-      internalID: 1003652947
+      spriteID: 7331b5083dd90cf4481b2a1ea16f188f
+      internalID: -1868483562
       vertices: []
       indices: 
       edges: []
@@ -213,19 +192,19 @@ TextureImporter:
       name: cyber prisoner Light attack slash-Sheet_5
       rect:
         serializedVersion: 2
-        x: 252
+        x: 264
         y: 0
         width: 28
         height: 30
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 513b72fc8d3df5e49a7c33cba8e8fd60
-      internalID: 1567606118
+      spriteID: 52bd8e737747c5b419db400f4c71ff06
+      internalID: 2100851463
       vertices: []
       indices: 
       edges: []
@@ -239,35 +218,35 @@ TextureImporter:
         width: 29
         height: 29
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5fd76e42bc727814fb570c54aac0371e
-      internalID: 1293087939
+      spriteID: a6286a47f575c9e479e3ee752bd9c38e
+      internalID: -1411013884
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cyber prisoner Light attack slash-Sheet_8
+      name: cyber prisoner Light attack slash-Sheet_7
       rect:
         serializedVersion: 2
-        x: 385
-        y: 1
-        width: 63
-        height: 29
+        x: 384
+        y: 0
+        width: 65
+        height: 31
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c6308a6f1530074fa1c27a45ece56bb
-      internalID: -1637931853
+      spriteID: 573959ce40893ab479e9066dd3c66499
+      internalID: 2021561235
       vertices: []
       indices: 
       edges: []
@@ -278,38 +257,17 @@ TextureImporter:
         serializedVersion: 2
         x: 449
         y: 0
-        width: 26
-        height: 30
+        width: 64
+        height: 31
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4384919e2ec193048907b479c8538731
-      internalID: 2065033106
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cyber prisoner Light attack slash-Sheet_10
-      rect:
-        serializedVersion: 2
-        x: 487
-        y: 2
-        width: 25
-        height: 30
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c669455f8b96c7544b8563de0affa26a
-      internalID: -767982112
+      spriteID: df69f436bdcba45479b8df5a15694ff0
+      internalID: 1287090808
       vertices: []
       indices: 
       edges: []
@@ -323,14 +281,14 @@ TextureImporter:
         width: 62
         height: 30
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a014db40d69c6934aacb1883134121c0
-      internalID: -336964412
+      spriteID: bd75d18f5f63f0a4499fc7a4802abf49
+      internalID: 550227062
       vertices: []
       indices: 
       edges: []
@@ -346,18 +304,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      cyber prisoner Light attack slash-Sheet_11: -336964412
-      cyber prisoner Light attack slash-Sheet_3: 1953746334
-      cyber prisoner Light attack slash-Sheet_7: -601999684
-      cyber prisoner Light attack slash-Sheet_5: 1567606118
-      cyber prisoner Light attack slash-Sheet_9: 2065033106
-      cyber prisoner Light attack slash-Sheet_6: 1293087939
-      cyber prisoner Light attack slash-Sheet_1: -1363811899
-      cyber prisoner Light attack slash-Sheet_10: -767982112
-      cyber prisoner Light attack slash-Sheet_8: -1637931853
-      cyber prisoner Light attack slash-Sheet_0: 1571989639
-      cyber prisoner Light attack slash-Sheet_2: 2085110802
-      cyber prisoner Light attack slash-Sheet_4: 1003652947
+      cyber prisoner Light attack slash-Sheet_11: 550227062
+      cyber prisoner Light attack slash-Sheet_3: -546690284
+      cyber prisoner Light attack slash-Sheet_7: 2021561235
+      cyber prisoner Light attack slash-Sheet_5: 2100851463
+      cyber prisoner Light attack slash-Sheet_9: 1287090808
+      cyber prisoner Light attack slash-Sheet_6: -1411013884
+      cyber prisoner Light attack slash-Sheet_1: 903075407
+      cyber prisoner Light attack slash-Sheet_10: -999310139
+      cyber prisoner Light attack slash-Sheet_8: 951658060
+      cyber prisoner Light attack slash-Sheet_0: 1173645572
+      cyber prisoner Light attack slash-Sheet_2: 1871385014
+      cyber prisoner Light attack slash-Sheet_4: -1868483562
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6047702001210631395}
-  - component: {fileID: 6047702001210631392}
   - component: {fileID: 6047702001210631394}
   - component: {fileID: 6047702001210631397}
+  - component: {fileID: 9206376651113361551}
   m_Layer: 0
   m_Name: Lab Worker
   m_TagString: Untagged
@@ -34,27 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!111 &6047702001210631392
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6047702001210631393}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: 2cd9eff9fc707664a8d6504e5b66752c, type: 2}
-  - {fileID: 7400000, guid: c2256236a9e2b6b40a8fc8c7546b1a55, type: 2}
-  - {fileID: 7400000, guid: 2dedc20fa2483664a955ee76c1e64a43, type: 2}
-  - {fileID: 7400000, guid: 1b0f84aa7f53c424a907ace318d844ac, type: 2}
-  - {fileID: 7400000, guid: 3c937cd3f4f725248ba455de7069d47c, type: 2}
-  - {fileID: 7400000, guid: 1c0a07dde7c9a8c4fbe4f737f3ca4ae2, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!212 &6047702001210631394
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -127,3 +106,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &9206376651113361551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6047702001210631393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b47eca29ba17cc4dbefa099d8f593d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyID: 0
+  dicardManager: {fileID: 0}
+  Animator: {fileID: 6047702001210631397}
+  deck: []

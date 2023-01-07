@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Walk : Card
@@ -10,6 +12,7 @@ public class Walk : Card
     public override Rarity rarity { get { return Rarity.basic; } }
     public override int Speed { get { return 2; } }
     public override int ID { get { return 1; } }
+
     public override IEnumerator Play()
     {
         Info.direction.Add(BattleData.playerData.position + new Vector2(1, 0));
@@ -21,6 +24,7 @@ public class Walk : Card
         TileMapButton.MakeSelectable(this);
         yield return new WaitUntil(() => TargetNum == 0);
         TileMapButton.MakeUnSelectable();
+        
         //BattleData.PlayingACard = false;
         UpdateData(0, ID, Info);
     }
@@ -28,10 +32,12 @@ public class Walk : Card
     public override void Activate(InfoForActivate Info)
     {
         Audio.Play();
+        StartCoroutine(Animate(Info.animator));
         if (Info.owner_ID == 0)
         {
             BattleData.playerData.position += Info.Selection[0];
             UI.UpdatePlayerData();
+
         }
         else
         {
@@ -41,6 +47,14 @@ public class Walk : Card
             UI.UpdateEnemyData(Info.owner_ID);
         }
     }
+
+    public IEnumerator Animate(Animator animator)
+    {
+        animator.SetBool("Walk", true);
+        yield return new WaitForSeconds(0);
+        animator.SetBool("Walk", false);
+    }
+
     private void Start()
     {
         TargetNum = 1;

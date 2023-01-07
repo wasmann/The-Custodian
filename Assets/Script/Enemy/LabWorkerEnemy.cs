@@ -9,6 +9,8 @@ public class LabWorkerEnemy : Enemy
 {
     public override string EnemyName { get { return "LabWorker"; } }
 
+    public Animator Animator;
+
     public List<Card> deck;
     public override List<Card> CardsDeck
     {
@@ -292,6 +294,8 @@ public class LabWorkerEnemy : Enemy
     {
         Card.InfoForActivate info = new Card.InfoForActivate();
         info.owner_ID = EnemyID;
+        info.animator = Animator;
+        info.animator.SetInteger("Damage", Health);
         UpdateState();
         UpdateWeight();
         List<List<float>> BehaviourUtility;

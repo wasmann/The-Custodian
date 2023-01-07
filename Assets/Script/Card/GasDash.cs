@@ -74,7 +74,8 @@ public class GasDash : Card
         }
         else
         {
-            for(int j = 0; j < path.Count; j++)
+            StartCoroutine(Animate(Info.animator));
+            for (int j = 0; j < path.Count; j++)
             {
                 if(BattleData.playerData.position == path[j])
                 {
@@ -88,6 +89,13 @@ public class GasDash : Card
             BattleData.EnemyDataList[Info.owner_ID] = data;
             UI.UpdateEnemyData(Info.owner_ID);
         }
+    }
+
+    public IEnumerator Animate(Animator animator)
+    {
+        animator.SetBool("GasDash", true);
+        yield return new WaitForSeconds(0);
+        animator.SetBool("GasDash", false);
     }
 
     private void Start()

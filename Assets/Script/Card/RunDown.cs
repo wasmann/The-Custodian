@@ -27,6 +27,7 @@ public class RunDown : Card
     public override void Activate(InfoForActivate Info)
     {
         Audio.Play();
+        StartCoroutine(Animate(Info.animator));
         if (Info.owner_ID == 0)
         {
             BattleData.playerData.position += Info.Selection[0];
@@ -40,7 +41,13 @@ public class RunDown : Card
             UI.UpdateEnemyData(Info.owner_ID);
         }
     }
+    private IEnumerator Animate(Animator animator)
+    {
+        animator.SetBool("Run", true);
+        yield return new WaitForSeconds(1);
+        animator.SetBool("Run", false);
 
+    }
     private void Start()
     {
         TargetNum = 1;
