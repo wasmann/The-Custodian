@@ -10,6 +10,7 @@ public class UI : MonoBehaviour
     private static GameObject custodian;
     static Slider health;
     static Slider energy;
+
     //static int RAM;
 
     //enemy
@@ -31,7 +32,7 @@ public class UI : MonoBehaviour
     public static Vector3[] TimeLinePos_Player = new Vector3[10];
 
     static List<GameObject> timelineObj;
-    static GameObject NotationList;
+    public static GameObject NotationList;
 
     //pause
     static GameObject pauseButton;
@@ -39,9 +40,18 @@ public class UI : MonoBehaviour
 
     //duplication
     static GameObject duplicationPanel;
+    static bool selectCard = false;
 
     static Vector3 mouseWorldPos;
-    
+
+
+    //move function
+    static Vector3 newPosition;
+    static Vector3 lastPosition;
+    static float timeElapsed = 0;
+
+    static Animator custoAnim;
+    static SpriteRenderer custoRender;
     public static void LoadBattleBegin()
     {
         timeline = GameObject.Find("TimeLine");
@@ -59,17 +69,18 @@ public class UI : MonoBehaviour
         duplicationPanel = GameObject.Find("DuplicationPanel");
         duplicationPanel.SetActive(false);
 
-        UpdatePlayerData();
-        UpdateAllEnemyData();
+        custoAnim = custodian.GetComponent<Animator>();
+        custoRender = custodian.GetComponent<SpriteRenderer>();
 
-        //UpdateEnemyData();
+        UpdatePlayerData();
+        custodian.transform.position = ToolFunction.FromCoorinateToWorld(BattleData.playerData.position);
+
+        UpdateAllEnemyData();
 
         InitTimeLinePos();
         InitHandcardPos();
 
         UpdateHandCard();
-
-
     }
     public static void MoveTimeLine()
     {
@@ -98,15 +109,13 @@ public class UI : MonoBehaviour
             for(int i = 0; i < card.Info.direction.Count; i++)
             {
                 GameObject notation= GameObject.Instantiate(Resources.Load("Prefab/Notation/" + card.RangeNotation) as GameObject);
+
                 notation.transform.position = ToolFunction.FromCoorinateToWorld(card.Info.direction[i]);
                 notation.transform.SetParent(NotationList.transform);
             }
         }
-        if (card.SelectionNotation != "None")
-        {
-            //ToDo 
-        }
     }
+
     public static void DeleteNotation()
     {
         foreach (Transform child in NotationList.transform)
@@ -155,7 +164,10 @@ public class UI : MonoBehaviour
     {
         health.value = BattleData.playerData.currentHealth;
         energy.value = BattleData.playerData.currentEnergy;
-        custodian.transform.position = ToolFunction.FromCoorinateToWorld(BattleData.playerData.position);
+
+        //custodian.transform.position = ToolFunction.FromCoorinateToWorld(BattleData.playerData.position);
+        lastPosition = custodian.transform.position;
+        newPosition = ToolFunction.FromCoorinateToWorld(BattleData.playerData.position);
     }
 
     public static void loadEnemyGameObject(List<string> enemyNames)
@@ -232,7 +244,7 @@ public class UI : MonoBehaviour
         foreach (Card card in BattleData.NewCard)
         {
 
-            GameObject obj = Instantiate(Resources.Load("Prefab/CardOnTimeLine/" + card.Name) as GameObject, duplicationPanel.transform);
+            GameObject obj = Instantiate(Resources.Load("Prefab/Card/" + card.Name) as GameObject, duplicationPanel.transform);
             //obj.transform.SetParent(GameObject.Find("Canvas/DuplicationPanel").transform);
             obj.transform.localScale = new Vector3(0.03f, 0.03f, 0);
             if (i >= 7)
@@ -243,6 +255,7 @@ public class UI : MonoBehaviour
             obj.transform.localPosition = new Vector3(initpos.x + 0.1f * i, initpos.y + 0.05f * j, 0);
             i++;
         }
+        selectCard = true;
     }
 
     public static void DestroyDuplicationWin()
@@ -264,6 +277,7 @@ public class UI : MonoBehaviour
             DestroyDuplicationWin();
             duplicationPanel.SetActive(false);
             Time.timeScale = 1;
+            selectCard = false;
         }
         else
         {
@@ -273,6 +287,69 @@ public class UI : MonoBehaviour
             //duplicationPanel.SetActive(true);
             isPaused = true;
             ShowDuplicationWin();
+        }
+    }
+
+    public static void MoveCusto()
+    {
+        //according to timeslots tick needed
+        if (timeElapsed < 1)
+        {
+            custodian.transform.position = Vector3.Lerp(lastPosition, newPosition, timeElapsed / 1);
+            timeElapsed += Time.deltaTime;
+            if ((lastPosition.x - newPosition.x) > 0)
+            {
+                custoRender.flipX = true;
+                custoAnim.Play("run");
+            }
+            else if ((lastPosition.x - newPosition.x) < 0)
+            {
+                custoRender.flipX = false;
+                custoAnim.Play("run");
+            }
+            else
+            {
+                custoAnim.Play("run_up");
+            }
+        }
+        else
+        {
+            custodian.transform.position = newPosition;
+            timeElapsed = 0;
+            custoAnim.Play("idle");
+        }
+
+    }
+
+    public static void SelectCard()
+    {
+        //no collider detected
+        /*Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit))
+        {
+            Debug.Log("hit: " + hit.collider.gameObject.name);
+            Pause();
+        }*/
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Pause();
+            //GameData.Deck.Add();
+            //BattleData.playerData.drawPile.Add();
+        }
+    }
+
+    private void Update()
+    {
+        if (newPosition != custodian.transform.position)
+        {
+            MoveCusto();
+        }
+
+        if (selectCard)
+        {
+            SelectCard();
         }
     }
 }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Playables;
+using UnityEngine.Timeline;
+using UnityEngine.SceneManagement;
 
 public class Tutorial : MonoBehaviour
 {
@@ -12,6 +15,9 @@ public class Tutorial : MonoBehaviour
 
     public SpriteRenderer spriteLeft;
     public SpriteRenderer spriteRight;
+
+    public GameObject dialogName;
+    public GameObject dialog;
 
     public TMP_Text nameText;
     public TMP_Text dialogText;
@@ -26,19 +32,30 @@ public class Tutorial : MonoBehaviour
     public GameObject optionButton;
     public Transform optionGroup;
 
+    public PlayableDirector director;
+    //public TimelineAsset tutorial;
+
+    //UI
+    public GameObject armor;
+    public GameObject energy;
+    public GameObject attribute;
+    public GameObject timeline;
+    public GameObject pausebutton;
+    public GameObject card;
+    public GameObject panel;
+    public GameObject headbutt;
+
     private void Awake()
     {
         //Time.timeScale = 0;
-        imageDic["Custodian"] = sprites[0];
-        imageDic["dog"] = sprites[1];
-        imageDic["GoodLabWorker"] = sprites[2];
-        imageDic["BadLabWorker"] = sprites[3];
+        //imageDic["Custodian"] = sprites[0];
+        //imageDic["dog"] = sprites[1];
     }
     // Start is called before the first frame update
     void Start()
     {
+        director = GetComponent<PlayableDirector>();
         ReadText(dialogDataFile);
-        ShowDialogRow();
         
     }
 
@@ -50,7 +67,7 @@ public class Tutorial : MonoBehaviour
 
     public void UpdateText(string _name, string _text)
     {
-        nameText.text = _name;
+        nameText.text = "Custodian";
         dialogText.text = _text;
     }
 
@@ -69,11 +86,6 @@ public class Tutorial : MonoBehaviour
     public void ReadText(TextAsset _textAsset)
     {
         dialogRows = _textAsset.text.Split('\n');
-/*        foreach (var row in rows)
-        {
-            string[] cell = row.Split(';');
-        }
-              */  
     }
 
     public void ShowDialogRow()
@@ -83,8 +95,9 @@ public class Tutorial : MonoBehaviour
             string[] cells = dialogRows[i].Split(',');
             if(cells[0]=="#" && int.Parse(cells[1]) == dialogIndex)
             {
+                EnableDialog();
                 UpdateText(cells[2], cells[4]);
-                UpdateImage(cells[2], cells[3]);
+                //UpdateImage(cells[2], cells[3]);
 
                 dialogIndex = int.Parse(cells[5]);
                 nextButton.gameObject.SetActive(true);
@@ -94,12 +107,32 @@ public class Tutorial : MonoBehaviour
             }
             else if (cells[0] == "&" && int.Parse(cells[1]) == dialogIndex)
             {
+                EnableDialog();
                 nextButton.gameObject.SetActive(false);
                 GenerateOption(i);
             }
             else if(cells[0] == "END" && int.Parse(cells[1]) == dialogIndex)
             {
+                SceneManager.LoadScene("Battle");
+            }
+            else if(cells[0] == "*" && int.Parse(cells[1]) == dialogIndex)
+            {
+                EnableDialog();
+                UpdateText(cells[2], cells[4]);
 
+                dialogIndex = int.Parse(cells[5]);
+                nextButton.gameObject.SetActive(true);
+                OptionEffect(int.Parse(cells[6]));
+                break;
+                
+            }
+            else if(cells[0] == "@" && int.Parse(cells[1]) == dialogIndex)
+            {
+                
+                DisableDialog();
+                OptionEffect(int.Parse(cells[6]));
+                dialogIndex = int.Parse(cells[5]);
+                break;
             }
         }
     }
@@ -122,9 +155,7 @@ public class Tutorial : MonoBehaviour
                 OnOptionClick(int.Parse(cells[5]));
             });
             GenerateOption(_index + 1);
-        }
-        
-        
+        }     
     }
 
     public void OnOptionClick(int _id)
@@ -137,8 +168,80 @@ public class Tutorial : MonoBehaviour
         }
     }
 
-    public void OptionEffect(string _effect)
+    public void OptionEffect(int _effect)
     {
+        switch (_effect)
+        {
+            case 1:
+                armor.SetActive(true);
+                energy.SetActive(true);
+                attribute.SetActive(true);          
+                break;
 
+            case 2:
+                card.SetActive(true);
+                break;
+
+            case 3:
+                director.playableGraph.GetRootPlayable(0).SetSpeed(1);
+                break;
+
+            case 4:
+                timeline.SetActive(true);
+                break;
+
+            case 5:
+                card.SetActive(false);
+                director.playableGraph.GetRootPlayable(0).SetSpeed(1);
+                break;
+
+            case 6:
+                Camera.main.transform.Translate(5, 0, 0);
+                director.playableGraph.GetRootPlayable(0).SetSpeed(1);
+                break;
+
+            case 7:
+                SceneManager.LoadScene("Battle");
+                break;
+
+            case 8:
+                dialogName.SetActive(false);
+                dialog.SetActive(false);
+                nextButton.gameObject.SetActive(false);
+                director.playableGraph.GetRootPlayable(0).SetSpeed(1);
+                break;
+
+            case 9:
+                nextButton.gameObject.SetActive(false);
+                pausebutton.SetActive(true);
+                break;
+        }
+    }
+
+    public void pauseDirector()
+    {
+        director.playableGraph.GetRootPlayable(0).SetSpeed(0);
+        ShowDialogRow();
+    }
+
+    public void EnableDialog()
+    {
+        dialogName.SetActive(true);
+        dialog.SetActive(true);
+    }
+
+    public void DisableDialog()
+    {
+        dialogName.SetActive(false);
+        dialog.SetActive(false);
+        
+    }
+
+    public void OnClickPauseButton()
+    {
+        panel.SetActive(true);
+        headbutt.SetActive(true);
+        ShowDialogRow();
+        pausebutton.SetActive(false);
     }
 }
