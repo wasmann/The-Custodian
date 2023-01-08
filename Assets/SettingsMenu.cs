@@ -6,12 +6,6 @@ public class SettingsMenu : MonoBehaviour
 {
     public GameObject SettingsMenuUI;
 
-    // Update is called once per frame
-    //void Update()
-    //{
-        //if
-    //}
-
     public void Back()
     {
         Debug.Log("Closing menu...");
