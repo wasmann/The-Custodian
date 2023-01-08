@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
+using TMPro;
 
 public class UI : MonoBehaviour
 {
@@ -52,6 +53,7 @@ public class UI : MonoBehaviour
 
     static Animator custoAnim;
     static SpriteRenderer custoRender;
+    static GameObject damage;
     public static void LoadBattleBegin()
     {
         timeline = GameObject.Find("TimeLine");
@@ -162,8 +164,15 @@ public class UI : MonoBehaviour
 
     public static void UpdatePlayerData()
     {
+        if (health.value > BattleData.playerData.currentHealth)
+        {
+            ShowDamage(health.value - BattleData.playerData.currentHealth);
+        }
         health.value = BattleData.playerData.currentHealth;
         energy.value = BattleData.playerData.currentEnergy;
+
+        health.GetComponentInChildren<TMP_Text>().text = health.value + " / " + health.maxValue;
+        energy.GetComponentInChildren<TMP_Text>().text = energy.value + " / " + energy.maxValue;
 
         //custodian.transform.position = ToolFunction.FromCoorinateToWorld(BattleData.playerData.position);
         lastPosition = custodian.transform.position;
@@ -243,10 +252,12 @@ public class UI : MonoBehaviour
         int i = 0, j = 0;
         foreach (Card card in BattleData.NewCard)
         {
-
-            GameObject obj = Instantiate(Resources.Load("Prefab/Card/" + card.Name) as GameObject, duplicationPanel.transform);
+            
+           GameObject obj = Instantiate(Resources.Load("Prefab/Card/" + card.Name) as GameObject, duplicationPanel.transform);
+           
             //obj.transform.SetParent(GameObject.Find("Canvas/DuplicationPanel").transform);
             obj.transform.localScale = new Vector3(0.03f, 0.03f, 0);
+            
             if (i >= 7)
             {
                 i = 0;
@@ -323,21 +334,33 @@ public class UI : MonoBehaviour
 
     public static void SelectCard()
     {
-        //no collider detected
-        /*Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit))
-        {
-            Debug.Log("hit: " + hit.collider.gameObject.name);
-            Pause();
-        }*/
+       
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Input.GetMouseButtonDown(0))
         {
-            Pause();
-            //GameData.Deck.Add();
-            //BattleData.playerData.drawPile.Add();
+            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 1000, -1);
+            //Debug.DrawLine(ray.origin, hit.transform.position, Color.red, 0.1f, true);
+            if (hit.collider && (hit.collider.transform.parent.transform.name == "DuplicationPanel"))
+            {
+               
+                Debug.Log("hit: " + hit.transform.name);
+                Pause();
+                string cardName = hit.collider.gameObject.transform.name;
+                GameObject obj = Instantiate(Resources.Load("Prefab/UI/Damage") as GameObject, GameObject.Find("CardBank").transform);
+                //GameObject obj = Instantiate(Resources.Load("Prefab/Card/Reload") as GameObject, GameObject.Find("CardBank").transform);
+                GameData.Deck.Add(obj.GetComponent<Card>());
+                BattleData.playerData.drawPile.Add(obj.GetComponent<Card>());
+            }
+
         }
+    }
+
+    public static void ShowDamage(float _damage)
+    {
+        GameObject damage = Instantiate(Resources.Load("Prefab/UI/Damage") as GameObject, custodian.transform.position, Quaternion.identity);
+        damage.GetComponent<TMP_Text>().text = "-" + _damage;
+        Destroy(damage, 0.5f);
     }
 
     private void Update()
