@@ -14,6 +14,7 @@ public static class Loader
         SettingsMenu,
         WorldMap,
         LoadingScreen,
+        StartMenu
     }
 
     private static Action onLoaderCallback;

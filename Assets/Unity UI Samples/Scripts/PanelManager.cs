@@ -51,6 +51,18 @@ public class PanelManager : MonoBehaviour {
         GameIsPaused = false;
     }
 
+	public void LoadStartMenu()
+    {
+        Debug.Log("Loading the start menu...");
+        Loader.Load(Loader.Scene.StartMenu);
+    }
+
+	public void LoadNewGame()
+    {
+        Debug.Log("Starting a new game...");
+        Loader.Load(Loader.Scene.Battle);
+    }
+
 	public void OnEnable()
 	{
 		if (GameIsPaused) { 
