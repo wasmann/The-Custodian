@@ -40,7 +40,11 @@ public class ApplicationManager : MonoBehaviour {
 		SceneManager.LoadScene("Tutorial");
 	}
 
-    private void Update()
+	public void BackToStart()
+	{
+		SceneManager.LoadScene("Start");
+	}
+	private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
