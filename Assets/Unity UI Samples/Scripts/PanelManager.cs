@@ -15,64 +15,14 @@ public class PanelManager : MonoBehaviour {
 	const string k_OpenTransitionName = "Open";
 	const string k_ClosedStateName = "Closed";
 
-	public static bool GameIsPaused = false;
-
-	void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (GameIsPaused)
-            {
-                Resume();
-            }
-            else //if (!GameIsPaused)
-            {
-				Pause();
-            }
-        }
-    }
-
-	void Pause()
-    {
+	public void OnEnable()
+	{
 		m_OpenParameterId = Animator.StringToHash (k_OpenTransitionName);
 
 		if (initiallyOpen == null)
 			return;
 
 		OpenPanel(initiallyOpen);
-        //Time.timeScale = 0f; // Stop the Unity clock!
-        GameIsPaused = true;
-    }
-
-	public void Resume()
-    {
-        CloseCurrent();
-        //Time.timeScale = 1f;    // Set Unity clock back to normal!
-        GameIsPaused = false;
-    }
-
-	public void LoadStartMenu()
-    {
-        Debug.Log("Loading the start menu...");
-        Loader.Load(Loader.Scene.StartMenu);
-    }
-
-	public void LoadNewGame()
-    {
-        Debug.Log("Starting a new game...");
-        Loader.Load(Loader.Scene.Battle);
-    }
-
-	public void OnEnable()
-	{
-		if (GameIsPaused) { 
-			m_OpenParameterId = Animator.StringToHash (k_OpenTransitionName);
-
-			if (initiallyOpen == null)
-				return;
-
-			OpenPanel(initiallyOpen);
-		}
 	}
 
 	public void OpenPanel (Animator anim)

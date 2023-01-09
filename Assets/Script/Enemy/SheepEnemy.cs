@@ -303,8 +303,8 @@ public class SheepEnemy : Enemy
         float DifferenceInXCoordinate = Math.Abs(PlayerPosition.x - SelfPosition.x);
         float DifferenceInYCoordinate = Math.Abs(PlayerPosition.y - SelfPosition.y);
 
-        Debug.Log("Player Position: " + PlayerPosition);
-        Debug.Log("Sheep Position: " + SelfPosition);
+        //Debug.Log("Player Position: " + PlayerPosition);
+        //Debug.Log("Sheep Position: " + SelfPosition);
 
         // Information required to play the cards will be stored in this struct.
         Card.InfoForActivate info = new Card.InfoForActivate();
@@ -317,36 +317,36 @@ public class SheepEnemy : Enemy
         {
             if (SheepData.handCard[i].ID == WALKCARDID) {
                 HasWalkCardAtHand = true;
-                Debug.Log("Sheep has the walk card");
+                //Debug.Log("Sheep has the walk card");
             }
             else if (SheepData.handCard[i].ID == RUNTOPCARDID) { 
                 HasRunTopCardAtHand = true;
-                Debug.Log("Sheep has the run top card");
+                //Debug.Log("Sheep has the run top card");
             }
             else if (SheepData.handCard[i].ID == RUNDOWNCARDID)
             {
                 HasRunDownCardAtHand = true;
-                Debug.Log("Sheep has the run down card");
+                //Debug.Log("Sheep has the run down card");
             }
             else if (SheepData.handCard[i].ID == RUNLEFTCARDID)
             {
                 HasRunLeftCardAtHand = true;
-                Debug.Log("Sheep has the run left card");
+                //Debug.Log("Sheep has the run left card");
             }
             else if (SheepData.handCard[i].ID == RUNRIGHTCARDID)
             {
                 HasRunRightCardAtHand = true;
-                Debug.Log("Sheep has the run right card");
+                //Debug.Log("Sheep has the run right card");
             }
             else if (SheepData.handCard[i].ID == HEADBUTTCARDID)
             {
                 HasHeadbuttCardAtHand = true;
-                Debug.Log("Sheep has the headbutt card");
+                //Debug.Log("Sheep has the headbutt card");
             }
             else if (SheepData.handCard[i].ID == RUSHATTACKCARDID)
             {
                 HasRushAttackCardAtHand = true;
-                Debug.Log("Sheep has the rush attack card");
+                //Debug.Log("Sheep has the rush attack card");
             }
         }
 
@@ -354,31 +354,31 @@ public class SheepEnemy : Enemy
         if (PlayerPosition.y > SelfPosition.y)
         {
             PlayerIsAbove = true;
-            Debug.Log("Player is roughly above sheep.");
+            //Debug.Log("Player is roughly above sheep.");
         }
         // Is the player rougly below us?
         else if (PlayerPosition.y < SelfPosition.y)
         {
             PlayerIsBelow = true;
-            Debug.Log("Player is roughly below sheep.");
+            //Debug.Log("Player is roughly below sheep.");
         }
 
         // Is the player roughly to the right of us?
         if (PlayerPosition.x > SelfPosition.x)
         {
             PlayerIsToTheRight = true;
-            Debug.Log("Player is roughly to the right of sheep.");
+            //Debug.Log("Player is roughly to the right of sheep.");
         }
         // Is the player rougly to the left of us?
         else if (PlayerPosition.x < SelfPosition.x)
         {
             PlayerIsToTheLeft = true;
-            Debug.Log("Player is roughly to the left of sheep.");
+            //Debug.Log("Player is roughly to the left of sheep.");
         }
 
         // If we are on top of each other, then sheep won't know what to do!
         if (PlayerPosition.x == SelfPosition.x && PlayerPosition.y == SelfPosition.y) {
-            Debug.Log("Sheep doesn't know what to do!");
+            //Debug.Log("Sheep doesn't know what to do!");
             // We discard the first card on our hand!
             Discard(info, SheepData.handCard[0].ID);
             return;
@@ -391,7 +391,7 @@ public class SheepEnemy : Enemy
         if ((PlayerPosition.x == SelfPosition.x && DifferenceInYCoordinate <= 3) ||
             (PlayerPosition.y == SelfPosition.y && DifferenceInXCoordinate <= 3))
         {
-            Debug.Log("Sheep is in range!");
+            //Debug.Log("Sheep is in range!");
             SheepIsInRange = true;
             if (HasHeadbuttCardAtHand && HasRushAttackCardAtHand)
             {
@@ -478,7 +478,7 @@ public class SheepEnemy : Enemy
                                        DifferenceInXCoordinate, DifferenceInYCoordinate);
                     if (PlayedACard) { return; }
                 }
-                Debug.Log("Discarding to try to get an attack card or movement card we can use!");
+                //Debug.Log("Discarding to try to get an attack card or movement card we can use!");
                 // If we have neither attack card or a useful movement card, then discard a card 
                 // and try to get the headbutt card or rush attack card!
                 // We discard the first card on our hand!
@@ -487,7 +487,7 @@ public class SheepEnemy : Enemy
             }
             else
             {
-                Debug.Log("Discarding to try to get the headbutt card or rush attack card!");
+               // Debug.Log("Discarding to try to get the headbutt card or rush attack card!");
                 // If we have neither attack card, then discard a card and try to get the headbutt 
                 // card or rush attack card!
                 // We discard the first card on our hand!
@@ -498,7 +498,7 @@ public class SheepEnemy : Enemy
         // If we are not in range, try to move into range!
         else
         {
-            Debug.Log("Sheep is not in range!");
+            //Debug.Log("Sheep is not in range!");
             SheepIsNotInRange = true;
             // Do we have a movement card?
             if (HasWalkCardAtHand || HasRunTopCardAtHand || HasRunDownCardAtHand || 
@@ -589,7 +589,7 @@ public class SheepEnemy : Enemy
                     // There may be a case where although we have a movement card at hand, we 
                     // shouldn't play it. Then, we simply discard to try to get another movement
                     // card.
-                    Debug.Log("Discarding to try to get another movement card we can play");
+                    //Debug.Log("Discarding to try to get another movement card we can play");
                     // We discard the first card on our hand!
                     Discard(info, SheepData.handCard[0].ID);
                     return;
@@ -599,7 +599,7 @@ public class SheepEnemy : Enemy
             // a movement card.
             else
             {
-                Debug.Log("Discarding to try to get a movement card!");
+                //Debug.Log("Discarding to try to get a movement card!");
                 // We discard the first card on our hand!
                 Discard(info, SheepData.handCard[0].ID);
                 return;
@@ -607,7 +607,7 @@ public class SheepEnemy : Enemy
         }
         // Getting this might be caused by a bug or in case of player and sheep getting on top of
         // each other, it is the defined behavior.
-        Debug.Log("No action was taken!");
+        //Debug.Log("No action was taken!");
         return;
     }
 }

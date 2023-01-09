@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BattleLevelDriver : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class BattleLevelDriver : MonoBehaviour
     public bool BattleOver;
 
     public static List<List<Card.InfoForActivate>> TimeLineSlots;
+
+    public float tickTime;
+    [SerializeField]
+    public Slider tickSlider;
 
     private void Start()
     {
@@ -27,6 +32,7 @@ public class BattleLevelDriver : MonoBehaviour
         BattleData.BattleLevelInit(ID);
         UI.LoadBattleBegin();
         GameData.currentState = GameData.state.Battle;
+        tickTime = GameData.tickspeed;
         StartCoroutine(EnableTimeLineSlots());
         StartCoroutine(BattleLevelGame());
     }
@@ -52,7 +58,7 @@ public class BattleLevelDriver : MonoBehaviour
             {
                 yield return new WaitForSeconds(0.2f);
             }
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(tickTime);
             //Remove the cards at time steps 0 and add a new list at  time step 10
             List<Card.InfoForActivate> currentCards = TimeLineSlots[0];
             TimeLineSlots.RemoveAt(0);
@@ -114,4 +120,24 @@ public class BattleLevelDriver : MonoBehaviour
         yield return new WaitUntil(() => UI.isPaused == false);
     }*/
 
+    public void SetTicktime()
+    {
+        tickTime = tickSlider.value;
+        GameData.tickspeed = tickSlider.value;
+    }
+
+    public void Pause()
+    {
+        if (Paused)
+        {
+            Paused = false;
+            Debug.Log(Paused);
+        }
+        else
+        {
+            Paused = true;
+            Debug.Log(Paused);
+        }
+        
+    }
 }

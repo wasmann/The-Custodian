@@ -76,8 +76,8 @@ public class BattleData : MonoBehaviour
             enviromentData.Add(new Vector2(int.Parse(split[0]), int.Parse(split[1])), environmentType);
         }
         reader.Close();
-        Debug.Log(enviromentData.Count);
-        Debug.Log(enviromentData.ElementAt(0).Value);
+        //Debug.Log(enviromentData.Count);
+        //Debug.Log(enviromentData.ElementAt(0).Value);
     }
 
     public static void LoadEnermyData(){
