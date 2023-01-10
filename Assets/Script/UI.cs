@@ -41,7 +41,8 @@ public class UI : MonoBehaviour
 
     //duplication
     static GameObject duplicationPanel;
-    static bool selectCard = false;
+
+    public static bool waitForDuplicate;
 
     static Vector3 mouseWorldPos;
 
@@ -248,16 +249,44 @@ public class UI : MonoBehaviour
     public static void ShowDuplicationWin()
     {
         duplicationPanel.SetActive(true);
-        Vector3 initpos = new Vector3(-0.4f, 0.06f, 0);
-        int i = 0, j = 0;
+        //Vector3 initpos = new Vector3(-0.4f, 0.06f, 0);
+        //int i = 0, j = 0;
         foreach (Card card in BattleData.NewCard)
         {
             
            GameObject obj = Instantiate(Resources.Load("Prefab/Card/" + card.Name) as GameObject, duplicationPanel.transform);
+            Debug.Log(card.Name);
            
             //obj.transform.SetParent(GameObject.Find("Canvas/DuplicationPanel").transform);
             obj.transform.localScale = new Vector3(0.03f, 0.03f, 0);
-            
+            obj.GetComponent<Collider2D>().enabled = false;
+            obj.GetComponent<Collider2D>().enabled = true;
+
+            /*if (i >= 7)
+            {
+                i = 0;
+                j++;
+            }
+            obj.transform.localPosition = new Vector3(initpos.x + 0.1f * i, initpos.y + 0.05f * j, 0);
+            i++;*/
+        }
+        
+    }
+
+    public static void ShowDuplicationWin2()
+    {
+        duplicationPanel.SetActive(true);
+        Vector3 initpos = new Vector3(-0.4f, 0.06f, 0);
+        int i = 0, j = 0;
+        foreach (Card card in BattleData.NewCard)
+        {
+
+            GameObject obj = Instantiate(Resources.Load("Prefab/Card/" + card.Name) as GameObject, duplicationPanel.transform);
+            Debug.Log(card.Name);
+
+            //obj.transform.SetParent(GameObject.Find("Canvas/DuplicationPanel").transform);
+            obj.transform.localScale = new Vector3(0.03f, 0.03f, 0);
+
             if (i >= 7)
             {
                 i = 0;
@@ -266,7 +295,7 @@ public class UI : MonoBehaviour
             obj.transform.localPosition = new Vector3(initpos.x + 0.1f * i, initpos.y + 0.05f * j, 0);
             i++;
         }
-        selectCard = true;
+
     }
 
     public static void DestroyDuplicationWin()
@@ -288,7 +317,7 @@ public class UI : MonoBehaviour
             DestroyDuplicationWin();
             duplicationPanel.SetActive(false);
             Time.timeScale = 1;
-            selectCard = false;
+            waitForDuplicate = false;
         }
         else
         {
@@ -297,10 +326,46 @@ public class UI : MonoBehaviour
             pauseButton.transform.GetChild(1).gameObject.SetActive(false);
             //duplicationPanel.SetActive(true);
             isPaused = true;
-            ShowDuplicationWin();
+            //ShowDuplicationWin();
+            ShowDuplicationWin2();
+            waitForDuplicate = true;
         }
     }
 
+    public static void FinishDuplicate(Card card, Card.Rarity rarity)
+    {
+        int time = 0;
+        switch (rarity)
+        {
+            case Card.Rarity.basic:
+                time = 1;
+                break;
+
+            case Card.Rarity.common:
+                time = 2;
+                break;
+
+            case Card.Rarity.rare:
+                time = 5;
+                break;
+
+            case Card.Rarity.epic:
+                time = 8;
+                break;
+
+            case Card.Rarity.legendary:
+                time = 10;
+                break;
+        }
+
+        card.Info.owner_ID = 99;
+        BattleLevelDriver.TimeLineSlots[time].Add(card.Info);
+        //GameData.Deck.Add(card);
+        //BattleData.playerData.drawPile.Add(card);
+        Debug.Log("duplicate: " + card.transform.name);
+        Pause();
+        BattleData.NewCard.Remove(card);
+    }
     public static void MoveCusto()
     {
         //according to timeslots tick needed
@@ -332,14 +397,15 @@ public class UI : MonoBehaviour
 
     }
 
-    public static void SelectCard()
+/*    public static void SelectCard()
     {
        
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 1000, -1);
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && hit.collider && (hit.collider.transform.parent.transform.name == "DuplicationPanel"))
         {
-            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 1000, -1);
+           
             //Debug.DrawLine(ray.origin, hit.transform.position, Color.red, 0.1f, true);
             if (hit.collider && (hit.collider.transform.parent.transform.name == "DuplicationPanel"))
             {
@@ -351,11 +417,12 @@ public class UI : MonoBehaviour
                 //GameObject obj = Instantiate(Resources.Load("Prefab/Card/Reload") as GameObject, GameObject.Find("CardBank").transform);
                 GameData.Deck.Add(obj.GetComponent<Card>());
                 BattleData.playerData.drawPile.Add(obj.GetComponent<Card>());
+                
             }
 
         }
-    }
-
+    }*/
+        
     public static void ShowDamage(float _damage)
     {
         GameObject damage = Instantiate(Resources.Load("Prefab/UI/Damage") as GameObject, custodian.transform.position, Quaternion.identity);
@@ -370,9 +437,5 @@ public class UI : MonoBehaviour
             MoveCusto();
         }
 
-        if (selectCard)
-        {
-            SelectCard();
-        }
     }
 }

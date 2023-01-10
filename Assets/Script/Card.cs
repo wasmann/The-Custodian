@@ -77,22 +77,30 @@ public abstract class Card : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (BattleData.AbleToPalyCard == true)
+        if (UI.waitForDuplicate)
         {
-            ReSetTarget();
-           // BattleData.PlayingACard = true;
-            BattleData.AbleToPalyCard = false;
-            Info = new InfoForActivate();
-            Info.owner_ID = 0;
-            Info.animator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
-            Info.direction = new List<Vector2>();
-            Info.Selection = new List<Vector2>();
-            Info.card = this;
-            StartCoroutine(Play());
+            UI.FinishDuplicate(this,this.rarity);
         }
         else
         {
-            Debug.Log("Another card is now ready to play");
+            if (BattleData.AbleToPalyCard == true)
+            {
+                ReSetTarget();
+                // BattleData.PlayingACard = true;
+                BattleData.AbleToPalyCard = false;
+                Info = new InfoForActivate();
+                Info.owner_ID = 0;
+                Info.animator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
+                Info.direction = new List<Vector2>();
+                Info.Selection = new List<Vector2>();
+                Info.card = this;
+                StartCoroutine(Play());
+            }
+            else
+            {
+                Debug.Log("Another card is now ready to play");
+            }
         }
+        
     }
 }

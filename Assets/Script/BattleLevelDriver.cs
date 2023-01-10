@@ -72,13 +72,22 @@ public class BattleLevelDriver : MonoBehaviour
 
             foreach (Card.InfoForActivate info in currentCards)
             {
+
+                if (info.owner_ID == 99)
+                {
+                    GameData.Deck.Add(info.card);
+                    BattleData.playerData.drawPile.Add(info.card);
+                    continue;
+                }
+
                 if (info.owner_ID == 0)
                 {
                     BattleData.AbleToPalyCard = true;
                 }
                 
                 info.card.Activate(info);
-                if (info.owner_ID != 0)
+
+                if (info.owner_ID != 0 && info.owner_ID != 99)
                 {
                     BattleData.NewCard.Add(info.card);//for duplication
                     BattleData.EnemyDataList[info.owner_ID].enemy.EnemyChooseACardToPlay();
