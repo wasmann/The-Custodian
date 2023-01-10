@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
-    
-    
+
+
     //Get playerData from BattleData.cs
 
     //private HashSet<Card> deck; // drawPile
@@ -28,8 +28,9 @@ public class Deck : MonoBehaviour
 
     public static void RebuildDrawPile()
     {
-        BattleData.playerData.drawPile = BattleData.playerData.discardPile;
-        BattleData.playerData.discardPile = new List<Card>();
+        Shuffle();
+        //BattleData.playerData.drawPile = BattleData.playerData.discardPile;
+        //BattleData.playerData.discardPile = new List<Card>();
     }
 
     public static void Withdraw(Card card)
@@ -54,4 +55,16 @@ public class Deck : MonoBehaviour
 
     }
 
+    public static void Shuffle()
+    {
+        int count = BattleData.playerData.discardPile.Count;
+        for(int i = count - 1; i >= 0; --i)
+        {
+            int k = Random.Range(0, i);
+            BattleData.playerData.drawPile.Add(BattleData.playerData.discardPile[k]);
+            BattleData.playerData.discardPile.RemoveAt(k);
+        }
+        Debug.Log(BattleData.playerData.discardPile.Count);
+        Debug.Log(BattleData.playerData.drawPile.Count + "==" + count);
+    }
 }

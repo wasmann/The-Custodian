@@ -35,11 +35,13 @@ public class BattleLevelDriver : MonoBehaviour
         tickTime = GameData.tickspeed;
         StartCoroutine(EnableTimeLineSlots());
         StartCoroutine(BattleLevelGame());
+        
     }
 
     private IEnumerator BattleLevelGame()
     {        
         yield return new WaitUntil(() => BattleOver == true);
+        
         GameData.currentState = GameData.state.WorldMap;
         //TODO: load gameover or show battle summary
     }
@@ -52,11 +54,13 @@ public class BattleLevelDriver : MonoBehaviour
             enemy.obj.GetComponent<Enemy>().EnemyChooseACardToPlay();
         }
         UI.UpdateTimeLine(TimeLineSlots);
-        while (!Paused && !BattleOver)
+        while (!BattleOver)
         {
             while (Paused)
             {
                 yield return new WaitForSeconds(0.2f);
+                //yield return new WaitUntil(() => Paused == false);
+                
             }
             yield return new WaitForSeconds(tickTime);
             //Remove the cards at time steps 0 and add a new list at  time step 10
@@ -130,13 +134,15 @@ public class BattleLevelDriver : MonoBehaviour
     {
         if (Paused)
         {
+            
             Paused = false;
-            Debug.Log(Paused);
+            //Debug.Log(Paused);
         }
         else
         {
+            
             Paused = true;
-            Debug.Log(Paused);
+            //Debug.Log(Paused);
         }
         
     }
