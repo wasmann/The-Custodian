@@ -12,7 +12,11 @@ public class PathSearchAlgorithm : MonoBehaviour
     };
     private bool IsValid(Vector2 pos)
     {
-        return BattleData.enviromentData[pos] == 0;
+        if (BattleData.enviromentData.ContainsKey(pos)) { 
+        var a = BattleData.enviromentData[pos];
+        return a == BattleData.EnvironmentType.Walkable;
+         }
+        return false;
     }
 
     private bool IsDestination(Vector2 src, Vector2 dst)
@@ -58,7 +62,7 @@ public class PathSearchAlgorithm : MonoBehaviour
         return path;
     }
 
-    public List<Vector2> AStarSearch( Vector2Int src, Vector2Int dest)
+    public  List<Vector2> AStarSearch( Vector2Int src, Vector2Int dest)
     {
 
         Dictionary<Vector2, bool> closedList = new Dictionary<Vector2, bool>();
@@ -107,6 +111,7 @@ public class PathSearchAlgorithm : MonoBehaviour
             openList.Remove(now);
 
             // Add this vertex to the closed list
+            //closedList.Remove(now);
             closedList.Add(now, true);
 
             /*
@@ -136,7 +141,7 @@ public class PathSearchAlgorithm : MonoBehaviour
                         next = new Vector2(now.x+1, now.y);
                         break;
                     case 3:
-                        next = new Vector2(now.x-1, now.y + 1);
+                        next = new Vector2(now.x-1, now.y );
                         break;
                 }
 

@@ -318,8 +318,8 @@ public class LabWorkerEnemy : Enemy
         }
 
         info.card = BattleData.EnemyDataList[EnemyID].handCard[BehaviourCardID];
-
-        switch (BehaviourCardID)
+        info.Selection = new List<Vector2>();
+        switch (info.card.ID)
         {
             case 1:
                 WalkFunc(BehaviourIndex, info);
