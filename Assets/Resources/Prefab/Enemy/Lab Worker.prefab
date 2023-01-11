@@ -121,4 +121,14 @@ MonoBehaviour:
   EnemyID: 0
   dicardManager: {fileID: 0}
   Animator: {fileID: 6047702001210631397}
-  deck: []
+  deck:
+  - {fileID: 3551649005920662421, guid: 1135a9ca0db55084e8ecd6d9d82ddc5e, type: 3}
+  - {fileID: 3551649005920662421, guid: 1135a9ca0db55084e8ecd6d9d82ddc5e, type: 3}
+  - {fileID: 3551649005920662421, guid: 1135a9ca0db55084e8ecd6d9d82ddc5e, type: 3}
+  - {fileID: -2963663794727677209, guid: b5733550bb438f34baf160bd700c3031, type: 3}
+  - {fileID: -2963663794727677209, guid: b5733550bb438f34baf160bd700c3031, type: 3}
+  - {fileID: -4348693494636543423, guid: cc35dde101b25ae42b0addc8f37b0a0a, type: 3}
+  - {fileID: -6870017613757654281, guid: e655cfdbf7cd94a42816eb40cad65f72, type: 3}
+  - {fileID: -6870017613757654281, guid: e655cfdbf7cd94a42816eb40cad65f72, type: 3}
+  - {fileID: -6870017613757654281, guid: e655cfdbf7cd94a42816eb40cad65f72, type: 3}
+  - {fileID: 7721227647281626715, guid: 481c815d10e081a45af06b6c5497a96f, type: 3}

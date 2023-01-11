@@ -37,8 +37,8 @@ public class BattleData : MonoBehaviour
 
     public enum EnvironmentType
     {
-        Normal,
-        Wall,
+        Walkable,
+        Obstacle,
         //exit or electric wall
     }
     public struct PlayerData
@@ -66,16 +66,42 @@ public class BattleData : MonoBehaviour
     public static void LoadEnvironmentData()
     {
         enviromentData = new Dictionary<Vector2, EnvironmentType>();
-        string path = "Assets/Scenes/SceneDoc/BattleLevel" + BattleLevelID + ".txt";
-        StreamReader reader = new StreamReader(path);
-        string line;
-        while ((line = reader.ReadLine()) != null)
+        Tilemap tilemap = GameObject.Find("Grid/Tilemap").GetComponent<Tilemap>();
+        BoundsInt bounds = tilemap.cellBounds;
+        TileBase[] allTiles = tilemap.GetTilesBlock(bounds);
+
+        for (int x = 0; x < bounds.size.x; x++)
         {
-            string[] split = line.Split(',');          
-            EnvironmentType environmentType = (EnvironmentType)System.Enum.Parse(typeof(EnvironmentType), split[2]);
-            enviromentData.Add(new Vector2(int.Parse(split[0]), int.Parse(split[1])), environmentType);
+            for (int y = 0; y < bounds.size.y; y++)
+            {
+                TileBase tile = allTiles[x + y * bounds.size.x];
+                if (tile != null)
+                {
+                    if (tile.name.Contains("CRATE_1")) //retrieve from level info
+                    {
+                        enviromentData.Add(new Vector2(x, y), EnvironmentType.Walkable);
+                        //Debug.Log("x " + x + " y " + y + "   walk" + tile.name);
+                    }
+                    else
+                    {
+                        enviromentData.Add(new Vector2(x, y), EnvironmentType.Obstacle);
+                        //Debug.Log("x " + x + " y " + y + "  nope" + tile.name);
+                    }
+
+                }
+            }
         }
-        reader.Close();
+        //enviromentData = new Dictionary<Vector2, EnvironmentType>();
+        //string path = "Assets/Scenes/SceneDoc/BattleLevel" + BattleLevelID + ".txt";
+        //StreamReader reader = new StreamReader(path);
+        //string line;
+        //while ((line = reader.ReadLine()) != null)
+        //{
+        //    string[] split = line.Split(',');          
+        //    EnvironmentType environmentType = (EnvironmentType)System.Enum.Parse(typeof(EnvironmentType), split[2]);
+        //    enviromentData.Add(new Vector2(int.Parse(split[0]), int.Parse(split[1])), environmentType);
+        //}
+        //reader.Close();
         //Debug.Log(enviromentData.Count);
         //Debug.Log(enviromentData.ElementAt(0).Value);
     }

@@ -33,7 +33,7 @@ public class LabWorkerEnemy : Enemy
 
     private State state;
     Weight weight;
-    List<Vector2> pathToPlayer;
+    List<Vector2> pathToPlayer = new List<Vector2>();
     private struct State
     {
         public int Aggressive;

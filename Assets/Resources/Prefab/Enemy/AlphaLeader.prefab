@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6502979706173651840}
   - component: {fileID: 6502979706173651841}
   - component: {fileID: 6502979706173651870}
-  - component: {fileID: 6502979706173651871}
+  - component: {fileID: 6474657049720921190}
   m_Layer: 0
   m_Name: AlphaLeader
   m_TagString: Untagged
@@ -106,23 +106,28 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!111 &6502979706173651871
-Animation:
+--- !u!114 &6474657049720921190
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6502979706173651868}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: ef6d294ff51485644a2651df239799f7, type: 2}
-  - {fileID: 7400000, guid: 445d94978eabfa04ab7b85c0eaf37064, type: 2}
-  - {fileID: 7400000, guid: 679cf49f9a593f24897eb70366057cc9, type: 2}
-  - {fileID: 7400000, guid: c2379a32d6a2b58458e473ccf398101b, type: 2}
-  - {fileID: 7400000, guid: aaa542e991fe4ef41879ca43bfdb367e, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a3e016e06770249ac6ab37b4445447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyID: 0
+  dicardManager: {fileID: 0}
+  Animator: {fileID: 0}
+  deck:
+  - {fileID: 3551649005920662421, guid: 1135a9ca0db55084e8ecd6d9d82ddc5e, type: 3}
+  - {fileID: 3551649005920662421, guid: 1135a9ca0db55084e8ecd6d9d82ddc5e, type: 3}
+  - {fileID: 6665477772585948525, guid: 582ba286775079948bfc163d50dd5d9e, type: 3}
+  - {fileID: -7104704317025516163, guid: 2e7620f76d5fb354faa5b3dde15a8bb9, type: 3}
+  - {fileID: 6031979245151135987, guid: 1167d015d97442b459945c9e9f09c9e0, type: 3}
+  - {fileID: 6031979245151135987, guid: 1167d015d97442b459945c9e9f09c9e0, type: 3}
+  - {fileID: 6031979245151135987, guid: 1167d015d97442b459945c9e9f09c9e0, type: 3}
+  - {fileID: 6031979245151135987, guid: 1167d015d97442b459945c9e9f09c9e0, type: 3}
+  - {fileID: 5053978309754441203, guid: cab8bf855a4913343897069ef56e1cf3, type: 3}
