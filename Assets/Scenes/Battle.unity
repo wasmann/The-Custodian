@@ -7062,32 +7062,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 22400002, guid: a93c012dd9ef6454fa7d140e976926f7, type: 3}
   m_PrefabInstance: {fileID: 1832582004}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1383709296 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6502979706173651868, guid: 1d354b408c22ea64cb7c83a7aab7cc8c, type: 3}
-  m_PrefabInstance: {fileID: 6502979706971062193}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1383709298 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 6502979706173651870, guid: 1d354b408c22ea64cb7c83a7aab7cc8c, type: 3}
-  m_PrefabInstance: {fileID: 6502979706971062193}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1383709301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1383709296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18a3e016e06770249ac6ab37b4445447, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemyID: 0
-  dicardManager: {fileID: 0}
-  Animator: {fileID: 1383709298}
-  deck: []
 --- !u!1 &1388155727
 GameObject:
   m_ObjectHideFlags: 0
@@ -9648,11 +9622,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6502979706173651840, guid: 1d354b408c22ea64cb7c83a7aab7cc8c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.01
+      value: 2.85
       objectReference: {fileID: 0}
     - target: {fileID: 6502979706173651840, guid: 1d354b408c22ea64cb7c83a7aab7cc8c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.95
+      value: -3.04
       objectReference: {fileID: 0}
     - target: {fileID: 6502979706173651840, guid: 1d354b408c22ea64cb7c83a7aab7cc8c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9688,7 +9662,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6502979706173651841, guid: 1d354b408c22ea64cb7c83a7aab7cc8c, type: 3}
       propertyPath: m_SortingOrder
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6502979706173651868, guid: 1d354b408c22ea64cb7c83a7aab7cc8c, type: 3}
       propertyPath: m_Name
