@@ -75,8 +75,10 @@ public class BattleLevelDriver : MonoBehaviour
 
                 if (info.owner_ID == 99)
                 {
+                    Debug.Log("finish duplicate" + info.card.Name);
                     GameData.Deck.Add(info.card);
                     BattleData.playerData.drawPile.Add(info.card);
+                    BattleData.duplicated.Add(info.card);
                     continue;
                 }
 
@@ -89,7 +91,11 @@ public class BattleLevelDriver : MonoBehaviour
 
                 if (info.owner_ID != 0 && info.owner_ID != 99)
                 {
-                    BattleData.NewCard.Add(info.card);//for duplication
+                    if(info.card.Name != "Discard" && !BattleData.duplicated.Contains(info.card))
+                    {
+                        BattleData.NewCard.Add(info.card);//for duplication
+                    }
+                    
                     BattleData.EnemyDataList[info.owner_ID].enemy.EnemyChooseACardToPlay();
                     UI.UpdateTimeLine(TimeLineSlots);
                 }
@@ -100,7 +106,7 @@ public class BattleLevelDriver : MonoBehaviour
 
     public static void NewCardPlayed(Card.InfoForActivate info)
     {
-        Debug.Log(info.card.name);
+        //Debug.Log(info.card.name);
 
         TimeLineSlots[info.card.Speed].Add(info);
         if (info.card.Speed == 0)//instant

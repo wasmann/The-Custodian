@@ -144,7 +144,7 @@ public class UI : MonoBehaviour
                 GameObject obj= Instantiate(Resources.Load("Prefab/CardOnTimeLine/" + timeLineSlots[i][j].card.Name) as GameObject);
                 obj.transform.SetParent(GameObject.Find("Canvas/TimeLine").transform);
                 obj.transform.localScale = new Vector3(20,20,0);
-                if(timeLineSlots[i][j].owner_ID == 0)
+                if((timeLineSlots[i][j].owner_ID == 0)  || (timeLineSlots[i][j].owner_ID == 99))
                 {
                     obj.transform.localPosition = TimeLinePos_Player[i];
                 }
@@ -218,6 +218,7 @@ public class UI : MonoBehaviour
         for (int i = 0; i < BattleData.playerData.handCard.Count; i++)
         {
             BattleData.playerData.handCard[i].gameObject.SetActive(true);
+            //BattleData.playerData.handCard[i] = Instantiate(Resources.Load("Prefab/Card/" + BattleData.playerData.handCard[i].Name) as GameObject);
             BattleData.playerData.handCard[i].transform.SetParent(GameObject.Find("Canvas/HandCard").transform);
             BattleData.playerData.handCard[i].transform.localPosition = HandCardPos[i];
             BattleData.playerData.handCard[i].transform.localScale = new Vector3(20,20,1);
@@ -280,9 +281,10 @@ public class UI : MonoBehaviour
         int i = 0, j = 0;
         foreach (Card card in BattleData.NewCard)
         {
-
+            //Debug.Log("new card number: " + BattleData.NewCard.Count);
+            //GameObject obj = Instantiate(Resources.Load("Prefab/Card/HeadButt") as GameObject, duplicationPanel.transform);
             GameObject obj = Instantiate(Resources.Load("Prefab/Card/" + card.Name) as GameObject, duplicationPanel.transform);
-            Debug.Log(card.Name);
+            //Debug.Log("instantiate "+card.Name);
 
             //obj.transform.SetParent(GameObject.Find("Canvas/DuplicationPanel").transform);
             obj.transform.localScale = new Vector3(0.03f, 0.03f, 0);
@@ -334,6 +336,8 @@ public class UI : MonoBehaviour
 
     public static void FinishDuplicate(Card card, Card.Rarity rarity)
     {
+        //Debug.Log("card name " + card.Name);
+        
         int time = 0;
         switch (rarity)
         {
@@ -357,12 +361,15 @@ public class UI : MonoBehaviour
                 time = 10;
                 break;
         }
-
+        
+        //Debug.Log("card info " + card.Info);
         card.Info.owner_ID = 99;
-        BattleLevelDriver.TimeLineSlots[time].Add(card.Info);
+        card.Info.card = card;
+        BattleLevelDriver.TimeLineSlots[9].Add(card.Info);
+
         //GameData.Deck.Add(card);
         //BattleData.playerData.drawPile.Add(card);
-        Debug.Log("duplicate: " + card.transform.name);
+
         Pause();
         BattleData.NewCard.Remove(card);
     }
