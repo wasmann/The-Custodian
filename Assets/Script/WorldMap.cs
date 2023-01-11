@@ -33,11 +33,11 @@ public class WorldMap : MonoBehaviour
     {
         Debug.Log("Load level" + id);
         currentLevelID = id;
-        battleLevelDriver.BeginABattleLevel(id);
-        battleLevelDriver.Paused = true;
+        //battleLevelDriver.BeginABattleLevel(1);
+        //battleLevelDriver.Paused = true;
         GameData.currentState = GameData.state.Battle;
         //load scene
-        SceneManager.LoadScene(id);
+        SceneManager.LoadScene("Level1");
     }
 
 

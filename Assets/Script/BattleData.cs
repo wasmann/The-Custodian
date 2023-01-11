@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class BattleData : MonoBehaviour
 {
@@ -178,8 +179,12 @@ public class BattleData : MonoBehaviour
     }
     public bool CheckLoseCondition()
     {
-        if (playerData.currentHealth == 0)
+        if (playerData.currentHealth <= 0)
+        {
+            SceneManager.LoadScene("LoadingScreen");
             return true;
+        }
+            
         else
             return false;
     }
@@ -189,6 +194,6 @@ public class BattleData : MonoBehaviour
 
     void Update()
     {
-        
+        CheckLoseCondition();
     }
 }
