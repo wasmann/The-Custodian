@@ -32,9 +32,10 @@ public class Walk : Card
     public override void Activate(InfoForActivate Info)
     {
         Audio.Play();
-        StartCoroutine(Animate(Info.animator));
+        
         if (Info.owner_ID == 0)
         {
+            StartCoroutine(Animate(Info.animator));
             BattleData.playerData.position += Info.Selection[0];
             UI.UpdatePlayerData();
 

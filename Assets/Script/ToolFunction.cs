@@ -12,8 +12,6 @@ public class ToolFunction : MonoBehaviour
     }
 
 
-
-
     private void Awake()
     {
         map = GameObject.Find("Grid/Tilemap").GetComponent<Tilemap>();

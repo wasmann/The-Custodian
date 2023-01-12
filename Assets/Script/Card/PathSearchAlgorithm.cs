@@ -4,6 +4,9 @@ using UnityEngine;
 using System.Linq;
 public class PathSearchAlgorithm : MonoBehaviour
 {
+    public bool ObstacleInBetween;
+    private Vector2 Destination;
+    private Vector2 Source;
     private struct NodeInfo
     {
         public Vector2 parent;
@@ -13,9 +16,18 @@ public class PathSearchAlgorithm : MonoBehaviour
     private bool IsValid(Vector2 pos)
     {
         if (BattleData.enviromentData.ContainsKey(pos)) { 
-        var a = BattleData.enviromentData[pos];
-        return a == BattleData.EnvironmentType.Walkable;
-         }
+            var a = BattleData.enviromentData[pos];
+            if (a == BattleData.EnvironmentType.Obstacle)
+            {
+                var length = Vector2.Distance(Destination, Source);
+                var side1 = Vector2.Distance(pos, Source);
+                var side2 = Vector2.Distance(Destination, pos);
+                if(side1 * side1 + side2 * side2 < length * length)
+                    ObstacleInBetween = true;
+                return false;
+            }
+            return true;
+        }
         return false;
     }
 
@@ -43,17 +55,19 @@ public class PathSearchAlgorithm : MonoBehaviour
 
         List<Vector2> path = new List<Vector2>();
 
-        while (!(nodeInfos[new Vector2(row, col)].parent.x == row
+        while (col > 0 && row > 0 && !(nodeInfos[new Vector2(row, col)].parent.x == row
                  && nodeInfos[new Vector2(row, col)].parent.y == col))
         {
             path.Add(new Vector2(row, col));
-            row = (int)nodeInfos[new Vector2(row, col)].parent.x;
-            col = (int)nodeInfos[new Vector2(row, col)].parent.y;
+
+            var tempr = row;
+            var tempc = col;
+            row = (int)nodeInfos[new Vector2(tempr, tempc)].parent.x;
+            col = (int)nodeInfos[new Vector2(tempr, tempc)].parent.y;
         }
-
-        path.Add(new Vector2(row, col));
+        //path.RemoveAt(0);
         path.Reverse();
-
+        //path.RemoveAt(0);
         for (int i = 0; i < path.Count; i++)
         {
             Debug.Log(" -> " + path[i].x + "," + path[i].y);
@@ -64,6 +78,8 @@ public class PathSearchAlgorithm : MonoBehaviour
 
     public  List<Vector2> AStarSearch( Vector2Int src, Vector2Int dest)
     {
+        Source = src;
+        Destination = dest;
 
         Dictionary<Vector2, bool> closedList = new Dictionary<Vector2, bool>();
 
@@ -83,7 +99,7 @@ public class PathSearchAlgorithm : MonoBehaviour
             info.f = float.MaxValue;
             info.g = float.MaxValue;
             info.h = float.MaxValue;
-            info.parent = new Vector2Int(-1, -1);
+            info.parent = new Vector2Int(-99999, -99999);
             cellDetails.Add(BattleData.enviromentData.ElementAt(i).Key, info);
         }
 
@@ -111,7 +127,7 @@ public class PathSearchAlgorithm : MonoBehaviour
             openList.Remove(now);
 
             // Add this vertex to the closed list
-            //closedList.Remove(now);
+            closedList.Remove(now);
             closedList.Add(now, true);
 
             /*
@@ -124,7 +140,7 @@ public class PathSearchAlgorithm : MonoBehaviour
              W -->  West           (i, j-1)
             */
 
-            // To store the 'g', 'h' and 'f' of the 8 successors
+            // To store the 'g', 'h' and 'f' of the 4 successors
             double gNew, hNew, fNew;
             Vector2 next=new Vector2();
             for (int i = 0; i < 4; i++)

@@ -111,7 +111,7 @@ public class LabWorkerEnemy : Enemy
         weight.w_Injured = state.Injured;
 
         if (state.ObsticalInBetween)
-            weight.w_ObsticalInBetween = 10;
+            weight.w_ObsticalInBetween = 20;
         else
             weight.w_ObsticalInBetween = 0;
 
@@ -296,6 +296,13 @@ public class LabWorkerEnemy : Enemy
         info.owner_ID = EnemyID;
         info.animator = Animator;
         info.animator.SetInteger("Damage", Health);
+        var a = new PathSearchAlgorithm();
+        var path = a.AStarSearch(new Vector2Int((int)BattleData.EnemyDataList[EnemyID].position.x, (int)BattleData.EnemyDataList[EnemyID].position.y), new Vector2Int((int)BattleData.playerData.position.x, (int)BattleData.playerData.position.y));
+        for(int i = 0; i < path.Count - 1; i++)
+        {
+            pathToPlayer.Add(path[i + 1] - path[i]);
+        }
+        state.ObsticalInBetween = a.ObstacleInBetween;
         UpdateState();
         UpdateWeight();
         List<List<float>> BehaviourUtility;

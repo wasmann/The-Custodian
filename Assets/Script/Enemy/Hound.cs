@@ -437,7 +437,7 @@ public class Hound : Enemy
         info.card = BattleData.EnemyDataList[EnemyID].handCard[BehaviourCardID];
         info.Selection = new List<Vector2>();
         bool allowToPlay = true;
-        switch (BehaviourCardID)
+        switch (info.card.ID)
         {
             case 2:
                 RunUpFunc(BehaviourIndex, info);

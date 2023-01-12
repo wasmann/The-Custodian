@@ -327,7 +327,7 @@ public class AlphaLeader : Enemy
 
         info.card = BattleData.EnemyDataList[EnemyID].handCard[BehaviourCardID];
         info.Selection = new List<Vector2>();
-        switch (BehaviourCardID)
+        switch (info.card.ID)
         {
             case 1:
                 WalkFunc(BehaviourIndex, info);

@@ -160,10 +160,10 @@ public class AlfaSolder : Enemy
         else
             state.WalkCanAlign = false;
         //ObsticalInBetween;
-        if (pathToPlayer.Count == Vector2.Distance(BattleData.playerData.position, BattleData.EnemyDataList[EnemyID].position))
-            state.ObsticalInBetween = false;
-        else
-            if (true)// some environment that movement cant pass but attack can pass 
+        //if (pathToPlayer.Count == Vector2.Distance(BattleData.playerData.position, BattleData.EnemyDataList[EnemyID].position))
+        //    state.ObsticalInBetween = false;
+       // else
+        if (true)// some environment that movement cant pass but attack can pass 
                      //TODO
             state.ObsticalInBetween = true;
         else
@@ -309,7 +309,7 @@ public class AlfaSolder : Enemy
 
         info.card = BattleData.EnemyDataList[EnemyID].handCard[BehaviourCardID];
         info.Selection = new List<Vector2>();
-        switch (BehaviourCardID)
+        switch (info.card.ID)
         {
             case 1:
                 WalkFunc(BehaviourIndex, info);
