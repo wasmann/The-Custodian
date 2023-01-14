@@ -30,8 +30,9 @@ public class Hound : Enemy
     private State state;
     Weight weight;
     public int CloseEnemyID;
+    int prevBehavior = -1;
     public int EnemyToAttackID;
-    List<Vector2> pathToPlayer;
+    List<Vector2> pathToPlayer = new List<Vector2>();
     private struct State
     {
         public int Aggressive;
@@ -413,6 +414,29 @@ public class Hound : Enemy
         Card.InfoForActivate info = new Card.InfoForActivate();
         info.owner_ID = EnemyID;
         info.animator = Animator;
+        if (prevBehavior != 0 || state.AlignedWithPlayer || state.AlignedWithEnemy)
+        {
+            if (pathToPlayer.Count != 0) pathToPlayer.Clear();
+            var a = new PathSearchAlgorithm();
+            var path = a.AStarSearch(new Vector2Int((int)BattleData.EnemyDataList[EnemyID].position.x, (int)BattleData.EnemyDataList[EnemyID].position.y), new Vector2Int((int)BattleData.playerData.position.x, (int)BattleData.playerData.position.y));
+            if (path.Count == 0)
+            {
+                state.ObsticalInBetween = false;
+            }
+            else
+            {
+
+                for (int i = 0; i < path.Count - 1; i++)
+                {
+                    pathToPlayer.Add(path[i + 1] - path[i]);
+                }
+                state.ObsticalInBetween = a.ObstacleInBetween;
+            }
+        }
+        else
+        {
+            pathToPlayer.RemoveAt(0);
+        }
         UpdateState();
         UpdateWeight();
         List<List<float>> BehaviourUtility;
@@ -498,15 +522,15 @@ public class Hound : Enemy
                 float disy = Mathf.Abs(BattleData.EnemyDataList[CloseEnemyID].position.y - BattleData.EnemyDataList[EnemyID].position.y);
                 if (disx < disy)
                 {
-                    if (disx <= 4)
-                        info.Selection.Add(BattleData.playerData.position - BattleData.EnemyDataList[EnemyID].position);
+                    if (disx <= 5)
+                        info.Selection.Add(new Vector2(BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x, 0));
                     else
                         info.Selection.Add(new Vector2(Mathf.Sign(BattleData.EnemyDataList[CloseEnemyID].position.x - BattleData.EnemyDataList[EnemyID].position.x) * 4, 0));
                 }
                 else
                 {
-                    if (disy <= 4)
-                        info.Selection.Add(BattleData.playerData.position - BattleData.EnemyDataList[EnemyID].position);
+                    if (disy <= 5)
+                        info.Selection.Add(new Vector2(0, BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y));
                     else
                         info.Selection.Add(new Vector2(0, Mathf.Sign(BattleData.EnemyDataList[CloseEnemyID].position.y - BattleData.EnemyDataList[EnemyID].position.y) * 4));
 
@@ -542,10 +566,11 @@ public class Hound : Enemy
         switch (behaviourIndex)
         {
             case (int)RunRightBehavior.RunRightFollowingPath:
-                for (int i = 1; i < 3; i++)
+                for (int i = 0; i < pathToPlayer.Count; i++)
                 {
                     if (pathToPlayer[i] == pathToPlayer[0])
                         result += pathToPlayer[0];
+                    else if (result.magnitude > 3) break;
                     else
                         break;
                 }
@@ -557,7 +582,7 @@ public class Hound : Enemy
                 if (disty > 0)
                 {
                     if (disty < 3)
-                        info.Selection.Add(BattleData.EnemyDataList[CloseEnemyID].position - BattleData.EnemyDataList[EnemyID].position);
+                        info.Selection.Add(new Vector2(BattleData.EnemyDataList[CloseEnemyID].position.x - BattleData.EnemyDataList[EnemyID].position.x, 0));
                     else
                         info.Selection.Add(new Vector2(3, 0));
                 }
@@ -578,10 +603,11 @@ public class Hound : Enemy
         switch (behaviourIndex)
         {
             case (int)RunLeftBehavior.RunLeftFollowingPath:
-                for (int i = 1; i < 3; i++)
+                for (int i = 0; i < pathToPlayer.Count; i++)
                 {
                     if (pathToPlayer[i] == pathToPlayer[0])
                         result += pathToPlayer[0];
+                    else if (result.magnitude > 3) break;
                     else
                         break;
                 }
@@ -593,7 +619,7 @@ public class Hound : Enemy
                 if (disty > 0)
                 {
                     if (disty < 3)
-                        info.Selection.Add(BattleData.EnemyDataList[CloseEnemyID].position - BattleData.EnemyDataList[EnemyID].position);
+                        info.Selection.Add(new Vector2(BattleData.EnemyDataList[CloseEnemyID].position.x - BattleData.EnemyDataList[EnemyID].position.x, 0));
                     else
                         info.Selection.Add(new Vector2(-3, 0));
                 }
@@ -614,10 +640,11 @@ public class Hound : Enemy
         switch (behaviourIndex)
         {
             case (int)RunDownBehavior.RunDownFollowingPath:
-                for (int i = 1; i < 3; i++)
+                for (int i = 0; i < pathToPlayer.Count; i++)
                 {
                     if (pathToPlayer[i] == pathToPlayer[0])
                         result += pathToPlayer[0];
+                    else if (result.magnitude > 3) break;
                     else
                         break;
                 }
@@ -629,7 +656,7 @@ public class Hound : Enemy
                 if (disty > 0)
                 {
                     if (disty < 3)
-                        info.Selection.Add(BattleData.EnemyDataList[CloseEnemyID].position - BattleData.EnemyDataList[EnemyID].position);
+                        info.Selection.Add(new Vector2(0, BattleData.EnemyDataList[CloseEnemyID].position.y - BattleData.EnemyDataList[EnemyID].position.y));
                     else
                         info.Selection.Add(new Vector2(0, -3));
                 }
@@ -650,10 +677,11 @@ public class Hound : Enemy
         switch (behaviourIndex)
         {
             case (int)RunUpBehavior.RunUpFollowingPath:
-                for (int i = 1; i < 3; i++)
+                for (int i = 0; i < pathToPlayer.Count; i++)
                 {
                     if (pathToPlayer[i] == pathToPlayer[0])
                         result += pathToPlayer[0];
+                    else if (result.magnitude > 3) break;
                     else
                         break;
                 }
@@ -665,7 +693,7 @@ public class Hound : Enemy
                 if (disty > 0)
                 {
                     if (disty < 3)
-                        info.Selection.Add(BattleData.EnemyDataList[CloseEnemyID].position - BattleData.EnemyDataList[EnemyID].position);
+                        info.Selection.Add(new Vector2(0, BattleData.EnemyDataList[CloseEnemyID].position.y - BattleData.EnemyDataList[EnemyID].position.y));
                     else
                         info.Selection.Add(new Vector2(0, 3));
                 }

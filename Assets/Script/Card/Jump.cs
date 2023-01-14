@@ -50,7 +50,7 @@ public class Jump : Card
     public IEnumerator Animate(Animator animator)
     {
         animator.SetBool("Jump", true);
-        yield return new WaitForSeconds(0);
+        yield return new WaitForSeconds(3);
         animator.SetBool("Jump", false);
     }
     private void Start()

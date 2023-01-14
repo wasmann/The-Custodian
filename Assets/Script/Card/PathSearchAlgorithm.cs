@@ -24,6 +24,8 @@ public class PathSearchAlgorithm : MonoBehaviour
                 var side2 = Vector2.Distance(Destination, pos);
                 if(side1 * side1 + side2 * side2 < length * length)
                     ObstacleInBetween = true;
+                //if(side1 + side2 == length)
+                 //   ObstacleInBetween = false;
                 return false;
             }
             return true;
@@ -81,6 +83,8 @@ public class PathSearchAlgorithm : MonoBehaviour
         Source = src;
         Destination = dest;
 
+        if (src == dest)
+            return new List<Vector2>();
         Dictionary<Vector2, bool> closedList = new Dictionary<Vector2, bool>();
 
         for (int i = 0; i < BattleData.enviromentData.Count; i++)

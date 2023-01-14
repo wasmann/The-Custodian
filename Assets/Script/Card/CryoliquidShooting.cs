@@ -47,7 +47,6 @@ public class CryoliquidShooting : Card
     public override void Activate(InfoForActivate Info)
     {
         Audio.Play();
-        StartCoroutine(Animate(Info.animator));
         Info.Selection[0].Normalize();
         if (Info.owner_ID == 0)
         {
@@ -75,7 +74,9 @@ public class CryoliquidShooting : Card
                 || BattleData.playerData.position == Info.Selection[0] * 4 + BattleData.EnemyDataList[Info.owner_ID].position
                 || BattleData.playerData.position == Info.Selection[0] * 5 + BattleData.EnemyDataList[Info.owner_ID].position)
             {
-                BattleData.playerData.buff.Frozen += 4;
+                StartCoroutine(Animate(Info.animator));
+                BattleData.playerData.currentHealth -= 5;
+                //BattleData.playerData.buff.Frozen += 4;
                 UI.UpdatePlayerData();
             }
         }

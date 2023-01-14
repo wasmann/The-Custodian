@@ -34,9 +34,10 @@ public class AlfaSolder : Enemy
     float w_Rare = 0.7f;
     float w_Trash = 1;
 
+    private int prevBehavior = -1;
     private State state;
     Weight weight;
-    List<Vector2> pathToPlayer;
+    List<Vector2> pathToPlayer = new List<Vector2>();
     private struct State
     {
         public int Aggressive;//from 0 to 5
@@ -160,14 +161,10 @@ public class AlfaSolder : Enemy
         else
             state.WalkCanAlign = false;
         //ObsticalInBetween;
-        //if (pathToPlayer.Count == Vector2.Distance(BattleData.playerData.position, BattleData.EnemyDataList[EnemyID].position))
-        //    state.ObsticalInBetween = false;
-       // else
-        if (true)// some environment that movement cant pass but attack can pass 
-                     //TODO
-            state.ObsticalInBetween = true;
-        else
+        if (pathToPlayer.Count == Vector2.Distance(BattleData.playerData.position, BattleData.EnemyDataList[EnemyID].position))
             state.ObsticalInBetween = false;
+        else
+            state.ObsticalInBetween = true;
         //Injured
         if (BattleData.EnemyDataList[EnemyID].currentHealth <= (BattleData.EnemyDataList[EnemyID].maxHealth / 3))
             state.Injured = (int)(1 - BattleData.EnemyDataList[EnemyID].currentHealth / (BattleData.EnemyDataList[EnemyID].maxHealth / 2)) * 2 + 1;
@@ -229,7 +226,7 @@ public class AlfaSolder : Enemy
         utility = weight.w_PathToLong + weight.w_ObsticalInBetween - weight.w_Injured + Random.Range(-3, 3);
         result.Add(utility);
         //WalkForAligning
-        utility = weight.w_Aggressive + weight.w_WalkCanAlign + weight.w_Loaded + Random.Range(-3, 3) - weight.w_Injured-weight.w_AlignOrNot;
+        utility = weight.w_Aggressive + weight.w_WalkCanAlign + weight.w_Loaded  - weight.w_Injured - weight.w_AlignOrNot;
         result.Add(utility);
         //RandomWalk
         utility = Random.Range(0, 8) - weight.w_Aggressive;
@@ -255,10 +252,10 @@ public class AlfaSolder : Enemy
         float utility;
         List<float> result = new List<float>();
         //ShootPlayer
-        utility = (weight.w_Loaded + weight.w_Aggressive + weight.w_GunShootInRange - weight.w_PathToLong - weight.w_Injured + Random.Range(-5, 5)) * w_Common;
+        utility = weight.w_Loaded + weight.w_Aggressive + weight.w_GunShootInRange + 2 * weight.w_AlignOrNot - weight.w_PathToLong - weight.w_Injured;
         result.Add(utility);
         //ShootRandomly
-        utility = (weight.w_TooClose + weight.w_Injured + weight.w_Loaded + weight.w_Aggressive + Random.Range(-5, 0)) * w_Common;
+        utility = weight.w_TooClose + weight.w_Injured + weight.w_Loaded + weight.w_Aggressive + Random.Range(-5, 0);
         result.Add(utility);
         return result;
     }
@@ -267,16 +264,16 @@ public class AlfaSolder : Enemy
         float utility;
         List<float> result = new List<float>();
         //DashfollowingPath
-        utility = (weight.w_PathToLong + weight.w_ObsticalInBetween - weight.w_Injured + Random.Range(-3,3)+weight.w_RareCardNotUsed) * w_Rare;
+        utility = weight.w_PathToLong + weight.w_ObsticalInBetween - weight.w_Injured + 2 * weight.w_AlignOrNot + weight.w_RareCardNotUsed;
         result.Add(utility);
         //DashForAligning
-        utility = (weight.w_Aggressive + weight.w_WalkCanAlign + weight.w_Loaded + Random.Range(-3, 3) - weight.w_Injured - weight.w_AlignOrNot+ weight.w_RareCardNotUsed) * w_Rare;
+        utility = weight.w_Aggressive  - weight.w_ObsticalInBetween + weight.w_WalkCanAlign + weight.w_Loaded + Random.Range(-3, 3) - weight.w_Injured - weight.w_AlignOrNot+ weight.w_RareCardNotUsed;
         result.Add(utility);
         //DashAttack
-        utility = (weight.w_RareCardNotUsed+weight.w_AlignOrNot+weight.w_TooClose+ weight.w_Aggressive + Random.Range(-3, 3)) * w_Rare;
+        utility = weight.w_RareCardNotUsed+weight.w_AlignOrNot+weight.w_TooClose+ weight.w_Aggressive + Random.Range(-3, 3);
         result.Add(utility);
         //DashBackWardsToPlayer
-        utility = (weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 5)+ weight.w_RareCardNotUsed) *w_Rare;
+        utility = weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 5)+ weight.w_RareCardNotUsed;
         result.Add(utility);
         return result;
     }
@@ -285,7 +282,30 @@ public class AlfaSolder : Enemy
     {
         Card.InfoForActivate info = new Card.InfoForActivate();
         info.owner_ID = EnemyID;
-        info.animator = Animator;
+        info.animator = GameObject.Find("AlphaSoldier").GetComponent<Animator>();
+        if (prevBehavior != 0 || state.AlignOrNot)
+        {
+           // if (pathToPlayer.Count != 0)
+                pathToPlayer.Clear();
+            var a = new PathSearchAlgorithm();
+            var path = a.AStarSearch(new Vector2Int((int)BattleData.EnemyDataList[EnemyID].position.x, (int)BattleData.EnemyDataList[EnemyID].position.y), new Vector2Int((int)BattleData.playerData.position.x, (int)BattleData.playerData.position.y));
+            if (path.Count == 0)
+            {
+                state.ObsticalInBetween = false;
+            }
+            else
+            {
+
+                for (int i = 0; i < path.Count - 1; i++)
+                {
+                    pathToPlayer.Add(path[i + 1] - path[i]);
+                }
+            }
+        }
+        else
+        {
+            pathToPlayer.RemoveAt(0);
+        }
         UpdateState();
         UpdateWeight();
         List<List<float>> BehaviourUtility;
@@ -306,7 +326,7 @@ public class AlfaSolder : Enemy
                 }     
             }
         }
-
+        prevBehavior = BehaviourIndex;
         info.card = BattleData.EnemyDataList[EnemyID].handCard[BehaviourCardID];
         info.Selection = new List<Vector2>();
         switch (info.card.ID)
@@ -391,12 +411,12 @@ public class AlfaSolder : Enemy
                 Vector2 dirVec = BattleData.playerData.position - BattleData.EnemyDataList[EnemyID].position;
                 if (Mathf.Abs(dirVec.x) > Mathf.Abs(dirVec.y))
                 {
-                    info.Selection.Add(new Vector2(0, -dirVec.y / Mathf.Abs(dirVec.y)));
+                    info.Selection.Add(new Vector2(-dirVec.x / Mathf.Abs(dirVec.x), 0));
                     break;
                 }
                 else
                 {
-                    info.Selection.Add(new Vector2(-dirVec.x / Mathf.Abs(dirVec.x), 0));
+                    info.Selection.Add(new Vector2(0, -dirVec.y / Mathf.Abs(dirVec.y)));
                     break;
                 }
         }
@@ -408,12 +428,15 @@ public class AlfaSolder : Enemy
         switch (BehaviourID)
         {
             case (int)GasDashBehavior.DashFollowingPath:              
-                for(int i = 0; i < 5; i++)
+                for(int i = 0; i < pathToPlayer.Count; i++)
                 {
                     if (pathToPlayer[i] == pathToPlayer[0])
                         result += pathToPlayer[0];
+                    else if (result.magnitude > 4) break;
                     else
-                        break;
+                    break;
+                    
+                   
                 }
                 info.Selection.Add(result);
                 break;
@@ -423,18 +446,17 @@ public class AlfaSolder : Enemy
                 float disy = Mathf.Abs(BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y);
                 if (disx < disy)
                 {
-                    if (disx <= 5) 
-                        info.Selection.Add(BattleData.playerData.position - BattleData.EnemyDataList[EnemyID].position);
+                    if (disx <= 6)
+                        info.Selection.Add(new Vector2(BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x, 0));
                     else
-                        info.Selection.Add(new Vector2(Mathf.Sign(BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x) * 5,0));
+                        info.Selection.Add(new Vector2(Mathf.Sign(BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x) * 5, 0));
                 }
                 else
                 {
-                    if (disy <= 5)
-                        info.Selection.Add(BattleData.playerData.position - BattleData.EnemyDataList[EnemyID].position);
+                    if (disy <= 6)
+                        info.Selection.Add(new Vector2(0, BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y));
                     else
                         info.Selection.Add(new Vector2(0, Mathf.Sign(BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y) * 5));
-                    
                 }
                 break;
 
@@ -443,12 +465,12 @@ public class AlfaSolder : Enemy
                 Vector2 dirVec = BattleData.playerData.position - BattleData.EnemyDataList[EnemyID].position;
                 if (Mathf.Abs(dirVec.x) > Mathf.Abs(dirVec.y))
                 {
-                    info.Selection.Add(new Vector2(0, -dirVec.y / Mathf.Abs(dirVec.y) * randomValue));
+                    info.Selection.Add(new Vector2(-dirVec.x / Mathf.Abs(dirVec.x) * randomValue, 0));
                     break;
                 }
                 else
                 {
-                    info.Selection.Add(new Vector2(-dirVec.x / Mathf.Abs(dirVec.x) * randomValue, 0));
+                    info.Selection.Add(new Vector2(0, -dirVec.y / Mathf.Abs(dirVec.y) * randomValue));
                     break;
                 }
 

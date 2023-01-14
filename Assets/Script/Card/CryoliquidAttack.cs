@@ -34,7 +34,7 @@ public class CryoliquidAttack : Card
     public override void Activate(InfoForActivate Info)
     {
         Audio.Play();
-        StartCoroutine(Animate(Info.animator));
+        //StartCoroutine(Animate(Info.animator));
         Info.Selection[0].Normalize();
         if (Info.owner_ID == 0)
         {
@@ -67,10 +67,10 @@ public class CryoliquidAttack : Card
         {
             if (BattleData.playerData.position == Info.Selection[0] + BattleData.EnemyDataList[Info.owner_ID].position|| BattleData.playerData.position == Info.Selection[0]*2 + BattleData.EnemyDataList[Info.owner_ID].position)
             {
-                BattleData.playerData.buff.Frozen += 2;
+                BattleData.playerData.currentHealth -= 5;
                 UI.UpdatePlayerData();
             }
-        }
+         }
     }
     public IEnumerator Animate(Animator animator)
     {

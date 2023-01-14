@@ -35,7 +35,7 @@ public class DoubleJump : Card
     public override void Activate(InfoForActivate Info)
     {
         Audio.Play();
-        StartCoroutine(Animate(Info.animator));
+       
         if (Info.owner_ID == 0)
         {
             BattleData.playerData.position += Info.Selection[0];
@@ -43,6 +43,7 @@ public class DoubleJump : Card
         }
         else
         {
+            StartCoroutine(Animate(Info.animator));
             BattleData.EnemyData newData = BattleData.EnemyDataList[Info.owner_ID];
             newData.position += Info.Selection[0];
             BattleData.EnemyDataList[Info.owner_ID] = newData;
@@ -52,7 +53,7 @@ public class DoubleJump : Card
     public IEnumerator Animate(Animator animator)
     {
         animator.SetBool("DoubleJump", true);
-        yield return new WaitForSeconds(0);
+        yield return new WaitForSeconds(1);
         animator.SetBool("DoubleJump", false);
     }
     private void Start()

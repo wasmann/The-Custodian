@@ -79,7 +79,7 @@ public class BattleData : MonoBehaviour
                 TileBase tile = allTiles[x + y * bounds.size.x];
                 if (tile != null)
                 {
-                    if (tile.name.Contains("CRATE_1")) //retrieve from level info
+                    if (tile.name.Contains("CRATE_1") || tile.name.Contains("RIVET") || tile.name.Contains("WARN")) //retrieve from level info
                     {
                         enviromentData.Add(new Vector2(x, y), EnvironmentType.Walkable);
                         //Debug.Log("x " + x + " y " + y + "   walk" + tile.name);
@@ -127,47 +127,66 @@ public class BattleData : MonoBehaviour
         //EnemyDataList.Add(1,tree);
 
         /// For Battle
-        //EnemyData sheep = new EnemyData();
-        //sheep.position = new Vector2(1,-7);
-        //sheep.obj = GameObject.Find("SheepEnemy");
-        //sheep.enemy = sheep.obj.GetComponent<SheepEnemy>();
-        //sheep.enemy.EnemyID = 1;
-        //sheep.currentHealth = sheep.enemy.Health;
-        //sheep.maxHealth = sheep.enemy.Health;
-        //sheep.drawPile = sheep.enemy.CardsDeck;
-        //sheep.handCard = new List<Card>();
-        //sheep.discardPile = new List<Card>();
-        //StartingHandCards(3, sheep.handCard, sheep.drawPile, false);
-        //EnemyDataList.Add(1, sheep);
-        ///
-        EnemyData enemy = new EnemyData();
-        enemy.position = new Vector2(8, 4);
-        enemy.obj = GameObject.Find("LabWorker");
-        enemy.enemy = enemy.obj.GetComponent<LabWorkerEnemy>();
-        enemy.enemy.EnemyID = 1;
-        enemy.currentHealth = enemy.enemy.Health;
-        enemy.maxHealth = enemy.enemy.Health;
-        enemy.drawPile = enemy.enemy.CardsDeck;
-        enemy.handCard = new List<Card>();
-        enemy.discardPile = new List<Card>();
-        StartingHandCards(2, enemy.handCard, enemy.drawPile, false);
-        EnemyDataList.Add(1, enemy);
-        //EnemyData enemy1 = new EnemyData();
-        //enemy1.position = new Vector2(1, -4);
-        //enemy1.obj = GameObject.Find("Hound");
-        //enemy1.enemy = enemy1.obj.GetComponent<Hound>();
-        //enemy1.enemy.EnemyID = 2;
-        //enemy1.currentHealth = enemy1.enemy.Health;
-        //enemy1.maxHealth = enemy1.enemy.Health;
-        //enemy1.drawPile = enemy1.enemy.CardsDeck;
-        //enemy1.handCard = new List<Card>();
-        //enemy1.discardPile = new List<Card>();
-        //StartingHandCards(3, enemy1.handCard, enemy1.drawPile, false);
-        //EnemyDataList.Add(2, enemy1);
+        if (BattleLevelID == 1)
+        {
+            EnemyData sheep = new EnemyData();
+            sheep.position = new Vector2(1, -7);
+            sheep.obj = GameObject.Find("SheepEnemy");
+            sheep.enemy = sheep.obj.GetComponent<SheepEnemy>();
+            sheep.enemy.EnemyID = 1;
+            sheep.currentHealth = sheep.enemy.Health;
+            sheep.maxHealth = sheep.enemy.Health;
+            sheep.drawPile = sheep.enemy.CardsDeck;
+            sheep.handCard = new List<Card>();
+            sheep.discardPile = new List<Card>();
+            StartingHandCards(3, sheep.handCard, sheep.drawPile, false);
+            EnemyDataList.Add(1, sheep);
+        }
+        else
+        {
+            EnemyData enemy = new EnemyData();
+            enemy.position = new Vector2(7, 4);
+            enemy.obj = GameObject.Find("AlphaSoldier");
+            enemy.enemy = enemy.obj.GetComponent<AlfaSolder>();
+            enemy.enemy.EnemyID = 1;
+            enemy.currentHealth = enemy.enemy.Health;
+            enemy.maxHealth = enemy.enemy.Health;
+            enemy.drawPile = enemy.enemy.CardsDeck;
+            enemy.handCard = new List<Card>();
+            enemy.discardPile = new List<Card>();
+            StartingHandCards(2, enemy.handCard, enemy.drawPile, false);
+            EnemyDataList.Add(1, enemy);
+
+            //EnemyData enemy1 = new EnemyData();
+            //enemy1.position = new Vector2(29, 12);
+            //enemy1.obj = GameObject.Find("Hound");
+            //enemy1.enemy = enemy1.obj.GetComponent<Hound>();
+            //enemy1.enemy.EnemyID = 2;
+            //enemy1.currentHealth = enemy1.enemy.Health;
+            //enemy1.maxHealth = enemy1.enemy.Health;
+            //enemy1.drawPile = enemy1.enemy.CardsDeck;
+            //enemy1.handCard = new List<Card>();
+            //enemy1.discardPile = new List<Card>();
+            //StartingHandCards(3, enemy1.handCard, enemy1.drawPile, false);
+            //EnemyDataList.Add(2, enemy1);
+
+            //enemy = new EnemyData();
+            //enemy.position = new Vector2(4, 7);
+            //enemy.obj = GameObject.Find("LabWorker");
+            //enemy.enemy = enemy.obj.GetComponent<LabWorkerEnemy>();
+            //enemy.enemy.EnemyID = 2;
+            //enemy.currentHealth = enemy.enemy.Health;
+            //enemy.maxHealth = enemy.enemy.Health;
+            //enemy.drawPile = enemy.enemy.CardsDeck;
+            //enemy.handCard = new List<Card>();
+            //enemy.discardPile = new List<Card>();
+            //StartingHandCards(3, enemy.handCard, enemy.drawPile, false);
+            //EnemyDataList.Add(2, enemy);
+        }
 
     }
     public static void LoadPlayerData(){
-        playerData.position = new Vector2(6, 6);
+        playerData.position = new Vector2(2, 2);
         playerData.maxHealth = GameData.health;
         playerData.maxEnergy = GameData.Energy;
         playerData.currentHealth = playerData.maxHealth;

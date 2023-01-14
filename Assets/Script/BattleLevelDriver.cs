@@ -18,7 +18,7 @@ public class BattleLevelDriver : MonoBehaviour
 
     private void Start()
     {
-        BeginABattleLevel(1);
+        BeginABattleLevel(2);
     }
     public void BeginABattleLevel(int ID)
     {

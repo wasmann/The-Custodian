@@ -26,11 +26,11 @@ public class LabWorkerEnemy : Enemy
 
     public override int HandCardNum { get { return 3; } }
 
-    float w_Common = 0.8f;
+    float w_Common = 1.0f;
     float w_Basic = 1;
-    float w_Rare = 0.7f;
-    float w_Legendary = 0.5f;
-
+    float w_Rare = 1.0f;
+    float w_Legendary = 1.0f;
+    int prevBehavior = -1;
     private State state;
     Weight weight;
     List<Vector2> pathToPlayer = new List<Vector2>();
@@ -121,7 +121,7 @@ public class LabWorkerEnemy : Enemy
             weight.w_CryoliquidShootInRange = 0;
 
         if (state.WalkCanAlign)
-            weight.w_WalkCanAlign = 3;
+            weight.w_WalkCanAlign = 10;
         else
             weight.w_WalkCanAlign = 0;
 
@@ -213,7 +213,7 @@ public class LabWorkerEnemy : Enemy
         float utility;
         List<float> result = new List<float>();
         //CryoliquidShootingToAttack
-        utility = (weight.w_LegendaryCardNotUsed + weight.w_Aligned + weight.w_CryoliquidShootInRange - weight.w_CryoliquidAttackInRange + weight.w_Aggressive) * w_Legendary;
+        utility = weight.w_LegendaryCardNotUsed + 8 *  weight.w_Aligned + 5 * weight.w_CryoliquidShootInRange + 2 * weight.w_CryoliquidAttackInRange + weight.w_Aggressive;
         result.Add(utility);
         //CryoliquidShootingRandom
         utility = (weight.w_LegendaryCardNotUsed + weight.w_TooClose + weight.w_Injured - weight.w_CryoliquidAttackInRange + weight.w_Aggressive) * w_Legendary;
@@ -225,7 +225,7 @@ public class LabWorkerEnemy : Enemy
         float utility;
         List<float> result = new List<float>();
         //CryoliquidAttack
-        utility = (weight.w_RareCardNotUsed + weight.w_Aligned + weight.w_CryoliquidAttackInRange + weight.w_Aggressive) * w_Rare;
+        utility = weight.w_RareCardNotUsed + 8 * weight.w_Aligned + 5 * weight.w_CryoliquidAttackInRange + weight.w_Aggressive;
         result.Add(utility);
         //CryoliquidAttackRandom
         utility = (weight.w_RareCardNotUsed + weight.w_TooClose + weight.w_Aggressive + weight.w_Injured + weight.w_Aggressive - weight.w_ObsticalInBetween) * w_Rare;
@@ -238,16 +238,16 @@ public class LabWorkerEnemy : Enemy
         float utility;
         List<float> result = new List<float>();
         //DoubleJumpfollowingPath
-        utility = (weight.w_PathTooLong + 2 * weight.w_ObsticalInBetween - weight.w_Injured + Random.Range(-3, 3) + weight.w_RareCardNotUsed) * w_Rare;
+        utility = (weight.w_PathTooLong +  weight.w_ObsticalInBetween - weight.w_Injured + Random.Range(-3, 3) + weight.w_RareCardNotUsed) * w_Rare;
         result.Add(utility);
         //DoubleJumpForAligning
-        utility = (weight.w_Aggressive + weight.w_WalkCanAlign - weight.w_Injured - weight.w_Aligned + 2 * weight.w_ObsticalInBetween + weight.w_RareCardNotUsed) * w_Rare; 
+        utility = (weight.w_Aggressive + weight.w_WalkCanAlign - weight.w_Injured - weight.w_Aligned +  weight.w_ObsticalInBetween + weight.w_RareCardNotUsed) * w_Rare; 
         result.Add(utility);
         //DoubleRandomJump
         utility = (Random.Range(0, 8) - weight.w_Aggressive + weight.w_RareCardNotUsed) * w_Rare;
         result.Add(utility);
         //DoubleJumpBackWardsToPlayer
-        utility = (weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 3) + weight.w_ObsticalInBetween + weight.w_RareCardNotUsed) * w_Rare;
+        utility = (weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 3) + weight.w_RareCardNotUsed) * w_Rare;
         result.Add(utility);
         return result;
     }
@@ -260,13 +260,13 @@ public class LabWorkerEnemy : Enemy
         utility = weight.w_PathTooLong + weight.w_ObsticalInBetween - weight.w_Injured + Random.Range(-3, 3); ;
         result.Add(utility);
         //JumpForAligning
-        utility = weight.w_Aggressive + weight.w_WalkCanAlign - weight.w_Injured - weight.w_Aligned + 2 * weight.w_ObsticalInBetween;
+        utility = weight.w_Aggressive + weight.w_WalkCanAlign - weight.w_Injured + weight.w_Aligned + weight.w_ObsticalInBetween;
         result.Add(utility);
         //RandomJump
         utility = Random.Range(0, 8) - weight.w_Aggressive;
         result.Add(utility);
         //JumpBackWardsToPlayer
-        utility = weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 3) + weight.w_ObsticalInBetween;
+        utility = weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 3);
         result.Add(utility);
         return result;
     }
@@ -296,13 +296,31 @@ public class LabWorkerEnemy : Enemy
         info.owner_ID = EnemyID;
         info.animator = Animator;
         info.animator.SetInteger("Damage", Health);
-        var a = new PathSearchAlgorithm();
-        var path = a.AStarSearch(new Vector2Int((int)BattleData.EnemyDataList[EnemyID].position.x, (int)BattleData.EnemyDataList[EnemyID].position.y), new Vector2Int((int)BattleData.playerData.position.x, (int)BattleData.playerData.position.y));
-        for(int i = 0; i < path.Count - 1; i++)
+        if (prevBehavior != 0 || state.Aligned)
         {
-            pathToPlayer.Add(path[i + 1] - path[i]);
+            if (pathToPlayer.Count != 0) pathToPlayer.Clear();
+            var a = new PathSearchAlgorithm();
+            var path = a.AStarSearch(new Vector2Int((int)BattleData.EnemyDataList[EnemyID].position.x, (int)BattleData.EnemyDataList[EnemyID].position.y), new Vector2Int((int)BattleData.playerData.position.x, (int)BattleData.playerData.position.y));
+            if (path.Count == 0)
+            {
+                state.ObsticalInBetween = false;
+            }
+            else
+            {
+
+                for (int i = 0; i < path.Count - 1; i++)
+                {
+                    pathToPlayer.Add(path[i + 1] - path[i]);
+                }
+                state.ObsticalInBetween = a.ObstacleInBetween;
+            }
         }
-        state.ObsticalInBetween = a.ObstacleInBetween;
+        else
+        {
+            pathToPlayer.RemoveAt(0);
+        }
+       
+        
         UpdateState();
         UpdateWeight();
         List<List<float>> BehaviourUtility;
@@ -323,7 +341,7 @@ public class LabWorkerEnemy : Enemy
                 }
             }
         }
-
+        prevBehavior = BehaviourIndex;
         info.card = BattleData.EnemyDataList[EnemyID].handCard[BehaviourCardID];
         info.Selection = new List<Vector2>();
         switch (info.card.ID)
@@ -364,9 +382,9 @@ public class LabWorkerEnemy : Enemy
                 if (state.Aligned)
                 {
                     if (BattleData.playerData.position.x == BattleData.EnemyDataList[EnemyID].position.x)
-                        info.Selection.Add(new Vector2(Mathf.Sign(BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x), 0));
-                    else
                         info.Selection.Add(new Vector2(0, Mathf.Sign(BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y)));
+                    else
+                        info.Selection.Add(new Vector2(Mathf.Sign(BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x), 0));
                 }
                 else
                 {
@@ -393,9 +411,9 @@ public class LabWorkerEnemy : Enemy
                 if (state.Aligned)
                 {
                     if (BattleData.playerData.position.x == BattleData.EnemyDataList[EnemyID].position.x)
-                        info.Selection.Add(new Vector2(Mathf.Sign(BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x), 0));
-                    else
                         info.Selection.Add(new Vector2(0, Mathf.Sign(BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y)));
+                    else
+                        info.Selection.Add(new Vector2(Mathf.Sign(BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x), 0));
                 }
                 else
                 {
@@ -420,7 +438,7 @@ public class LabWorkerEnemy : Enemy
         switch (behaviourIndex)
         {
             case (int)JumpBehavior.JumpFollowingPath:
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 2; i++)
                 {
                     if (pathToPlayer[i] == pathToPlayer[0])
                         result += pathToPlayer[0];
@@ -434,15 +452,15 @@ public class LabWorkerEnemy : Enemy
                 float disy = Mathf.Abs(BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y);
                 if (disx < disy)
                 {
-                    if (disx <= 3)
-                        info.Selection.Add(BattleData.playerData.position - BattleData.EnemyDataList[EnemyID].position);
+                    if (disx <= 4)
+                        info.Selection.Add(new Vector2(BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x, 0));
                     else
                         info.Selection.Add(new Vector2(Mathf.Sign(BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x) * 3, 0));
                 }
                 else
                 {
-                    if (disy <= 3)
-                        info.Selection.Add(BattleData.playerData.position - BattleData.EnemyDataList[EnemyID].position);
+                    if (disy <= 4)
+                        info.Selection.Add(new Vector2(0, BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y));
                     else
                         info.Selection.Add(new Vector2(0, Mathf.Sign(BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y) * 3));
 
@@ -453,16 +471,16 @@ public class LabWorkerEnemy : Enemy
                 switch (dir)
                 {
                     case 0:
-                        info.Selection.Add(new Vector2(0, 1 * (int)Random.Range(1, 3)));
+                        info.Selection.Add(new Vector2(0, 1 * (int)Random.Range(1, 2)));
                         break;
                     case 1:
-                        info.Selection.Add(new Vector2(0, -1 * (int)Random.Range(1, 3)));
+                        info.Selection.Add(new Vector2(0, -1 * (int)Random.Range(1, 2)));
                         break;
                     case 2:
-                        info.Selection.Add(new Vector2(-1 * (int)Random.Range(1, 3), 0));
+                        info.Selection.Add(new Vector2(-1 * (int)Random.Range(1, 2), 0));
                         break;
                     case 3:
-                        info.Selection.Add(new Vector2(1 * (int)Random.Range(1, 3), 0));
+                        info.Selection.Add(new Vector2(1 * (int)Random.Range(1, 2), 0));
                         break;
                 }
                 break;
@@ -480,7 +498,7 @@ public class LabWorkerEnemy : Enemy
                 }
         }
     }
-        private void JumpFunc(int behaviourIndex, Card.InfoForActivate info)
+    private void JumpFunc(int behaviourIndex, Card.InfoForActivate info)
     {
         Vector2 result = new Vector2(0, 0);
         int randomValue = Random.Range(1, 2);
@@ -502,14 +520,14 @@ public class LabWorkerEnemy : Enemy
                 if (disx < disy)
                 {
                     if (disx <= 2)
-                        info.Selection.Add(BattleData.playerData.position - BattleData.EnemyDataList[EnemyID].position);
+                        info.Selection.Add(new Vector2(BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x, 0));
                     else
                         info.Selection.Add(new Vector2(Mathf.Sign(BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x) * 2, 0));
                 }
                 else
                 {
                     if (disy <= 2)
-                        info.Selection.Add(BattleData.playerData.position - BattleData.EnemyDataList[EnemyID].position);
+                        info.Selection.Add(new Vector2(0, BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y));
                     else
                         info.Selection.Add(new Vector2(0, Mathf.Sign(BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y) * 2));
 
@@ -608,12 +626,12 @@ public class LabWorkerEnemy : Enemy
                 Vector2 dirVec = BattleData.playerData.position - BattleData.EnemyDataList[EnemyID].position;
                 if (Mathf.Abs(dirVec.x) > Mathf.Abs(dirVec.y))
                 {
-                    info.Selection.Add(new Vector2(0, -dirVec.y / Mathf.Abs(dirVec.y)));
+                    info.Selection.Add(new Vector2(-dirVec.x / Mathf.Abs(dirVec.x), 0));
                     break;
                 }
                 else
                 {
-                    info.Selection.Add(new Vector2(-dirVec.x / Mathf.Abs(dirVec.x), 0));
+                    info.Selection.Add(new Vector2(0, -dirVec.y / Mathf.Abs(dirVec.y)));
                     break;
                 }
         }

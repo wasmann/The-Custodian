@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6175434421491327185}
   - component: {fileID: 7951532492484726489}
   m_Layer: 0
-  m_Name: RushAndBite
+  m_Name: RushAndBiteAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

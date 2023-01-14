@@ -35,6 +35,7 @@ public class AlphaLeader : Enemy
     float w_Legendary = 0.5f;
     float w_Epic = 0.3f;
 
+    int prevBehavior = -1;
     private State state;
     Weight weight;
     List<Vector2> pathToPlayer;
@@ -120,7 +121,7 @@ public class AlphaLeader : Enemy
         weight.w_AlliesInDanger = state.AlliesInDanger;
 
         if (state.ObsticalInBetween)
-            weight.w_ObsticalInBetween = 10;
+            weight.w_ObsticalInBetween = 20;
         else
             weight.w_ObsticalInBetween = 0;
 
@@ -184,6 +185,13 @@ public class AlphaLeader : Enemy
             state.TooClose = true;
         else
             state.TooClose = false;
+        for(int i = 0; i < BattleData.EnemyDataList.Count; i++)
+        {
+            if(i != EnemyID)
+            {
+                state.AlliesInDanger += BattleData.EnemyDataList[i].currentHealth < BattleData.EnemyDataList[i].maxHealth / 2 ? 1 : 0;
+            }
+        }
     }
     private List<List<float>> CalculateAllUtilities(List<Card> handcards)
     {
@@ -233,7 +241,7 @@ public class AlphaLeader : Enemy
         float utility;
         List<float> result = new List<float>();
         //ToAttack
-        utility = weight.w_PathTooLong + weight.w_Injured + weight.w_ObsticalInBetween;
+        utility = weight.w_PathTooLong + weight.w_Injured;
         result.Add(utility);
         //Random
         utility = weight.w_PathTooLong + weight.w_Injured + weight.w_ObsticalInBetween + Random.Range(-3, 3);
@@ -259,10 +267,10 @@ public class AlphaLeader : Enemy
         float utility;
         List<float> result = new List<float>();
         //ToAttack
-        utility = (weight.w_EpicCardNotUsed + weight.w_TooClose + weight.w_Injured + weight.w_AlignOrNot) * w_Epic;
+        utility = weight.w_EpicCardNotUsed + weight.w_TooClose + weight.w_Injured + weight.w_AlignOrNot;
         result.Add(utility);
         //Random
-        utility = (weight.w_EpicCardNotUsed + weight.w_TooClose + weight.w_Injured + weight.w_Aggressive + weight.w_AlignOrNot - Random.Range(-4, 1) )* w_Epic;
+        utility = weight.w_EpicCardNotUsed + weight.w_TooClose + weight.w_Injured + weight.w_Aggressive + weight.w_AlignOrNot - Random.Range(-4, 1);
         result.Add(utility);
         return result;
     }
@@ -272,10 +280,10 @@ public class AlphaLeader : Enemy
         float utility;
         List<float> result = new List<float>();
         //ToAttack
-        utility = (weight.w_LegendaryCardNotUsed + weight.w_AttackShootInRange + weight.w_Injured + weight.w_AlignOrNot + weight.w_TooClose) * w_Legendary;
+        utility = weight.w_LegendaryCardNotUsed + weight.w_AttackShootInRange + weight.w_Injured + weight.w_AlignOrNot + weight.w_TooClose;
         result.Add(utility);
         //Random
-        utility = (weight.w_LegendaryCardNotUsed + weight.w_AttackShootInRange + weight.w_Injured + weight.w_Aggressive + weight.w_TooClose - Random.Range(-3, 1)) * w_Legendary;
+        utility = weight.w_LegendaryCardNotUsed + weight.w_AttackShootInRange + weight.w_Injured + weight.w_Aggressive + weight.w_TooClose - Random.Range(-3, 1);
         result.Add(utility);
         return result;
     }
@@ -294,7 +302,7 @@ public class AlphaLeader : Enemy
         utility = Random.Range(0, 8) - weight.w_Aggressive;
         result.Add(utility);
         //WalkBackWardsToPlayer
-        utility = weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 3);
+        utility = weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 3) + weight.w_Injured;
         result.Add(utility);
         return result;
     }
@@ -304,6 +312,29 @@ public class AlphaLeader : Enemy
         Card.InfoForActivate info = new Card.InfoForActivate();
         info.owner_ID = EnemyID;
         info.animator = Animator;
+        if (prevBehavior != 0 || state.AlignOrNot)
+        {
+            pathToPlayer.Clear();
+            var a = new PathSearchAlgorithm();
+            var path = a.AStarSearch(new Vector2Int((int)BattleData.EnemyDataList[EnemyID].position.x, (int)BattleData.EnemyDataList[EnemyID].position.y), new Vector2Int((int)BattleData.playerData.position.x, (int)BattleData.playerData.position.y));
+            if (path.Count == 0)
+            {
+                state.ObsticalInBetween = false;
+            }
+            else
+            {
+
+                for (int i = 0; i < path.Count - 1; i++)
+                {
+                    pathToPlayer.Add(path[i + 1] - path[i]);
+                }
+                state.ObsticalInBetween = a.ObstacleInBetween;
+            }
+        }
+        else
+        {
+            pathToPlayer.RemoveAt(0);
+        }
         UpdateState();
         UpdateWeight();
         List<List<float>> BehaviourUtility;
