@@ -43,6 +43,7 @@ public class UI : MonoBehaviour
     static GameObject duplicationPanel;
 
     public static bool waitForDuplicate;
+    public static GameObject duplicationGrid;
 
     static Vector3 mouseWorldPos;
 
@@ -71,6 +72,7 @@ public class UI : MonoBehaviour
         pauseButton = GameObject.Find("PauseButton");
         duplicationPanel = GameObject.Find("DuplicationPanel");
         duplicationPanel.SetActive(false);
+        duplicationGrid = GameObject.Find("DuplicationGrid");
 
         custoAnim = custodian.GetComponent<Animator>();
         custoRender = custodian.GetComponent<SpriteRenderer>();
@@ -250,61 +252,24 @@ public class UI : MonoBehaviour
     public static void ShowDuplicationWin()
     {
         duplicationPanel.SetActive(true);
-        //Vector3 initpos = new Vector3(-0.4f, 0.06f, 0);
-        //int i = 0, j = 0;
+        duplicationGrid.SetActive(true);
+
         foreach (Card card in BattleData.NewCard)
         {
             
-           GameObject obj = Instantiate(Resources.Load("Prefab/Card/" + card.Name) as GameObject, duplicationPanel.transform);
-            Debug.Log(card.Name);
-           
-            //obj.transform.SetParent(GameObject.Find("Canvas/DuplicationPanel").transform);
-            obj.transform.localScale = new Vector3(0.03f, 0.03f, 0);
-            obj.GetComponent<Collider2D>().enabled = false;
-            obj.GetComponent<Collider2D>().enabled = true;
+           GameObject obj = Instantiate(Resources.Load("Prefab/Card/" + card.Name) as GameObject, duplicationGrid.transform);
+           //Debug.Log(card.Name);
 
-            /*if (i >= 7)
-            {
-                i = 0;
-                j++;
-            }
-            obj.transform.localPosition = new Vector3(initpos.x + 0.1f * i, initpos.y + 0.05f * j, 0);
-            i++;*/
         }
         
     }
 
-    public static void ShowDuplicationWin2()
-    {
-        duplicationPanel.SetActive(true);
-        Vector3 initpos = new Vector3(-0.4f, 0.06f, 0);
-        int i = 0, j = 0;
-        foreach (Card card in BattleData.NewCard)
-        {
-            //Debug.Log("new card number: " + BattleData.NewCard.Count);
-            //GameObject obj = Instantiate(Resources.Load("Prefab/Card/HeadButt") as GameObject, duplicationPanel.transform);
-            GameObject obj = Instantiate(Resources.Load("Prefab/Card/" + card.Name) as GameObject, duplicationPanel.transform);
-            //Debug.Log("instantiate "+card.Name);
-
-            //obj.transform.SetParent(GameObject.Find("Canvas/DuplicationPanel").transform);
-            obj.transform.localScale = new Vector3(0.03f, 0.03f, 0);
-
-            if (i >= 7)
-            {
-                i = 0;
-                j++;
-            }
-            obj.transform.localPosition = new Vector3(initpos.x + 0.1f * i, initpos.y + 0.05f * j, 0);
-            i++;
-        }
-
-    }
 
     public static void DestroyDuplicationWin()
     {
-        for (int i = 0; i < duplicationPanel.transform.childCount; ++i)
+        for (int i = 0; i < duplicationGrid.transform.childCount; ++i)
         {
-            Destroy(duplicationPanel.transform.GetChild(i).gameObject);
+            Destroy(duplicationGrid.transform.GetChild(i).gameObject);
         }
     }
     public static void Pause()
@@ -314,23 +279,27 @@ public class UI : MonoBehaviour
             //Child 1 is continue, 0 is pause
             pauseButton.transform.GetChild(0).gameObject.SetActive(false);
             pauseButton.transform.GetChild(1).gameObject.SetActive(true);
-            //duplicationPanel.SetActive(false);
+            
             isPaused = false;
+            
             DestroyDuplicationWin();
             duplicationPanel.SetActive(false);
-            Time.timeScale = 1;
+            duplicationGrid.SetActive(false);
+          
             waitForDuplicate = false;
+
+            GameObject.Find("GameManager").GetComponent<BattleLevelDriver>().Pause();
         }
         else
         {
-            Time.timeScale = 0;
             pauseButton.transform.GetChild(0).gameObject.SetActive(true);
             pauseButton.transform.GetChild(1).gameObject.SetActive(false);
-            //duplicationPanel.SetActive(true);
+            
             isPaused = true;
-            //ShowDuplicationWin();
-            ShowDuplicationWin2();
+            ShowDuplicationWin();
+           
             waitForDuplicate = true;
+            GameObject.Find("GameManager").GetComponent<BattleLevelDriver>().Pause();
         }
     }
 
@@ -404,32 +373,6 @@ public class UI : MonoBehaviour
 
     }
 
-/*    public static void SelectCard()
-    {
-       
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 1000, -1);
-
-        if (Input.GetMouseButtonDown(0) && hit.collider && (hit.collider.transform.parent.transform.name == "DuplicationPanel"))
-        {
-           
-            //Debug.DrawLine(ray.origin, hit.transform.position, Color.red, 0.1f, true);
-            if (hit.collider && (hit.collider.transform.parent.transform.name == "DuplicationPanel"))
-            {
-               
-                Debug.Log("hit: " + hit.transform.name);
-                Pause();
-                string cardName = hit.collider.gameObject.transform.name;
-                GameObject obj = Instantiate(Resources.Load("Prefab/UI/Damage") as GameObject, GameObject.Find("CardBank").transform);
-                //GameObject obj = Instantiate(Resources.Load("Prefab/Card/Reload") as GameObject, GameObject.Find("CardBank").transform);
-                GameData.Deck.Add(obj.GetComponent<Card>());
-                BattleData.playerData.drawPile.Add(obj.GetComponent<Card>());
-                
-            }
-
-        }
-    }*/
-        
     public static void ShowDamage(float _damage)
     {
         GameObject damage = Instantiate(Resources.Load("Prefab/UI/Damage") as GameObject, custodian.transform.position, Quaternion.identity);

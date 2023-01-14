@@ -79,7 +79,11 @@ public abstract class Card : MonoBehaviour
     {
         if (UI.waitForDuplicate)
         {
-            UI.FinishDuplicate(this,this.rarity);
+            if (this.transform.parent.name == "DuplicationGrid")
+            {
+                UI.FinishDuplicate(this, this.rarity);
+            }
+            
         }
         else
         {

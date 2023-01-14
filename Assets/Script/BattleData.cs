@@ -181,7 +181,7 @@ public class BattleData : MonoBehaviour
     {
         if (playerData.currentHealth <= 0)
         {
-            SceneManager.LoadScene("LoadingScreen");
+            //SceneManager.LoadScene("LoadingScreen");
             return true;
         }
             
