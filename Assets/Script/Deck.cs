@@ -64,7 +64,7 @@ public class Deck : MonoBehaviour
             BattleData.playerData.drawPile.Add(BattleData.playerData.discardPile[k]);
             BattleData.playerData.discardPile.RemoveAt(k);
         }
-        Debug.Log(BattleData.playerData.discardPile.Count);
-        Debug.Log(BattleData.playerData.drawPile.Count + "==" + count);
+        //Debug.Log(BattleData.playerData.discardPile.Count);
+        //Debug.Log(BattleData.playerData.drawPile.Count + "==" + count);
     }
 }

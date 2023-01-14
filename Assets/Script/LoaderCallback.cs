@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoaderCallback : MonoBehaviour
 {
-    private bool isFirstUpdate = true;
+    /*private bool isFirstUpdate = true;
 
     private void Update()
     {
@@ -13,5 +14,10 @@ public class LoaderCallback : MonoBehaviour
             isFirstUpdate = false;
             Loader.LoaderCallback();
         }
+    }*/
+
+    public void back()
+    {
+        SceneManager.LoadScene("WorldMap");
     }
 }
