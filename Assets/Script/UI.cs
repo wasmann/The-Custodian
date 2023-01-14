@@ -69,7 +69,7 @@ public class UI : MonoBehaviour
 
         timelineObj = new List<GameObject>();
 
-        pauseButton = GameObject.Find("PauseButton");
+        pauseButton = GameObject.Find("Button");
         duplicationPanel = GameObject.Find("DuplicationPanel");
         duplicationPanel.SetActive(false);
         duplicationGrid = GameObject.Find("DuplicationGrid");
