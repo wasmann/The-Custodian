@@ -13,6 +13,7 @@ public class RushAndCollisionAttack: Card
 
     public override IEnumerator Play()
     {
+        Info.otherInfo = new List<string>();
         BattleData.playerData.currentEnergy -= 1;
         UI.UpdatePlayerData();
         Info.direction.Add(BattleData.playerData.position + new Vector2(1, 0));

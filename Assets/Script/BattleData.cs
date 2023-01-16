@@ -187,7 +187,7 @@ public class BattleData : MonoBehaviour
 
     }
     public static void LoadPlayerData(){
-        playerData.position = new Vector2(2, 2);
+        playerData.position = new Vector2(-2,-3);
         playerData.maxHealth = GameData.health;
         playerData.maxEnergy = GameData.Energy;
         playerData.currentHealth = playerData.maxHealth;

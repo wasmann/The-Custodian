@@ -18,7 +18,7 @@ public class BattleLevelDriver : MonoBehaviour
 
     private void Start()
     {
-        BeginABattleLevel(2);
+        BeginABattleLevel(1);
     }
     public void BeginABattleLevel(int ID)
     {
@@ -76,10 +76,15 @@ public class BattleLevelDriver : MonoBehaviour
                 if (info.owner_ID == 99)
                 {
                     Debug.Log("finish duplicate" + info.card.Name);
-                    GameData.Deck.Add(info.card);
+                    System.Type myType = Type.GetType(info.card.Name);
+
+                    Card newcard=(Card)GameObject.Instantiate(GameObject.Find("CardBank/"+info.card.Name)).GetComponent(myType);
+
+
+                    GameData.Deck.Add(newcard);
                     GameData.duplicated += 1;
-                    BattleData.playerData.drawPile.Add(info.card);
-                    BattleData.duplicated.Add(info.card);
+                    BattleData.playerData.drawPile.Add(newcard);
+                    BattleData.duplicated.Add(newcard);
                     continue;
                 }
 

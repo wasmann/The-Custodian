@@ -334,13 +334,13 @@ public class UI : MonoBehaviour
         //Debug.Log("card info " + card.Info);
         card.Info.owner_ID = 99;
         card.Info.card = card;
-        BattleLevelDriver.TimeLineSlots[9].Add(card.Info);
+        BattleLevelDriver.TimeLineSlots[time].Add(card.Info);
 
         //GameData.Deck.Add(card);
         //BattleData.playerData.drawPile.Add(card);
 
         Pause();
-        BattleData.NewCard.Remove(card);
+        //BattleData.NewCard.Remove(card);
     }
     public static void MoveCusto()
     {
