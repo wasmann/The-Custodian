@@ -77,6 +77,7 @@ public class BattleLevelDriver : MonoBehaviour
                 {
                     Debug.Log("finish duplicate" + info.card.Name);
                     GameData.Deck.Add(info.card);
+                    GameData.duplicated += 1;
                     BattleData.playerData.drawPile.Add(info.card);
                     BattleData.duplicated.Add(info.card);
                     continue;

@@ -217,8 +217,12 @@ public class BattleData : MonoBehaviour
 
     public bool CheckWinCondition()
     {
-        if(EnemyDataList.Count==0)
+        if (EnemyDataList.Count == 0)
+        {
+            //SceneManager.LoadScene("WinningScreen");
             return true;
+        }
+            
         else
             return false;
     }
@@ -226,7 +230,7 @@ public class BattleData : MonoBehaviour
     {
         if (playerData.currentHealth <= 0)
         {
-            //SceneManager.LoadScene("LoadingScreen");
+            //SceneManager.LoadScene("FailedScreen");
             return true;
         }
             
