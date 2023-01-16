@@ -131,7 +131,7 @@ public class BattleData : MonoBehaviour
         if (BattleLevelID == 1)
         {
             EnemyData sheep = new EnemyData();
-            sheep.position = new Vector2(1, -7);
+            sheep.position = new Vector2(7, 4);
             sheep.obj = GameObject.Find("SheepEnemy");
             sheep.enemy = sheep.obj.GetComponent<SheepEnemy>();
             sheep.enemy.EnemyID = 1;
@@ -187,7 +187,7 @@ public class BattleData : MonoBehaviour
 
     }
     public static void LoadPlayerData(){
-        playerData.position = new Vector2(-2,-3);
+        playerData.position = new Vector2(6,12);
         playerData.maxHealth = GameData.health;
         playerData.maxEnergy = GameData.Energy;
         playerData.currentHealth = playerData.maxHealth;
