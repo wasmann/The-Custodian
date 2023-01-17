@@ -115,4 +115,17 @@ public abstract class Card : MonoBehaviour
         }
 
     }
+
+    void OnMouseEnter()
+    {
+        this.transform.localScale *= 2;
+        this.transform.position = this.transform.position + new Vector3(0, this.GetComponent<SpriteRenderer>().bounds.size.y/4, 0);
+    }
+    void OnMouseExit()
+    {
+        
+        this.transform.localScale /= 2;
+        this.transform.position = this.transform.position - new Vector3(0, this.GetComponent<SpriteRenderer>().bounds.size.y / 2, 0);
+
+    }
 }
