@@ -194,12 +194,20 @@ public class UI : MonoBehaviour
     public static void UpdateEnemyData(int ID)
     {
         BattleData.EnemyDataList[ID].obj.transform.position= ToolFunction.FromCoorinateToWorld(BattleData.EnemyDataList[ID].position);
-        
+        if (BattleData.EnemyDataList[ID].obj.GetComponentInChildren<Slider>().value != BattleData.EnemyDataList[ID].currentHealth)
+        {
+            GameObject damage = Instantiate(Resources.Load("Prefab/UI/Damage") as GameObject, BattleData.EnemyDataList[ID].obj.transform.position, Quaternion.identity);
+            damage.GetComponent<TMP_Text>().text = "-" + (BattleData.EnemyDataList[ID].obj.GetComponentInChildren<Slider>().value - BattleData.EnemyDataList[ID].currentHealth);
+            Destroy(damage, 0.5f);
+            BattleData.EnemyDataList[ID].obj.GetComponentInChildren<Slider>().value = BattleData.EnemyDataList[ID].currentHealth;
+        }
     }
     public static void UpdateAllEnemyData()
     {
         for (int i = 1; i < BattleData.EnemyDataList.Count+1; i++)
         {
+            BattleData.EnemyDataList[i].obj.GetComponentInChildren<Slider>().maxValue = BattleData.EnemyDataList[i].maxHealth;
+            BattleData.EnemyDataList[i].obj.GetComponentInChildren<Slider>().value = BattleData.EnemyDataList[i].currentHealth;
             UpdateEnemyData(i);
         }
     }
