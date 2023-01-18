@@ -52,7 +52,7 @@ public class Walk : Card
     public IEnumerator Animate(Animator animator)
     {
         animator.SetBool("Walk", true);
-        yield return new WaitForSeconds(0);
+        yield return new WaitForSeconds(1f);
         animator.SetBool("Walk", false);
     }
 

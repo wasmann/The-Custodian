@@ -357,26 +357,23 @@ public class UI : MonoBehaviour
         {
             custodian.transform.position = Vector3.Lerp(lastPosition, newPosition, timeElapsed / 1);
             timeElapsed += Time.deltaTime;
-            //if ((lastPosition.x - newPosition.x) > 0)
-            //{
-            //    custoRender.flipX = true;
-            //    custoAnim.Play("run");
-            //}
-            //else if ((lastPosition.x - newPosition.x) < 0)
-            //{
-            //    custoRender.flipX = false;
-            //    custoAnim.Play("run");
-            //}
-            //else
-            //{
-            //    custoAnim.Play("run_up");
-            //}
+            if ((lastPosition.x - newPosition.x) > 0)
+            {
+                custoRender.flipX = true;
+               
+            }
+            else if ((lastPosition.x - newPosition.x) < 0)
+            {
+                custoRender.flipX = false;
+            
+            }
+           
         }
         else
         {
             custodian.transform.position = newPosition;
             timeElapsed = 0;
-            custoAnim.Play("idle");
+           
         }
 
     }
