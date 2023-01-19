@@ -215,10 +215,11 @@ public class BattleData : MonoBehaviour
             UI.SetOtherPilesInative();
     }
 
-    public bool CheckWinCondition()
+    public static bool CheckWinCondition()
     {
         if (EnemyDataList.Count == 0)
         {
+            GameData.currentState = GameData.state.WorldMap;
             //SceneManager.LoadScene("WinningScreen");
             return true;
         }
@@ -226,10 +227,11 @@ public class BattleData : MonoBehaviour
         else
             return false;
     }
-    public bool CheckLoseCondition()
+    public static bool CheckLoseCondition()
     {
         if (playerData.currentHealth <= 0)
         {
+            GameData.currentState = GameData.state.WorldMap;
             //SceneManager.LoadScene("FailedScreen");
             return true;
         }
@@ -244,5 +246,6 @@ public class BattleData : MonoBehaviour
     void Update()
     {
         CheckLoseCondition();
+        CheckWinCondition();
     }
 }

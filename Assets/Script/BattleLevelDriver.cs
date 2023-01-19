@@ -4,6 +4,7 @@ using System.Linq;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BattleLevelDriver : MonoBehaviour
 {
@@ -44,6 +45,15 @@ public class BattleLevelDriver : MonoBehaviour
         
         GameData.currentState = GameData.state.WorldMap;
         //TODO: load gameover or show battle summary
+        /*if (BattleData.CheckWinCondition())
+        {
+            SceneManager.LoadScene("WinningScreen");
+        }
+
+        if (BattleData.CheckLoseCondition())
+        {
+            SceneManager.LoadScene("FailedScreen");
+        }*/
     }
 
     private IEnumerator EnableTimeLineSlots()
