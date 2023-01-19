@@ -29,41 +29,40 @@ public class Hound : Enemy
 
     private State state;
     Weight weight;
-    public int CloseEnemyID;
     int prevBehavior = -1;
     public int EnemyToAttackID;
+    PathSearchAlgorithm pathSearchAlgorithm = new PathSearchAlgorithm();
     List<Vector2> pathToPlayer = new List<Vector2>();
-    private struct State
+    private struct State 
     {
         public int Aggressive;
-        public bool inDanger;
-        public bool playerInDanger;
-        public bool AlignedWithPlayer;
+        public bool InDanger;
+        public bool PlayerInDanger;
         public bool AlignedWithEnemy;
-        public bool RunUp;
-        public bool RunDown;
-        public bool RunLeft;
-        public bool RunRight;
         public bool BarkRange;
         public bool BiteRange;
         public int  Injured;//from 0 to 2
         public bool PathTooLong;
         public bool TooClose;
         public bool ObsticalInBetween;
+        public bool RunToEscape;
     }
 
     private struct Weight
     {
         public int w_Aggressive;
-        public int w_inDanger;
-        public int w_playerInDanger;
-        public int w_AlignedWithPlayer;
-        public int w_AlignedWithEnemy;
-        public int w_ObsticalInBetween;
-        public int w_RunUp;
-        public int w_RunDown;
+        public int w_InDanger;
         public int w_RunLeft;
         public int w_RunRight;
+        public int w_RunUp;
+        public int w_RunDown;
+        public int w_RunLeftEscape;
+        public int w_RunRightEscape;
+        public int w_RunUpEscape;
+        public int w_RunDownEscape;
+        public int w_PlayerInDanger;
+        public int w_AlignedWithEnemy;
+        public int w_ObsticalInBetween;
         public int w_BarkRange;
         public int w_BiteRange;
         public int w_Injured;
@@ -73,28 +72,24 @@ public class Hound : Enemy
     enum RunUpBehavior
     {
         RunUpFollowingPath,
-        RunUpForAligning, //for biting
         RunUpForEscape,
         RunUpRandom
     }
     enum RunDownBehavior
     {
         RunDownFollowingPath,
-        RunDownForAligning,
         RunDownForEscape,
         RunDownRandom
     }
     enum RunLeftBehavior
     {
         RunLeftFollowingPath,
-        RunLeftForAligning,
         RunLeftForEscape,
         RunLeftRandom
     }
     enum RunRightBehavior
     {
         RunRightFollowingPath,
-        RunRightForAligning,
         RunRightForEscape,
         RunRightRandom
     }
@@ -105,51 +100,35 @@ public class Hound : Enemy
     }
     enum RushnBiteBehavior
     {
+        RushnBiteFollowingPath,
         RushnBiteToAttack,
-        RushnBiteForAligning,
         RushnBiteForFollowingPath,
     }
     private void UpdateWeight()
     {
         weight.w_Aggressive = state.Aggressive;
-        if (state.inDanger)
-            weight.w_inDanger = 10;
+        weight.w_Injured = state.Injured;
+        if (state.InDanger)
+            weight.w_InDanger = 10;
         else
-            weight.w_inDanger = 0;
-        if (state.playerInDanger)
-            weight.w_playerInDanger = 5;
+            weight.w_InDanger = 0;
+        if (state.PlayerInDanger)
+            weight.w_PlayerInDanger = 8;
         else
-            weight.w_playerInDanger = 0;
+            weight.w_PlayerInDanger = -12;
         if (state.BiteRange)
             weight.w_BiteRange = 8;
         else
             weight.w_BiteRange = 0;
-        if (state.RunDown)
-            weight.w_RunDown = 7;
-        else
-            weight.w_RunDown = 0;
-        if(state.RunLeft)
-            weight.w_RunLeft = 7;
-        else
-            weight.w_RunLeft= 0;
-        if (state.RunRight)
-            weight.w_RunRight = 7;
-        else
-            weight.w_RunLeft = 0;
-        if (state.RunUp)
-            weight.w_RunUp = 7;
-        else
-            weight.w_RunUp = 0;
         if (state.BarkRange)
             weight.w_BarkRange = 5;
         else
             weight.w_BarkRange = 0;
 
         if (state.ObsticalInBetween)
-            weight.w_ObsticalInBetween = 10;
+            weight.w_ObsticalInBetween = -10;
         else
-            weight.w_ObsticalInBetween = 0;
-
+            weight.w_ObsticalInBetween = 10;
         if (state.TooClose)
             weight.w_TooClose = 5;
         else
@@ -163,10 +142,34 @@ public class Hound : Enemy
             weight.w_AlignedWithEnemy = 8;
         else
             weight.w_AlignedWithEnemy = 0;
-        if (state.AlignedWithPlayer)
-            weight.w_AlignedWithPlayer = 6;
-        else
-            weight.w_AlignedWithPlayer = 0;
+
+        if(pathToPlayer.Count != 0)
+        {
+            weight.w_RunRightEscape = 0;
+            weight.w_RunLeftEscape = 0;
+            weight.w_RunDownEscape = 0;
+            weight.w_RunUpEscape = 0;
+            weight.w_RunRight = 0;
+            weight.w_RunLeft = 0;
+            weight.w_RunDown = 0;
+            weight.w_RunUp = 0;
+            if (state.Injured >= 1)
+            {
+
+                weight.w_RunRightEscape = Random.Range(7, 10) * (int)(Mathf.Abs(pathToPlayer[0].y));
+                weight.w_RunLeftEscape = Random.Range(7, 10) * (int)(Mathf.Abs(pathToPlayer[0].y));
+                weight.w_RunUpEscape = Random.Range(7, 10) * (int)(Mathf.Abs(pathToPlayer[0].x));
+                weight.w_RunDownEscape = Random.Range(7, 10) * (int)(Mathf.Abs(pathToPlayer[0].x));
+            }
+            else
+            {
+                weight.w_RunDown = 5 * (int)(-pathToPlayer[0].y);
+                weight.w_RunLeft = 5 * (int)(-pathToPlayer[0].x);
+                weight.w_RunRight = 5 * (int)(pathToPlayer[0].x);
+                weight.w_RunUp = 5 * (int)(pathToPlayer[0].y);
+            }
+
+        }
 
     }
     private void UpdateState()
@@ -178,95 +181,81 @@ public class Hound : Enemy
             state.Aggressive = 0;
         //player is in danger
         if (BattleData.playerData.buff.Fear == true)
-            state.playerInDanger = true;
+            state.PlayerInDanger = true;
         else
-            state.playerInDanger = false;
-        //aligned with player
-        if (BattleData.playerData.position.x == BattleData.EnemyDataList[EnemyID].position.x || BattleData.playerData.position.y == BattleData.EnemyDataList[EnemyID].position.y)
-            state.AlignedWithPlayer = true;
-        else
-            state.AlignedWithPlayer = false;
-        //align with player
-        if (Mathf.Abs(BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x) <= 3)
-        {
-            if (BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x > 0)
-                state.RunLeft = true;
-            else
-                state.RunRight = true;
-        }
-        if (Mathf.Abs(BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y) <= 3)
-        {
-            if (BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y > 0)
-                state.RunUp = true;
-            else
-                state.RunDown = true;
-        }
+            state.PlayerInDanger = false;
+
         //injured
         if (BattleData.EnemyDataList[EnemyID].currentHealth <= (BattleData.EnemyDataList[EnemyID].maxHealth / 3))
             state.Injured = (int)(1 - BattleData.EnemyDataList[EnemyID].currentHealth / (BattleData.EnemyDataList[EnemyID].maxHealth / 3)) * 2 + 1;
         else
             state.Injured = 0;
 
+      
+        float playerEnemyDistance = 999;
         //check for all enemies
         foreach (var enemy in BattleData.EnemyDataList.Keys)
         {
             if (enemy != EnemyID)
             {
-                //if hound is in danger
-                if (Vector2.Distance(BattleData.EnemyDataList[EnemyID].position, BattleData.EnemyDataList[enemy].position) <= 2)
+                float dist = Vector2.Distance(BattleData.playerData.position, BattleData.EnemyDataList[enemy].position);
+                if (dist < playerEnemyDistance)
                 {
-                    state.inDanger = true;
-                    state.BarkRange = true;
-                    state.BiteRange = true;
-                    CloseEnemyID = enemy;
-                }
-                else
-                {
-                    state.inDanger = false;
-                    state.BarkRange = false;
-                }
-                
-                if (Vector2.Distance(BattleData.playerData.position, BattleData.EnemyDataList[enemy].position) <= Random.Range(2, BattleData.EnemyDataList[enemy].enemy.AttackMaxRange))
-                {
-                    state.playerInDanger = true;
-                    state.BarkRange = false;
-                    CloseEnemyID = enemy;
-                }
-                else
-                {
-                    state.BarkRange = false;
-                    state.playerInDanger = false;
-                }
-
-                if (BattleData.EnemyDataList[EnemyID].position.x == BattleData.EnemyDataList[enemy].position.x || BattleData.EnemyDataList[EnemyID].position.y == BattleData.EnemyDataList[enemy].position.y)
-                {
-                    state.AlignedWithEnemy = true;
-                    CloseEnemyID = enemy;
-                }
-                else
-                    state.AlignedWithEnemy = false;
-                //if custodin is in danger
-                if(Vector2.Distance(BattleData.playerData.position, BattleData.EnemyDataList[enemy].position) <= Random.Range(2, BattleData.EnemyDataList[enemy].enemy.AttackMaxRange))
-                {
-                    state.playerInDanger = true;
-                }
-
-                //Align with Enemy
-                if (Mathf.Abs(BattleData.EnemyDataList[enemy].position.x - BattleData.EnemyDataList[EnemyID].position.x) <= 3)
-                {
-                    if(BattleData.EnemyDataList[enemy].position.x - BattleData.EnemyDataList[EnemyID].position.x > 0)
-                        state.RunLeft = true;
-                    else
-                        state.RunRight = true;
-                }
-                if (Mathf.Abs(BattleData.EnemyDataList[enemy].position.y - BattleData.EnemyDataList[EnemyID].position.y) <= 3)
-                {
-                    if (BattleData.EnemyDataList[enemy].position.y - BattleData.EnemyDataList[EnemyID].position.y > 0)
-                        state.RunUp = true;
-                    else
-                        state.RunDown = true;
+                    playerEnemyDistance = dist;
+                    EnemyToAttackID = enemy;
                 }
             }
+        }
+
+        if (prevBehavior != 0)
+        {
+            if (pathToPlayer.Count != 0) pathToPlayer.Clear();
+            var a = new PathSearchAlgorithm();
+            var path = a.AStarSearch(new Vector2Int((int)BattleData.EnemyDataList[EnemyID].position.x, (int)BattleData.EnemyDataList[EnemyID].position.y), new Vector2Int((int)BattleData.playerData.position.x, (int)BattleData.playerData.position.y));
+            if (path.Count == 0)
+            {
+                state.ObsticalInBetween = false;
+            }
+            else
+            {
+
+                for (int i = 0; i < path.Count - 1; i++)
+                {
+                    pathToPlayer.Add(path[i + 1] - path[i]);
+                }
+            }
+            if (pathToPlayer.Count == Vector2.Distance(BattleData.EnemyDataList[EnemyToAttackID].position, BattleData.EnemyDataList[EnemyID].position))
+                state.ObsticalInBetween = false;
+            else
+                state.ObsticalInBetween = true;
+        }
+        else
+        {
+            pathToPlayer.RemoveAt(0);
+        }
+        float currentDistance = Vector2.Distance(BattleData.EnemyDataList[EnemyID].position, BattleData.EnemyDataList[EnemyToAttackID].position);
+        if (playerEnemyDistance < 4)
+            state.PlayerInDanger = true;
+        else
+            state.PlayerInDanger = false;
+        if (BattleData.EnemyDataList[EnemyToAttackID].position.x == BattleData.EnemyDataList[EnemyID].position.x || BattleData.EnemyDataList[EnemyToAttackID].position.y == BattleData.EnemyDataList[EnemyID].position.y)
+            state.AlignedWithEnemy = true;
+        else
+            state.AlignedWithEnemy = true;
+        if (state.AlignedWithEnemy && !state.ObsticalInBetween && currentDistance <= 4)
+            state.BiteRange = true;
+        else
+            state.BiteRange = false;
+
+        if (state.AlignedWithEnemy && !state.ObsticalInBetween && currentDistance <= 2)
+        {
+            state.BarkRange = true;
+            state.TooClose = true;
+        }
+        else 
+        {
+            state.BarkRange = false;
+            state.TooClose = false;
         }
     }
     private List<float>RunUpUtility()
@@ -274,16 +263,13 @@ public class Hound : Enemy
         int utility;
         List<float> result = new List<float>();
         //Run up follow path
-        utility = weight.w_PathToLong + weight.w_ObsticalInBetween - weight.w_Injured;
-        result.Add(utility);
-        //run up align
-        utility = weight.w_Aggressive + weight.w_RunUp + weight.w_AlignedWithEnemy + weight.w_AlignedWithPlayer + weight.w_playerInDanger - weight.w_Injured - weight.w_BiteRange;
+        utility = weight.w_PathToLong - weight.w_BiteRange - weight.w_BarkRange + weight.w_RunUp + weight.w_ObsticalInBetween;
         result.Add(utility);
         //run up escape
-        utility = weight.w_inDanger + weight.w_RunUp + weight.w_AlignedWithEnemy + weight.w_Injured - weight.w_BiteRange - weight.w_BarkRange;
+        utility = weight.w_InDanger + weight.w_AlignedWithEnemy + weight.w_Injured + weight.w_RunUpEscape;
         result.Add(utility);
         //run up random
-        utility = Random.Range(0, 8) - weight.w_Aggressive;
+        utility = Random.Range(0, 4) - weight.w_Aggressive - weight.w_PlayerInDanger;
         result.Add(utility);
         return result;
     } 
@@ -292,16 +278,13 @@ public class Hound : Enemy
         int utility;
         List<float> result = new List<float>();
         //Run down follow path
-        utility = weight.w_PathToLong + weight.w_ObsticalInBetween - weight.w_Injured;
-        result.Add(utility);
-        //run down align
-        utility = weight.w_Aggressive + weight.w_RunDown + weight.w_AlignedWithEnemy + weight.w_AlignedWithPlayer + weight.w_playerInDanger - weight.w_Injured - weight.w_BiteRange;
+        utility = weight.w_PathToLong - weight.w_BiteRange - weight.w_BarkRange + weight.w_RunDown + weight.w_ObsticalInBetween;
         result.Add(utility);
         //run down escape
-        utility = weight.w_inDanger + weight.w_RunDown + weight.w_AlignedWithEnemy + weight.w_Injured - weight.w_BiteRange - weight.w_BarkRange;
+        utility = weight.w_InDanger + weight.w_AlignedWithEnemy + weight.w_Injured + weight.w_RunDownEscape;
         result.Add(utility);
         //run down random
-        utility = Random.Range(0, 8) - weight.w_Aggressive;
+        utility = Random.Range(0, 4) - weight.w_Aggressive - weight.w_PlayerInDanger;
         result.Add(utility);
         return result;
     } 
@@ -310,16 +293,13 @@ public class Hound : Enemy
         int utility;
         List<float> result = new List<float>();
         //Run down follow path
-        utility = weight.w_PathToLong + weight.w_ObsticalInBetween - weight.w_Injured;
-        result.Add(utility);
-        //run down align
-        utility = weight.w_Aggressive + weight.w_RunLeft + weight.w_AlignedWithEnemy + weight.w_AlignedWithPlayer + weight.w_playerInDanger - weight.w_Injured - weight.w_BiteRange;
+        utility = weight.w_PathToLong - weight.w_BiteRange - weight.w_BarkRange + weight.w_RunLeft + weight.w_ObsticalInBetween;
         result.Add(utility);
         //run down escape
-        utility = weight.w_inDanger + weight.w_RunLeft + weight.w_AlignedWithEnemy + weight.w_Injured - weight.w_BiteRange - weight.w_BarkRange;
+        utility = weight.w_InDanger + weight.w_AlignedWithEnemy + weight.w_Injured + weight.w_RunLeftEscape;
         result.Add(utility);
         //run down random
-        utility = Random.Range(0, 8) - weight.w_Aggressive;
+        utility = Random.Range(0, 4) - weight.w_Aggressive - weight.w_PlayerInDanger;
         result.Add(utility);
         return result;
     }  
@@ -328,16 +308,13 @@ public class Hound : Enemy
         int utility;
         List<float> result = new List<float>();
         //Run down follow path
-        utility = weight.w_PathToLong + weight.w_ObsticalInBetween - weight.w_Injured;
-        result.Add(utility);
-        //run down align
-        utility = weight.w_Aggressive + weight.w_RunRight + weight.w_AlignedWithEnemy + weight.w_AlignedWithPlayer + weight.w_playerInDanger - weight.w_Injured - weight.w_BiteRange;
+        utility = weight.w_PathToLong - weight.w_BiteRange - weight.w_BarkRange + weight.w_RunRight + weight.w_ObsticalInBetween;
         result.Add(utility);
         //run down escape
-        utility = weight.w_inDanger + weight.w_RunRight + weight.w_AlignedWithEnemy + weight.w_Injured - weight.w_BiteRange - weight.w_BarkRange;
+        utility = weight.w_InDanger + weight.w_AlignedWithEnemy + weight.w_Injured + weight.w_RunRightEscape;
         result.Add(utility);
         //run down random
-        utility = Random.Range(0, 8) - weight.w_Aggressive;
+        utility = Random.Range(0, 4) - weight.w_Aggressive - weight.w_PlayerInDanger;
         result.Add(utility);
         return result;
     }
@@ -346,25 +323,22 @@ public class Hound : Enemy
         int utility;
         List<float> result = new List<float>();
         //Bark for attack
-        utility = weight.w_BarkRange + weight.w_playerInDanger + weight.w_inDanger + weight.w_Injured;
+        utility = weight.w_BarkRange + weight.w_PlayerInDanger + weight.w_InDanger + weight.w_Injured;
         result.Add(utility);
         //Bark random
-        utility = Random.Range(0, 4) + weight.w_Aggressive;
+        utility = Random.Range(0, 4) + weight.w_Aggressive - weight.w_PlayerInDanger;
         result.Add(utility);
         return result;
     }
     private List<float> RushBiteUtility()
     {
-        int utility;
         List<float> result = new List<float>();
-        //to attack
-        utility = weight.w_BiteRange + weight.w_playerInDanger + weight.w_inDanger + weight.w_Injured + weight.w_AlignedWithEnemy + weight.w_Aggressive - weight.w_ObsticalInBetween;
-        result.Add(utility);
-        //to align
-        utility = weight.w_PathToLong - weight.w_AlignedWithEnemy - weight.w_Injured + weight.w_playerInDanger;
-        result.Add(utility);
+        int utility;
         //to follow path
-        utility = weight.w_PathToLong + weight.w_ObsticalInBetween - weight.w_Injured + weight.w_playerInDanger;
+        utility = weight.w_PathToLong - weight.w_Injured + weight.w_PlayerInDanger + weight.w_BiteRange * 2 + weight.w_AlignedWithEnemy;
+        result.Add(utility);
+        //to attack
+        utility =  weight.w_AlignedWithEnemy + weight.w_TooClose - weight.w_Injured + weight.w_PlayerInDanger + weight.w_BiteRange - weight.w_ObsticalInBetween;
         result.Add(utility);
         return result;
     }   
@@ -372,7 +346,7 @@ public class Hound : Enemy
     {
         int utility;
         List<float> result = new List<float>();
-        utility = weight.w_inDanger + weight.w_TooClose + weight.w_Injured - (weight.w_RunDown + weight.w_RunLeft + weight.w_RunRight + weight.w_RunUp) / 4;
+        utility = weight.w_InDanger * 3 + weight.w_TooClose + weight.w_Injured * 3;
         result.Add(utility);
         return result;
     }
@@ -414,29 +388,6 @@ public class Hound : Enemy
         Card.InfoForActivate info = new Card.InfoForActivate();
         info.owner_ID = EnemyID;
         info.animator = Animator;
-        if (prevBehavior != 0 || state.AlignedWithPlayer || state.AlignedWithEnemy)
-        {
-            if (pathToPlayer.Count != 0) pathToPlayer.Clear();
-            var a = new PathSearchAlgorithm();
-            var path = a.AStarSearch(new Vector2Int((int)BattleData.EnemyDataList[EnemyID].position.x, (int)BattleData.EnemyDataList[EnemyID].position.y), new Vector2Int((int)BattleData.playerData.position.x, (int)BattleData.playerData.position.y));
-            if (path.Count == 0)
-            {
-                state.ObsticalInBetween = false;
-            }
-            else
-            {
-
-                for (int i = 0; i < path.Count - 1; i++)
-                {
-                    pathToPlayer.Add(path[i + 1] - path[i]);
-                }
-                state.ObsticalInBetween = a.ObstacleInBetween;
-            }
-        }
-        else
-        {
-            pathToPlayer.RemoveAt(0);
-        }
         UpdateState();
         UpdateWeight();
         List<List<float>> BehaviourUtility;
@@ -486,7 +437,20 @@ public class Hound : Enemy
                 EscapeInstinctFunc(BehaviourIndex, info);
                 break;
         }
-        if(allowToPlay)
+        if (info.card.ID <= 6 || info.card.ID == 16)
+        {
+            for (int i = 0; i < info.Selection.Count; ++i)
+            {
+                if (!pathSearchAlgorithm.IsValid(BattleData.EnemyDataList[EnemyID].position + info.Selection[i]))
+                {
+                    info.Selection.RemoveRange(i, info.Selection.Count);
+                    break;
+                }
+            }
+        }
+        if (info.Selection.Count == 0)
+            info.Selection.Add(new Vector2(0, 0));
+        if (allowToPlay)
             BattleLevelDriver.NewCardPlayed(info);
         UpdatePiles(info.card);
 
@@ -495,7 +459,7 @@ public class Hound : Enemy
     private void EscapeInstinctFunc(int behaviourIndex, Card.InfoForActivate info)
     {
         if (state.AlignedWithEnemy) {
-            if (BattleData.EnemyDataList[CloseEnemyID].position.y == BattleData.EnemyDataList[EnemyID].position.y)
+            if (BattleData.EnemyDataList[EnemyToAttackID].position.y == BattleData.EnemyDataList[EnemyID].position.y)
                 info.Selection.Add(new Vector2((int)Random.Range(0, 1) == 1 ? -1 : 1, 0));
              else
                 info.Selection.Add(new Vector2(0, (int)Random.Range(0, 1) == 1 ? -1 : 1));
@@ -517,32 +481,13 @@ public class Hound : Enemy
                 }
                 info.Selection.Add(result);
                 break;
-            case (int)RushnBiteBehavior.RushnBiteForAligning:
-                float disx = Mathf.Abs(BattleData.EnemyDataList[CloseEnemyID].position.x - BattleData.EnemyDataList[EnemyID].position.x);
-                float disy = Mathf.Abs(BattleData.EnemyDataList[CloseEnemyID].position.y - BattleData.EnemyDataList[EnemyID].position.y);
-                if (disx < disy)
-                {
-                    if (disx <= 5)
-                        info.Selection.Add(new Vector2(BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x, 0));
-                    else
-                        info.Selection.Add(new Vector2(Mathf.Sign(BattleData.EnemyDataList[CloseEnemyID].position.x - BattleData.EnemyDataList[EnemyID].position.x) * 4, 0));
-                }
-                else
-                {
-                    if (disy <= 5)
-                        info.Selection.Add(new Vector2(0, BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y));
-                    else
-                        info.Selection.Add(new Vector2(0, Mathf.Sign(BattleData.EnemyDataList[CloseEnemyID].position.y - BattleData.EnemyDataList[EnemyID].position.y) * 4));
-
-                }
-                break;
             case (int)RushnBiteBehavior.RushnBiteToAttack:
                 if (state.AlignedWithEnemy)
                 {
                     if (BattleData.playerData.position.x == BattleData.EnemyDataList[EnemyID].position.x)
-                        info.Selection.Add(new Vector2(BattleData.EnemyDataList[CloseEnemyID].position.x - BattleData.EnemyDataList[EnemyID].position.x, 0));
+                        info.Selection.Add(new Vector2(BattleData.EnemyDataList[EnemyToAttackID].position.x - BattleData.EnemyDataList[EnemyID].position.x, 0));
                     else
-                        info.Selection.Add(new Vector2(0, BattleData.EnemyDataList[CloseEnemyID].position.y - BattleData.EnemyDataList[EnemyID].position.y));
+                        info.Selection.Add(new Vector2(0, BattleData.EnemyDataList[EnemyToAttackID].position.y - BattleData.EnemyDataList[EnemyID].position.y));
                 }
                 else
                 {
@@ -576,20 +521,7 @@ public class Hound : Enemy
                 }
                 info.Selection.Add(result);
                 break;
-
-            case (int)RunRightBehavior.RunRightForAligning:
-                float disty = Mathf.Abs(BattleData.EnemyDataList[CloseEnemyID].position.y - BattleData.EnemyDataList[EnemyID].position.y);
-                if (disty > 0)
-                {
-                    if (disty < 3)
-                        info.Selection.Add(new Vector2(BattleData.EnemyDataList[CloseEnemyID].position.x - BattleData.EnemyDataList[EnemyID].position.x, 0));
-                    else
-                        info.Selection.Add(new Vector2(3, 0));
-                }
-                else
-                    break;
-                break;
-
+            case (int)RunRightBehavior.RunRightForEscape:
             case (int)RunRightBehavior.RunRightRandom:
                 int steps = Random.Range(3, 0);
                 info.Selection.Add(new Vector2(steps, 0));
@@ -614,19 +546,7 @@ public class Hound : Enemy
                 info.Selection.Add(result);
                 break;
 
-            case (int)RunLeftBehavior.RunLeftForAligning:
-                float disty = Mathf.Abs(BattleData.EnemyDataList[CloseEnemyID].position.y - BattleData.EnemyDataList[EnemyID].position.y);
-                if (disty > 0)
-                {
-                    if (disty < 3)
-                        info.Selection.Add(new Vector2(BattleData.EnemyDataList[CloseEnemyID].position.x - BattleData.EnemyDataList[EnemyID].position.x, 0));
-                    else
-                        info.Selection.Add(new Vector2(-3, 0));
-                }
-                else
-                    break;
-                break;
-
+            case (int)RunLeftBehavior.RunLeftForEscape:
             case (int)RunLeftBehavior.RunLeftRandom:
                 int steps = Random.Range(3, 0);
                 info.Selection.Add(new Vector2(-steps, 0));
@@ -651,19 +571,7 @@ public class Hound : Enemy
                 info.Selection.Add(result);
                 break;
 
-            case (int)RunDownBehavior.RunDownForAligning:
-                float disty = Mathf.Abs(BattleData.EnemyDataList[CloseEnemyID].position.y - BattleData.EnemyDataList[EnemyID].position.y);
-                if (disty > 0)
-                {
-                    if (disty < 3)
-                        info.Selection.Add(new Vector2(0, BattleData.EnemyDataList[CloseEnemyID].position.y - BattleData.EnemyDataList[EnemyID].position.y));
-                    else
-                        info.Selection.Add(new Vector2(0, -3));
-                }
-                else
-                    break;
-                break;
-
+            case (int)RunDownBehavior.RunDownForEscape:
             case (int)RunDownBehavior.RunDownRandom:
                 int steps = Random.Range(0, 3);
                 info.Selection.Add(new Vector2(0, -steps));
@@ -688,19 +596,7 @@ public class Hound : Enemy
                 info.Selection.Add(result);
                 break;
 
-            case (int)RunUpBehavior.RunUpForAligning:
-                float disty = Mathf.Abs(BattleData.EnemyDataList[CloseEnemyID].position.y - BattleData.EnemyDataList[EnemyID].position.y);
-                if (disty > 0)
-                {
-                    if (disty < 3)
-                        info.Selection.Add(new Vector2(0, BattleData.EnemyDataList[CloseEnemyID].position.y - BattleData.EnemyDataList[EnemyID].position.y));
-                    else
-                        info.Selection.Add(new Vector2(0, 3));
-                }
-                else
-                    break;
-                break;
-
+            case (int)RunUpBehavior.RunUpForEscape:
             case (int)RunUpBehavior.RunUpRandom:
                 int steps = Random.Range(0, 3);
                 info.Selection.Add(new Vector2(0, steps));

@@ -34,7 +34,9 @@ public class LabWorkerEnemy : Enemy
     private State state;
     Weight weight;
     List<Vector2> pathToPlayer = new List<Vector2>();
-    private struct State
+    PathSearchAlgorithm pathSearchAlgorithm = new PathSearchAlgorithm();
+
+    private struct State 
     {
         public int Aggressive;
         public bool Aligned;
@@ -111,9 +113,9 @@ public class LabWorkerEnemy : Enemy
         weight.w_Injured = state.Injured;
 
         if (state.ObsticalInBetween)
-            weight.w_ObsticalInBetween = 20;
+            weight.w_ObsticalInBetween = -10;
         else
-            weight.w_ObsticalInBetween = 0;
+            weight.w_ObsticalInBetween = 10;
 
         if (state.CryoliquidShootInRange)
             weight.w_CryoliquidShootInRange = 7;
@@ -238,16 +240,16 @@ public class LabWorkerEnemy : Enemy
         float utility;
         List<float> result = new List<float>();
         //DoubleJumpfollowingPath
-        utility = (weight.w_PathTooLong +  weight.w_ObsticalInBetween - weight.w_Injured + Random.Range(-3, 3) + weight.w_RareCardNotUsed) * w_Rare;
+        utility = weight.w_PathTooLong + 2 * weight.w_ObsticalInBetween - weight.w_Injured + weight.w_RareCardNotUsed;
         result.Add(utility);
         //DoubleJumpForAligning
-        utility = (weight.w_Aggressive + weight.w_WalkCanAlign - weight.w_Injured - weight.w_Aligned +  weight.w_ObsticalInBetween + weight.w_RareCardNotUsed) * w_Rare; 
+        utility = weight.w_Aggressive + weight.w_WalkCanAlign - weight.w_Injured - weight.w_Aligned +  weight.w_ObsticalInBetween + weight.w_RareCardNotUsed; 
         result.Add(utility);
         //DoubleRandomJump
         utility = (Random.Range(0, 8) - weight.w_Aggressive + weight.w_RareCardNotUsed) * w_Rare;
         result.Add(utility);
         //DoubleJumpBackWardsToPlayer
-        utility = (weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 3) + weight.w_RareCardNotUsed) * w_Rare;
+        utility = -10;// (weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 3) + weight.w_RareCardNotUsed) * w_Rare;
         result.Add(utility);
         return result;
     }
@@ -257,7 +259,7 @@ public class LabWorkerEnemy : Enemy
         int utility;
         List<float> result = new List<float>();
         //JumpfollowingPath
-        utility = weight.w_PathTooLong + weight.w_ObsticalInBetween - weight.w_Injured + Random.Range(-3, 3); ;
+        utility = weight.w_PathTooLong + 2 * weight.w_ObsticalInBetween - weight.w_Injured;
         result.Add(utility);
         //JumpForAligning
         utility = weight.w_Aggressive + weight.w_WalkCanAlign - weight.w_Injured + weight.w_Aligned + weight.w_ObsticalInBetween;
@@ -266,7 +268,7 @@ public class LabWorkerEnemy : Enemy
         utility = Random.Range(0, 8) - weight.w_Aggressive;
         result.Add(utility);
         //JumpBackWardsToPlayer
-        utility = weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 3);
+        utility = -10;// weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 3);
         result.Add(utility);
         return result;
     }
@@ -276,7 +278,7 @@ public class LabWorkerEnemy : Enemy
         int utility;
         List<float> result = new List<float>();
         //WalkfollowingPath
-        utility = weight.w_PathTooLong + weight.w_ObsticalInBetween - weight.w_Injured + Random.Range(-3, 3);
+        utility = weight.w_PathTooLong - 2 * weight.w_ObsticalInBetween - weight.w_Injured + weight.w_WalkCanAlign;
         result.Add(utility);
         //WalkForAligning
         utility = weight.w_Aggressive + weight.w_WalkCanAlign - weight.w_Injured - weight.w_Aligned;
@@ -285,7 +287,7 @@ public class LabWorkerEnemy : Enemy
         utility = Random.Range(0, 8) - weight.w_Aggressive;
         result.Add(utility);
         //WalkBackWardsToPlayer
-        utility = weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 3);
+        utility = -10;//weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 3);
         result.Add(utility);
         return result;
     }
@@ -299,8 +301,7 @@ public class LabWorkerEnemy : Enemy
         if (prevBehavior != 0 || state.Aligned)
         {
             if (pathToPlayer.Count != 0) pathToPlayer.Clear();
-            var a = new PathSearchAlgorithm();
-            var path = a.AStarSearch(new Vector2Int((int)BattleData.EnemyDataList[EnemyID].position.x, (int)BattleData.EnemyDataList[EnemyID].position.y), new Vector2Int((int)BattleData.playerData.position.x, (int)BattleData.playerData.position.y));
+            var path = pathSearchAlgorithm.AStarSearch(new Vector2Int((int)BattleData.EnemyDataList[EnemyID].position.x, (int)BattleData.EnemyDataList[EnemyID].position.y), new Vector2Int((int)BattleData.playerData.position.x, (int)BattleData.playerData.position.y));
             if (path.Count == 0)
             {
                 state.ObsticalInBetween = false;
@@ -312,7 +313,7 @@ public class LabWorkerEnemy : Enemy
                 {
                     pathToPlayer.Add(path[i + 1] - path[i]);
                 }
-                state.ObsticalInBetween = a.ObstacleInBetween;
+                state.ObsticalInBetween = pathSearchAlgorithm.ObstacleInBetween;
             }
         }
         else
@@ -635,5 +636,7 @@ public class LabWorkerEnemy : Enemy
                     break;
                 }
         }
+        if (!pathSearchAlgorithm.IsValid(BattleData.EnemyDataList[EnemyID].position + info.Selection[0]))
+            info.Selection[0] = new Vector2(0, 0);
     }
 }

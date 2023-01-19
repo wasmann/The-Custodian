@@ -4,6 +4,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using Random = UnityEngine.Random;
+using UnityEditor;
 
 public class AlfaSolder : Enemy
 {
@@ -38,6 +41,7 @@ public class AlfaSolder : Enemy
     private State state;
     Weight weight;
     List<Vector2> pathToPlayer = new List<Vector2>();
+    PathSearchAlgorithm pathSearchAlgorithm = new PathSearchAlgorithm();
     private struct State
     {
         public int Aggressive;//from 0 to 5
@@ -102,14 +106,14 @@ public class AlfaSolder : Enemy
         if (state.GunShootInRange)
             weight.w_GunShootInRange = 8;
         else
-            weight.w_GunShootInRange = -3;
+            weight.w_GunShootInRange = -8;
 
         weight.w_Injured = state.Injured;
 
         if (state.ObsticalInBetween)
-            weight.w_ObsticalInBetween = 10;
+            weight.w_ObsticalInBetween = -10;
         else
-            weight.w_ObsticalInBetween = 0;
+            weight.w_ObsticalInBetween = 10;
 
         if (state.HasGunShoot)
             weight.w_HasGunShoot = 8;
@@ -223,7 +227,7 @@ public class AlfaSolder : Enemy
         int utility;
         List<float> result = new List<float>();
         //WalkfollowingPath
-        utility = weight.w_PathToLong + weight.w_ObsticalInBetween - weight.w_Injured + Random.Range(-3, 3);
+        utility = weight.w_PathToLong - 2 * weight.w_ObsticalInBetween - weight.w_Injured ;
         result.Add(utility);
         //WalkForAligning
         utility = weight.w_Aggressive + weight.w_WalkCanAlign + weight.w_Loaded  - weight.w_Injured - weight.w_AlignOrNot;
@@ -232,7 +236,7 @@ public class AlfaSolder : Enemy
         utility = Random.Range(0, 8) - weight.w_Aggressive;
         result.Add(utility);
         //WalkBackWardsToPlayer
-        utility = weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 3);
+        utility = -5;// weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 3);
         result.Add(utility);
         return result;
     }
@@ -252,7 +256,7 @@ public class AlfaSolder : Enemy
         float utility;
         List<float> result = new List<float>();
         //ShootPlayer
-        utility = weight.w_Loaded + weight.w_Aggressive + weight.w_GunShootInRange + 2 * weight.w_AlignOrNot - weight.w_PathToLong - weight.w_Injured;
+        utility = weight.w_Loaded + weight.w_HasGunShoot + weight.w_Aggressive + 2 * weight.w_GunShootInRange + weight.w_AlignOrNot - weight.w_PathToLong - weight.w_Injured;
         result.Add(utility);
         //ShootRandomly
         utility = weight.w_TooClose + weight.w_Injured + weight.w_Loaded + weight.w_Aggressive + Random.Range(-5, 0);
@@ -273,7 +277,7 @@ public class AlfaSolder : Enemy
         utility = weight.w_RareCardNotUsed+weight.w_AlignOrNot+weight.w_TooClose+ weight.w_Aggressive + Random.Range(-3, 3);
         result.Add(utility);
         //DashBackWardsToPlayer
-        utility = weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 5)+ weight.w_RareCardNotUsed;
+        utility = -5;// weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 5)+ weight.w_RareCardNotUsed;
         result.Add(utility);
         return result;
     }
@@ -287,8 +291,7 @@ public class AlfaSolder : Enemy
         {
            // if (pathToPlayer.Count != 0)
                 pathToPlayer.Clear();
-            var a = new PathSearchAlgorithm();
-            var path = a.AStarSearch(new Vector2Int((int)BattleData.EnemyDataList[EnemyID].position.x, (int)BattleData.EnemyDataList[EnemyID].position.y), new Vector2Int((int)BattleData.playerData.position.x, (int)BattleData.playerData.position.y));
+            var path = pathSearchAlgorithm.AStarSearch(new Vector2Int((int)BattleData.EnemyDataList[EnemyID].position.x, (int)BattleData.EnemyDataList[EnemyID].position.y), new Vector2Int((int)BattleData.playerData.position.x, (int)BattleData.playerData.position.y));
             if (path.Count == 0)
             {
                 state.ObsticalInBetween = false;
@@ -344,6 +347,16 @@ public class AlfaSolder : Enemy
                 ReloadFunc(BehaviourIndex, info);
                 break;
         }
+        for (int i = 0; i < info.Selection.Count; ++i)
+        {
+            if(!pathSearchAlgorithm.IsValid(BattleData.EnemyDataList[EnemyID].position + info.Selection[i]))
+            {
+                info.Selection.RemoveRange(i, info.Selection.Count);
+                break;
+            }
+        }
+        if (info.Selection.Count == 0)
+            info.Selection.Add(new Vector2(0, 0));
         if (info.card.rarity == Card.Rarity.rare)
             state.RareCardNotUsed++;
         else

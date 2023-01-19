@@ -38,9 +38,9 @@ public class AlphaLeader : Enemy
     int prevBehavior = -1;
     private State state;
     Weight weight;
-    List<Vector2> pathToPlayer;
-
-    private struct State
+    List<Vector2> pathToPlayer = new List<Vector2>();
+    PathSearchAlgorithm pathSearchAlgorithm = new PathSearchAlgorithm();
+    private struct State 
     {
         public int Aggressive;//from 0 to 5
         public bool AlignOrNot;
@@ -121,14 +121,14 @@ public class AlphaLeader : Enemy
         weight.w_AlliesInDanger = state.AlliesInDanger;
 
         if (state.ObsticalInBetween)
-            weight.w_ObsticalInBetween = 20;
+            weight.w_ObsticalInBetween = -10;
         else
-            weight.w_ObsticalInBetween = 0;
+            weight.w_ObsticalInBetween = 10;
 
         if (state.DiamondAligned)
-            weight.w_DiamondAligned = 7;
+            weight.w_DiamondAligned = 8;
         else
-            weight.w_DiamondAligned = 0;
+            weight.w_DiamondAligned = -8;
 
         if (state.WalkCanAlign)
             weight.w_WalkCanAlign = 3;
@@ -150,11 +150,21 @@ public class AlphaLeader : Enemy
     }
     private void UpdateState()
     {
+        //obstacle in between
+        if (pathToPlayer.Count == Vector2.Distance(BattleData.playerData.position, BattleData.EnemyDataList[EnemyID].position))
+            state.ObsticalInBetween = false;
+        else
+            state.ObsticalInBetween = true;
         //aggressive
         if (BattleData.playerData.currentHealth < (BattleData.playerData.maxHealth / 2))
             state.Aggressive = (int)(1 - BattleData.playerData.currentHealth / (BattleData.playerData.maxHealth / 2)) * 5 + 1;
         else
             state.Aggressive = 0;
+        //diamond range
+        if (Mathf.Abs(BattleData.playerData.position.x - BattleData.EnemyDataList[EnemyID].position.x) + Mathf.Abs(BattleData.playerData.position.y - BattleData.EnemyDataList[EnemyID].position.y) <= 5)
+            state.DiamondAligned = true;
+        else
+            state.DiamondAligned = false;
         //align
         if (BattleData.playerData.position.x == BattleData.EnemyDataList[EnemyID].position.x || BattleData.playerData.position.y == BattleData.EnemyDataList[EnemyID].position.y)
             state.AlignOrNot = true;
@@ -185,7 +195,7 @@ public class AlphaLeader : Enemy
             state.TooClose = true;
         else
             state.TooClose = false;
-        for(int i = 0; i < BattleData.EnemyDataList.Count; i++)
+        for(int i = 1; i < BattleData.EnemyDataList.Count; i++)
         {
             if(i != EnemyID)
             {
@@ -228,10 +238,10 @@ public class AlphaLeader : Enemy
         float utility;
         List<float> result = new List<float>();
         //ToAttack
-        utility = weight.w_AttackShootInRange + weight.w_DiamondAligned * 2 + weight.w_Aggressive + weight.w_TooClose + weight.w_ObsticalInBetween;
+        utility = weight.w_AttackShootInRange + weight.w_DiamondAligned * 3 + weight.w_Aggressive + weight.w_TooClose - weight.w_ObsticalInBetween;
         result.Add(utility);
         //Random
-        utility = weight.w_AttackShootInRange + weight.w_Aggressive + weight.w_TooClose + weight.w_ObsticalInBetween + Random.Range(-3, 3);
+        utility = weight.w_AttackShootInRange + weight.w_Aggressive + weight.w_TooClose - weight.w_ObsticalInBetween + Random.Range(-3, 3);
         result.Add(utility);
         return result;
     }
@@ -241,7 +251,7 @@ public class AlphaLeader : Enemy
         float utility;
         List<float> result = new List<float>();
         //ToAttack
-        utility = weight.w_PathTooLong + weight.w_Injured;
+        utility = weight.w_PathTooLong + weight.w_Injured * 4;
         result.Add(utility);
         //Random
         utility = weight.w_PathTooLong + weight.w_Injured + weight.w_ObsticalInBetween + Random.Range(-3, 3);
@@ -254,7 +264,7 @@ public class AlphaLeader : Enemy
         float utility;
         List<float> result = new List<float>();
         //ToAttack
-        utility = weight.w_TooClose + weight.w_AlliesInDanger + weight.w_Injured - weight.w_Aggressive - weight.w_PathTooLong;
+        utility = weight.w_TooClose * 2 + weight.w_AlliesInDanger + weight.w_Injured  - weight.w_Aggressive - weight.w_PathTooLong;
         result.Add(utility);
         //Random
         utility = weight.w_TooClose + weight.w_AlliesInDanger + weight.w_Injured - Random.Range(-2, 2);
@@ -267,7 +277,7 @@ public class AlphaLeader : Enemy
         float utility;
         List<float> result = new List<float>();
         //ToAttack
-        utility = weight.w_EpicCardNotUsed + weight.w_TooClose + weight.w_Injured + weight.w_AlignOrNot;
+        utility = weight.w_EpicCardNotUsed + weight.w_TooClose * 3 + weight.w_Injured + weight.w_AlignOrNot;
         result.Add(utility);
         //Random
         utility = weight.w_EpicCardNotUsed + weight.w_TooClose + weight.w_Injured + weight.w_Aggressive + weight.w_AlignOrNot - Random.Range(-4, 1);
@@ -280,7 +290,7 @@ public class AlphaLeader : Enemy
         float utility;
         List<float> result = new List<float>();
         //ToAttack
-        utility = weight.w_LegendaryCardNotUsed + weight.w_AttackShootInRange + weight.w_Injured + weight.w_AlignOrNot + weight.w_TooClose;
+        utility = weight.w_LegendaryCardNotUsed + weight.w_AttackShootInRange + weight.w_Injured + weight.w_AlignOrNot + weight.w_ObsticalInBetween + weight.w_TooClose;
         result.Add(utility);
         //Random
         utility = weight.w_LegendaryCardNotUsed + weight.w_AttackShootInRange + weight.w_Injured + weight.w_Aggressive + weight.w_TooClose - Random.Range(-3, 1);
@@ -293,16 +303,16 @@ public class AlphaLeader : Enemy
         int utility;
         List<float> result = new List<float>();
         //WalkfollowingPath
-        utility = weight.w_PathTooLong + weight.w_ObsticalInBetween - weight.w_Injured + Random.Range(-3, 3);
+        utility = weight.w_PathTooLong + weight.w_ObsticalInBetween - weight.w_Injured;
         result.Add(utility);
         //WalkForAligning
-        utility = weight.w_Aggressive + weight.w_WalkCanAlign  + Random.Range(-3, 3) - weight.w_Injured - weight.w_AlignOrNot;
+        utility = weight.w_Aggressive + weight.w_WalkCanAlign * 4 - weight.w_Injured - weight.w_AlignOrNot;
         result.Add(utility);
         //RandomWalk
         utility = Random.Range(0, 8) - weight.w_Aggressive;
         result.Add(utility);
         //WalkBackWardsToPlayer
-        utility = weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 3) + weight.w_Injured;
+        utility = -10;// weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 3) + weight.w_Injured;
         result.Add(utility);
         return result;
     }
@@ -315,8 +325,7 @@ public class AlphaLeader : Enemy
         if (prevBehavior != 0 || state.AlignOrNot)
         {
             pathToPlayer.Clear();
-            var a = new PathSearchAlgorithm();
-            var path = a.AStarSearch(new Vector2Int((int)BattleData.EnemyDataList[EnemyID].position.x, (int)BattleData.EnemyDataList[EnemyID].position.y), new Vector2Int((int)BattleData.playerData.position.x, (int)BattleData.playerData.position.y));
+            var path = pathSearchAlgorithm.AStarSearch(new Vector2Int((int)BattleData.EnemyDataList[EnemyID].position.x, (int)BattleData.EnemyDataList[EnemyID].position.y), new Vector2Int((int)BattleData.playerData.position.x, (int)BattleData.playerData.position.y));
             if (path.Count == 0)
             {
                 state.ObsticalInBetween = false;
@@ -328,7 +337,7 @@ public class AlphaLeader : Enemy
                 {
                     pathToPlayer.Add(path[i + 1] - path[i]);
                 }
-                state.ObsticalInBetween = a.ObstacleInBetween;
+                state.ObsticalInBetween = pathSearchAlgorithm.ObstacleInBetween;
             }
         }
         else
@@ -379,7 +388,6 @@ public class AlphaLeader : Enemy
                 FallingLightningFunc(BehaviourIndex, info);
                 break;
         }
-       
         if (info.card.rarity == Card.Rarity.legendary)
             state.LegendaryCardNotUsed++;
         else
@@ -485,5 +493,7 @@ public class AlphaLeader : Enemy
                     break;
                 }
         }
+        if (!pathSearchAlgorithm.IsValid(BattleData.EnemyDataList[EnemyID].position + info.Selection[0]))
+            info.Selection[0] = new Vector2(0, 0);
     }
 }

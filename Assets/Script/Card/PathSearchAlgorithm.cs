@@ -13,7 +13,7 @@ public class PathSearchAlgorithm : MonoBehaviour
         // f = g + h
         public double f, g, h;
     };
-    private bool IsValid(Vector2 pos)
+    public bool IsValid(Vector2 pos)
     {
         if (BattleData.enviromentData.ContainsKey(pos)) { 
             var a = BattleData.enviromentData[pos];
