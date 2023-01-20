@@ -38,7 +38,7 @@ public class FallingLightning : Card
     public override void Activate(InfoForActivate Info)
     {
         Audio.Play();
-        StartCoroutine(Animate(Info.animator));
+        Info.animator.SetTrigger("Attack");
         int random = (int)Random.Range(0, 10);
         if(random >= 70)
         {
@@ -85,12 +85,6 @@ public class FallingLightning : Card
                 UI.UpdatePlayerData();
             }
         }
-    }
-    public IEnumerator Animate(Animator animator)
-    {
-        animator.SetBool("Attack", true);
-        yield return new WaitForSeconds(0);
-        animator.SetBool("Attack", false);
     }
     public override void ReSetTarget()
     {

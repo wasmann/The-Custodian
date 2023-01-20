@@ -32,7 +32,7 @@ public class Jump : Card
     public override void Activate(InfoForActivate Info)
     {
         Audio.Play();
-        
+
         if (Info.owner_ID == 0)
         {
             BattleData.playerData.position += Info.Selection[0];
@@ -40,19 +40,14 @@ public class Jump : Card
         }
         else
         {
-            StartCoroutine(Animate(Info.animator));
+            Info.animator.SetTrigger("Jump");
             BattleData.EnemyData newData = BattleData.EnemyDataList[Info.owner_ID];
             newData.position += Info.Selection[0];
             BattleData.EnemyDataList[Info.owner_ID] = newData;
             UI.UpdateEnemyData(Info.owner_ID);
         }
     }
-    public IEnumerator Animate(Animator animator)
-    {
-        animator.SetBool("Jump", true);
-        yield return new WaitForSeconds(3);
-        animator.SetBool("Jump", false);
-    }
+
     private void Start()
     {
         TargetNum = 1;

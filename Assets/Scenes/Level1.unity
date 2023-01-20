@@ -378,6 +378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Paused: 0
   BattleOver: 0
+  LevelID: 1
   tickTime: 0
   tickSlider: {fileID: 0}
 --- !u!114 &24419581

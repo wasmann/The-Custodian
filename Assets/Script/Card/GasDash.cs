@@ -74,7 +74,7 @@ public class GasDash : Card
         }
         else
         {
-            StartCoroutine(Animate(Info.animator));
+            Info.animator.SetTrigger("GasDash");
             for (int j = 0; j < path.Count; j++)
             {
                 if(BattleData.playerData.position == path[j])
@@ -91,12 +91,6 @@ public class GasDash : Card
         }
     }
 
-    public IEnumerator Animate(Animator animator)
-    {
-        animator.SetBool("GasDash", true);
-        yield return new WaitForSeconds(0);
-        animator.SetBool("GasDash", false);
-    }
 
     private void Start()
     {

@@ -297,7 +297,6 @@ public class LabWorkerEnemy : Enemy
         Card.InfoForActivate info = new Card.InfoForActivate();
         info.owner_ID = EnemyID;
         info.animator = Animator;
-        info.animator.SetInteger("Damage", Health);
         if (prevBehavior != 0 || state.Aligned)
         {
             if (pathToPlayer.Count != 0) pathToPlayer.Clear();

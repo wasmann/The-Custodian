@@ -28,7 +28,7 @@ public class RunLeft: Card
     public override void Activate(InfoForActivate Info)
     {
         Audio.Play();
-        StartCoroutine(Animate(Info.animator));
+        Info.animator.SetTrigger("Run");
         if (Info.owner_ID == 0)
         {
             BattleData.playerData.position += Info.Selection[0];
@@ -41,13 +41,6 @@ public class RunLeft: Card
             BattleData.EnemyDataList[Info.owner_ID] = newData;
             UI.UpdateEnemyData(Info.owner_ID);
         }
-    }
-    private IEnumerator Animate(Animator animator)
-    {
-        animator.SetBool("Run", true);
-        yield return new WaitForSeconds(1);
-        animator.SetBool("Run", false);
-
     }
 
     private void Start()

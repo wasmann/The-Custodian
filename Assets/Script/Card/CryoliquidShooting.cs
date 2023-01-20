@@ -74,20 +74,14 @@ public class CryoliquidShooting : Card
                 || BattleData.playerData.position == Info.Selection[0] * 4 + BattleData.EnemyDataList[Info.owner_ID].position
                 || BattleData.playerData.position == Info.Selection[0] * 5 + BattleData.EnemyDataList[Info.owner_ID].position)
             {
-                StartCoroutine(Animate(Info.animator));
-                BattleData.playerData.currentHealth -= 5;
-                //BattleData.playerData.buff.Frozen += 4;
+                Info.animator.SetTrigger("Shoot");
+                //BattleData.playerData.currentHealth -= 5;
+                BattleData.playerData.buff.Frozen += 4;
                 UI.UpdatePlayerData();
             }
         }
     }
 
-    public IEnumerator Animate(Animator animator)
-    {
-        animator.SetBool("Shooting", true);
-        yield return new WaitForSeconds(0);
-        animator.SetBool("Shooting", false);
-    }
     private void Start()
     {
         TargetNum = 1;

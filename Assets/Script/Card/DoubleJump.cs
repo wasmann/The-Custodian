@@ -43,18 +43,12 @@ public class DoubleJump : Card
         }
         else
         {
-            StartCoroutine(Animate(Info.animator));
+            Info.animator.SetTrigger("DoubleJump");
             BattleData.EnemyData newData = BattleData.EnemyDataList[Info.owner_ID];
             newData.position += Info.Selection[0];
             BattleData.EnemyDataList[Info.owner_ID] = newData;
             UI.UpdateEnemyData(Info.owner_ID);
         }
-    }
-    public IEnumerator Animate(Animator animator)
-    {
-        animator.SetBool("DoubleJump", true);
-        yield return new WaitForSeconds(1);
-        animator.SetBool("DoubleJump", false);
     }
     private void Start()
     {

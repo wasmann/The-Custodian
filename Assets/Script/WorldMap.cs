@@ -32,7 +32,8 @@ public class WorldMap : MonoBehaviour
                 newButton.GetComponent<LevelButton>().levelText.text = "Tutorial";
             else
                 newButton.GetComponent<LevelButton>().levelText.text = "Level" + i.ToString();
-            newButton.GetComponent<Button>().onClick.AddListener(() => LoadLevelScene(i));
+            int x = i;
+            newButton.GetComponent<Button>().onClick.AddListener(() => LoadLevelScene(x));
         }
 
         deleteButton = GameObject.Find("Delete");
@@ -43,11 +44,12 @@ public class WorldMap : MonoBehaviour
     {
         Debug.Log("Load level" + id);
         currentLevelID = id;
-        //battleLevelDriver.BeginABattleLevel(1);
-        //battleLevelDriver.Paused = true;
         GameData.currentState = GameData.state.Battle;
         //load scene
-        SceneManager.LoadScene("Level1");
+        if(id == 0)
+            SceneManager.LoadScene("Tutorial");
+        else
+            SceneManager.LoadScene("Level" + id.ToString());
     }
 
 

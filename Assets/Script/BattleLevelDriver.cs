@@ -12,6 +12,8 @@ public class BattleLevelDriver : MonoBehaviour
     public bool BattleOver;
 
     public static List<List<Card.InfoForActivate>> TimeLineSlots;
+    [SerializeField]
+    public int LevelID;
 
     public float tickTime;
     [SerializeField]
@@ -19,7 +21,7 @@ public class BattleLevelDriver : MonoBehaviour
 
     private void Start()
     {
-        BeginABattleLevel(1);
+        BeginABattleLevel(LevelID);
     }
     public void BeginABattleLevel(int ID)
     {

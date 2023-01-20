@@ -29,28 +29,19 @@ public class RunRight : Card
     public override void Activate(InfoForActivate Info)
     {
         Audio.Play();
-       
+        Info.animator.SetTrigger("Run");
         if (Info.owner_ID == 0)
         {
-            StartCoroutine(Animate(Info.animator));
             BattleData.playerData.position += Info.Selection[0];
             UI.UpdatePlayerData();
         }
         else
         {
-           // StartCoroutine(Animate(Info.animator));
             BattleData.EnemyData newData = BattleData.EnemyDataList[Info.owner_ID];
             newData.position += Info.Selection[0];
             BattleData.EnemyDataList[Info.owner_ID] = newData;
             UI.UpdateEnemyData(Info.owner_ID);
         }
-    }
-    private IEnumerator Animate(Animator animator)
-    {
-        animator.SetBool("Run", true);
-        yield return new WaitForSeconds(1);
-        animator.SetBool("Run", false);
-
     }
 
     private void Start()

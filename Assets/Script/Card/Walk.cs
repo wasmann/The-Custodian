@@ -7,7 +7,7 @@ using UnityEngine;
 public class Walk : Card
 {
 
-    [SerializeField] private AudioSource Audio;
+    public AudioSource Audio;
     public override string Name { get { return "Walk"; } }
     public override Rarity rarity { get { return Rarity.basic; } }
     public override int Speed { get { return 2; } }
@@ -32,28 +32,22 @@ public class Walk : Card
     public override void Activate(InfoForActivate Info)
     {
         Audio.Play();
-        
+        Info.animator.SetTrigger("Walk");
         if (Info.owner_ID == 0)
         {
-            StartCoroutine(Animate(Info.animator));
             BattleData.playerData.position += Info.Selection[0];
             UI.UpdatePlayerData();
 
         }
         else
         {
+           
             BattleData.EnemyData newData = BattleData.EnemyDataList[Info.owner_ID];
             newData.position += Info.Selection[0];
             BattleData.EnemyDataList[Info.owner_ID] = newData;
             UI.UpdateEnemyData(Info.owner_ID);
+            Info.animator.SetBool("Walk", false);
         }
-    }
-
-    public IEnumerator Animate(Animator animator)
-    {
-        animator.SetBool("Walk", true);
-        yield return new WaitForSeconds(1f);
-        animator.SetBool("Walk", false);
     }
 
     private void Start()

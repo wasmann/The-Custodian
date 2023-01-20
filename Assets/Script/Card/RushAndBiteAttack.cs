@@ -49,7 +49,7 @@ public class RushAndBiteAttack : Card
 
     public override void Activate(InfoForActivate Info)
     {
-        StartCoroutine(Animate(Info.animator));
+        Info.animator.SetTrigger("Run");
         if (Info.owner_ID == 0)
         {
             Vector2 oriPos = BattleData.playerData.position;
@@ -101,14 +101,6 @@ public class RushAndBiteAttack : Card
 
 
         }
-    }
-
-    private IEnumerator Animate(Animator animator)
-    {
-        animator.SetBool("Run", true);
-        yield return new WaitForSeconds(1);
-        animator.SetBool("Run", false);
-
     }
 
     private void Start()

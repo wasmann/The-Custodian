@@ -286,7 +286,7 @@ public class AlfaSolder : Enemy
     {
         Card.InfoForActivate info = new Card.InfoForActivate();
         info.owner_ID = EnemyID;
-        info.animator = GameObject.Find("AlphaSoldier").GetComponent<Animator>();
+        info.animator = Animator;
         if (prevBehavior != 0 || state.AlignOrNot)
         {
            // if (pathToPlayer.Count != 0)
