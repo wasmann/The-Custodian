@@ -206,7 +206,7 @@ public class BattleData : MonoBehaviour
         //EnemyDataList.Add(1,tree);
         EnemyData sheep = new EnemyData();
         sheep.position = new Vector2(7, 4);
-        sheep.obj = GameObject.Find("Sheep");
+        sheep.obj = GameObject.Find("SheepEnemy");
         sheep.enemy = sheep.obj.GetComponent<SheepEnemy>();
         sheep.enemy.EnemyID = 1;
         sheep.currentHealth = sheep.enemy.Health;

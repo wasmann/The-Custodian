@@ -62,36 +62,25 @@ public class WorldMap : MonoBehaviour
         if (deckPanel.activeInHierarchy)
         {
             deckPanel.SetActive(false);
-            deleteButton.SetActive(false);
-            for (int i = 0; i < deckPanel.transform.childCount; ++i)
+            //deleteButton.SetActive(false);
+            for (int i = 0; i < deckGrid.transform.childCount; ++i)
             {
-                Destroy(deckPanel.transform.GetChild(i).gameObject);
+                Destroy(deckGrid.transform.GetChild(i).gameObject);
             }
         }
         else
         {
             deckPanel.SetActive(true);
 
-            /*            foreach (Card card in GameData.Deck)
-                        {
-                            GameObject obj = Instantiate(Resources.Load("Prefab/UI/Damage") as GameObject, deckGrid.transform);
-                            obj.transform.localScale = new Vector3(0.1f, 0.1f, 0);
-                        }*/
+            Debug.Log(GameData.health);
+            Debug.Log(GameData.Deck.Count);
 
-            GameObject obj = Instantiate(Resources.Load("Prefab/Card/Walk") as GameObject, deckGrid.transform);
-            obj.transform.localScale = new Vector3(50, 50, 0);
+            foreach (Card card in GameData.Deck)
+            {
+                GameObject obj = Instantiate(Resources.Load("Prefab/Card/" + card.Name) as GameObject, deckGrid.transform);
+                obj.transform.localScale = new Vector3(50, 50, 0);
+            }
 
-            GameObject obj2 = Instantiate(Resources.Load("Prefab/Card/RunUp") as GameObject, deckGrid.transform);
-            obj2.transform.localScale = new Vector3(50, 50, 0);
-
-            GameObject obj3 = Instantiate(Resources.Load("Prefab/Card/RunDown") as GameObject, deckGrid.transform);
-            obj3.transform.localScale = new Vector3(50, 50, 0);
-
-            GameObject obj4 = Instantiate(Resources.Load("Prefab/Card/RunLeft") as GameObject, deckGrid.transform);
-            obj4.transform.localScale = new Vector3(50, 50, 0);
-
-            GameObject obj5 = Instantiate(Resources.Load("Prefab/Card/Headbutt") as GameObject, deckGrid.transform);
-            obj5.transform.localScale = new Vector3(50, 50, 0);
         }
         
     }
