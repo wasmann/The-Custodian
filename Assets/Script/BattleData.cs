@@ -117,13 +117,13 @@ public class BattleData : MonoBehaviour
         switch (BattleLevelID)
         {
             case 0:
-                LoadEnemyForTutorial();
-                break;
-            case 1:
                 LoadEnemyForLevel1();
                 break;
-            case 2:
+            case 1:
                 LoadEnemyForLevel2();
+                break;
+            case 2:
+                LoadEnemyForLevel3();
                 break; 
         }
 
@@ -191,7 +191,7 @@ public class BattleData : MonoBehaviour
         CheckWinCondition();
     }
 
-    static void LoadEnemyForTutorial()
+    static void LoadEnemyForLevel1()
     {
         //EnemyData tree = new EnemyData();  
         //tree.position=new Vector2(4,-1);
@@ -219,7 +219,7 @@ public class BattleData : MonoBehaviour
         EnemyDataList.Add(1, sheep);
     }
 
-    static void LoadEnemyForLevel1()
+    static void LoadEnemyForLevel2()
     {
         EnemyData enemy1 = new EnemyData();
         enemy1.position = new Vector2(18, 12);
@@ -247,7 +247,7 @@ public class BattleData : MonoBehaviour
         StartingHandCards(3, enemy.handCard, enemy.drawPile, false);
         EnemyDataList.Add(2, enemy);
     }
-    static void LoadEnemyForLevel2()
+    static void LoadEnemyForLevel3()
     {
         EnemyData sheep = new EnemyData();
         sheep.position = new Vector2(7, 4);
