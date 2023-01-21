@@ -236,7 +236,7 @@ public class AlfaSolder : Enemy
         utility = Random.Range(0, 8) - weight.w_Aggressive;
         result.Add(utility);
         //WalkBackWardsToPlayer
-        utility = -5;// weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 3);
+        utility = -8;// weight.w_TooClose + (5 - weight.w_Aggressive) + Random.Range(-3, 3);
         result.Add(utility);
         return result;
     }

@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-public class PathSearchAlgorithm : MonoBehaviour
+public class PathSearchAlgorithm1 : MonoBehaviour
 {
     public bool ObstacleInBetween;
     private Vector2 Destination;
     private Vector2 Source;
+    public Vector2 UpperBounds;
+    public Vector2 LowerBounds;
     private struct NodeInfo
     {
         public Vector2 parent;
         // f = g + h
         public double f, g, h;
     };
-    public bool IsValid(Vector2 pos)
+    public bool IsValid1(Vector2 pos)
     {
-        if (BattleData.enviromentData.ContainsKey(pos)) { 
+        if (BattleData.enviromentData.ContainsKey(pos) && pos.x <= UpperBounds.x && pos.x >= LowerBounds.x && pos.y <= UpperBounds.y && pos.y >= LowerBounds.y) { 
             var a = BattleData.enviromentData[pos];
             if (a == BattleData.EnvironmentType.Obstacle)
             {
@@ -78,7 +80,7 @@ public class PathSearchAlgorithm : MonoBehaviour
         return path;
     }
 
-    public  List<Vector2> AStarSearch( Vector2Int src, Vector2Int dest)
+    public  List<Vector2> AStarSearch1( Vector2Int src, Vector2Int dest)
     {
         Source = src;
         Destination = dest;
@@ -165,7 +167,7 @@ public class PathSearchAlgorithm : MonoBehaviour
                         break;
                 }
 
-                if (IsValid(next) == true)
+                if (IsValid1(next) == true)
                 {
 
                     if (IsDestination(next, dest) == true)
@@ -177,7 +179,7 @@ public class PathSearchAlgorithm : MonoBehaviour
                         return TracePath(cellDetails, dest);
                     }
 
-                    else if (closedList[next] == false && IsValid(next) == true)
+                    else if (closedList[next] == false && IsValid1(next) == true)
                     {
                         gNew = cellDetails[now].g + 1.0;
                         hNew = CalculateHValue(next, dest);
