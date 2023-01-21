@@ -22,7 +22,17 @@ public class WorldMap : MonoBehaviour
 
     public static Card readyToDelete;
 
+    private void Awake()
+    {
 
+        //PlayerPrefs.DeleteAll();
+/*        GameData.SaveCard(1, "RunUp");
+        GameData.SaveCard(2, "Walk");
+        GameData.SaveCard(3, "RunDown");
+        GameData.SaveCard(4, "RunLeft");*/
+        //GameData.SaveCardNumber(4);
+        GameData.LoadCard();
+    }
     private void Start()
     {
         for(int i = 0; i < positions.Length; i++)
@@ -30,13 +40,21 @@ public class WorldMap : MonoBehaviour
             GameObject newButton = Instantiate(buttonPrefab, positions[i].transform);
             if (i == 0)
                 newButton.GetComponent<LevelButton>().levelText.text = "Tutorial";
-            else
+            else if(i % 2 == 0)
+                newButton.GetComponent<LevelButton>().levelText.text = "Event";
+            else 
                 newButton.GetComponent<LevelButton>().levelText.text = "Level" + i.ToString();
-            int x = i;
-            newButton.GetComponent<Button>().onClick.AddListener(() => LoadLevelScene(x));
+
+            if(i <= GameData.accessible)
+            {
+                int x = i;
+                newButton.GetComponent<Button>().onClick.AddListener(() => LoadLevelScene(x));
+            }
+            
         }
 
         deleteButton = GameObject.Find("Delete");
+        deleteButton.SetActive(false);
     }
 
 
@@ -48,6 +66,8 @@ public class WorldMap : MonoBehaviour
         //load scene
         if(id == 0)
             SceneManager.LoadScene("Tutorial");
+        else if(id % 2 == 0)
+            SceneManager.LoadScene("EventLevel");
         else
             SceneManager.LoadScene("Level" + id.ToString());
     }
@@ -91,8 +111,11 @@ public class WorldMap : MonoBehaviour
         readyToDelete = card;
     }
 
-    public static void Delete()
+    public void Delete()
     {
-        GameData.Deck.Remove(readyToDelete);
+        //GameData.Deck.Remove(readyToDelete);
+        GameData.DeleteCard(readyToDelete.Name);
+        ShowDeck();
+        ShowDeck();
     }
 }

@@ -36,6 +36,7 @@ public class EventLevelNPC : MonoBehaviour
     {
         optionGroup.SetActive(true);
         continueButton.SetActive(false);
+        //Debug.Log(GameData.Deck.Count);
     }
 
     public void Armor()
@@ -111,8 +112,11 @@ public class EventLevelNPC : MonoBehaviour
        
         GameObject obj = Instantiate(Resources.Load("Prefab/Card/" + name) as GameObject);
         obj.transform.localScale = new Vector3(1f, 1f, 0);
-        Type t = Type.GetType(name);
-        GameData.Deck.Add((Card)obj.GetComponent(t));
+
+        /*Type t = Type.GetType(name);
+        GameData.Deck.Add((Card)obj.GetComponent(t));*/
+
+        GameData.SaveCard(GameData.GetCardNumber()+1, name);
 
         obj.transform.position = GameObject.Find("Custodian").transform.position;
         optionGroup.SetActive(false);
