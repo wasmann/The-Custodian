@@ -89,4 +89,14 @@ public class ApplicationManager : MonoBehaviour {
     {
 		GameData.tickspeed = tickSlider.value;
     }
+
+	public void gogogo()
+    {
+		SceneManager.LoadScene("EventLevel");
+    }
+
+	public void gogogo2()
+	{
+		SceneManager.LoadScene("EventLevel");
+	}
 }

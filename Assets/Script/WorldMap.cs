@@ -22,7 +22,17 @@ public class WorldMap : MonoBehaviour
 
     public static Card readyToDelete;
 
+    private void Awake()
+    {
 
+        //PlayerPrefs.DeleteAll();
+/*        GameData.SaveCard(1, "RunUp");
+        GameData.SaveCard(2, "Walk");
+        GameData.SaveCard(3, "RunDown");
+        GameData.SaveCard(4, "RunLeft");*/
+        //GameData.SaveCardNumber(4);
+        GameData.LoadCard();
+    }
     private void Start()
     {
         for(int i = 0; i < positions.Length; i++)
@@ -30,13 +40,21 @@ public class WorldMap : MonoBehaviour
             GameObject newButton = Instantiate(buttonPrefab, positions[i].transform);
             if (i == 0)
                 newButton.GetComponent<LevelButton>().levelText.text = "Tutorial";
-            else
+            else if(i % 2 == 0)
+                newButton.GetComponent<LevelButton>().levelText.text = "Event";
+            else 
                 newButton.GetComponent<LevelButton>().levelText.text = "Level" + i.ToString();
-            int x = i;
-            newButton.GetComponent<Button>().onClick.AddListener(() => LoadLevelScene(x));
+
+            if(i <= GameData.accessible)
+            {
+                int x = i;
+                newButton.GetComponent<Button>().onClick.AddListener(() => LoadLevelScene(x));
+            }
+            
         }
 
         deleteButton = GameObject.Find("Delete");
+        deleteButton.SetActive(false);
     }
 
 
@@ -48,6 +66,8 @@ public class WorldMap : MonoBehaviour
         //load scene
         if(id == 0)
             SceneManager.LoadScene("Tutorial");
+        else if(id % 2 == 0)
+            SceneManager.LoadScene("EventLevel");
         else
             SceneManager.LoadScene("Level" + id.ToString());
     }
@@ -62,36 +82,25 @@ public class WorldMap : MonoBehaviour
         if (deckPanel.activeInHierarchy)
         {
             deckPanel.SetActive(false);
-            deleteButton.SetActive(false);
-            for (int i = 0; i < deckPanel.transform.childCount; ++i)
+            //deleteButton.SetActive(false);
+            for (int i = 0; i < deckGrid.transform.childCount; ++i)
             {
-                Destroy(deckPanel.transform.GetChild(i).gameObject);
+                Destroy(deckGrid.transform.GetChild(i).gameObject);
             }
         }
         else
         {
             deckPanel.SetActive(true);
 
-            /*            foreach (Card card in GameData.Deck)
-                        {
-                            GameObject obj = Instantiate(Resources.Load("Prefab/UI/Damage") as GameObject, deckGrid.transform);
-                            obj.transform.localScale = new Vector3(0.1f, 0.1f, 0);
-                        }*/
+            Debug.Log(GameData.health);
+            Debug.Log(GameData.Deck.Count);
 
-            GameObject obj = Instantiate(Resources.Load("Prefab/Card/Walk") as GameObject, deckGrid.transform);
-            obj.transform.localScale = new Vector3(50, 50, 0);
+            foreach (Card card in GameData.Deck)
+            {
+                GameObject obj = Instantiate(Resources.Load("Prefab/Card/" + card.Name) as GameObject, deckGrid.transform);
+                obj.transform.localScale = new Vector3(50, 50, 0);
+            }
 
-            GameObject obj2 = Instantiate(Resources.Load("Prefab/Card/RunUp") as GameObject, deckGrid.transform);
-            obj2.transform.localScale = new Vector3(50, 50, 0);
-
-            GameObject obj3 = Instantiate(Resources.Load("Prefab/Card/RunDown") as GameObject, deckGrid.transform);
-            obj3.transform.localScale = new Vector3(50, 50, 0);
-
-            GameObject obj4 = Instantiate(Resources.Load("Prefab/Card/RunLeft") as GameObject, deckGrid.transform);
-            obj4.transform.localScale = new Vector3(50, 50, 0);
-
-            GameObject obj5 = Instantiate(Resources.Load("Prefab/Card/Headbutt") as GameObject, deckGrid.transform);
-            obj5.transform.localScale = new Vector3(50, 50, 0);
         }
         
     }
@@ -102,8 +111,11 @@ public class WorldMap : MonoBehaviour
         readyToDelete = card;
     }
 
-    public static void Delete()
+    public void Delete()
     {
-        GameData.Deck.Remove(readyToDelete);
+        //GameData.Deck.Remove(readyToDelete);
+        GameData.DeleteCard(readyToDelete.Name);
+        ShowDeck();
+        ShowDeck();
     }
 }

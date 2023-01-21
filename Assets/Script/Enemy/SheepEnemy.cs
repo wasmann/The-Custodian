@@ -5,6 +5,8 @@ using System;
 
 public class SheepEnemy : Enemy
 {
+    public Animator animator;
+    
     public override string EnemyName { get { return "Sheep"; } }
 
     public List<Card> deck;
@@ -84,6 +86,7 @@ public class SheepEnemy : Enemy
         }
         info.card = dicardManager;
         BattleLevelDriver.NewCardPlayed(info);
+        animator.SetBool("WasCardPlayed", false);
     }
 
     // This function plays the chosen card.
@@ -94,6 +97,7 @@ public class SheepEnemy : Enemy
         info.Selection.Add(ActionTarget);
         BattleLevelDriver.NewCardPlayed(info);
         UpdatePiles(info.card);
+        animator.SetBool("WasCardPlayed", true);
     }
 
     private bool walk (Card.InfoForActivate info, BattleData.EnemyData SheepData, 
@@ -553,7 +557,7 @@ public class SheepEnemy : Enemy
                         { 
                             PlayedACard = run(info, SheepData, PlayerPosition, SelfPosition, 
                                               DifferenceInXCoordinate, DifferenceInYCoordinate);
-                        if (PlayedACard) { return; }
+                            if (PlayedACard) { return; }
                         }
                         // If we, however, don't have the run card we need, then play the walk 
                         // card instead!

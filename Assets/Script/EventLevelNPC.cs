@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,23 +36,26 @@ public class EventLevelNPC : MonoBehaviour
     {
         optionGroup.SetActive(true);
         continueButton.SetActive(false);
+        //Debug.Log(GameData.Deck.Count);
     }
 
     public void Armor()
     {
         GameData.health += 5;
+        GameData.currentState = GameData.state.WorldMap;
         SceneManager.LoadScene("WorldMap");
     }
 
     public void Energy()
     {
         GameData.Energy += 3;
+        GameData.currentState = GameData.state.WorldMap;
         SceneManager.LoadScene("WorldMap");
     }
 
     public void GetCard()
     {
-        int id = Random.Range(8, 23);
+        int id = UnityEngine.Random.Range(8, 23);
         string name = "";
         switch (id)
         {
@@ -105,8 +109,15 @@ public class EventLevelNPC : MonoBehaviour
                 break;
 
         }
+       
         GameObject obj = Instantiate(Resources.Load("Prefab/Card/" + name) as GameObject);
         obj.transform.localScale = new Vector3(1f, 1f, 0);
+
+        /*Type t = Type.GetType(name);
+        GameData.Deck.Add((Card)obj.GetComponent(t));*/
+
+        GameData.SaveCard(GameData.GetCardNumber()+1, name);
+
         obj.transform.position = GameObject.Find("Custodian").transform.position;
         optionGroup.SetActive(false);
         over.SetActive(true);
@@ -114,6 +125,7 @@ public class EventLevelNPC : MonoBehaviour
 
     public void Next()
     {
+        GameData.currentState = GameData.state.WorldMap;
         SceneManager.LoadScene("WorldMap");
     }
 }

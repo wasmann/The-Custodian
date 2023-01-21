@@ -50,6 +50,12 @@ public class Tutorial : MonoBehaviour
         //Time.timeScale = 0;
         //imageDic["Custodian"] = sprites[0];
         //imageDic["dog"] = sprites[1];
+
+        PlayerPrefs.DeleteAll();
+        GameData.SaveCard(1, "RunUp");
+        GameData.SaveCard(2, "Walk");
+        GameData.SaveCard(3, "RunDown");
+        GameData.SaveCard(4, "RunLeft");
     }
     // Start is called before the first frame update
     void Start()
@@ -113,7 +119,7 @@ public class Tutorial : MonoBehaviour
             }
             else if(cells[0] == "END" && int.Parse(cells[1]) == dialogIndex)
             {
-                SceneManager.LoadScene("Battle");
+                SceneManager.LoadScene("Level1");
             }
             else if(cells[0] == "*" && int.Parse(cells[1]) == dialogIndex)
             {
@@ -201,10 +207,11 @@ public class Tutorial : MonoBehaviour
                 break;
 
             case 7:
-                SceneManager.LoadScene("Battle");
+                SceneManager.LoadScene("Level1");
                 break;
 
             case 8:
+                GameData.SaveCard(5, "Headbutt");
                 dialogName.SetActive(false);
                 dialog.SetActive(false);
                 nextButton.gameObject.SetActive(false);
@@ -243,5 +250,11 @@ public class Tutorial : MonoBehaviour
         headbutt.SetActive(true);
         ShowDialogRow();
         pausebutton.SetActive(false);
+    }
+
+    public void Skip()
+    {
+        GameData.SaveCard(5, "Headbutt");
+        SceneManager.LoadScene("Level1");
     }
 }

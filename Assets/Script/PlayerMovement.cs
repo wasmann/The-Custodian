@@ -40,18 +40,20 @@ public class PlayerMovement : MonoBehaviour
             if (inputX != 0)
             {
                 transform.localScale = new Vector3(inputX, 1, 1);
-                animator.SetBool("Run", true);
+                animator.Play("run");
+                //animator.SetBool("Run", true);
             }
 
             if (inputY != 0)
             {
-               
-                animator.SetBool("Run", true);
+                animator.Play("run");
+                //animator.SetBool("Run", true);
             }
 
             if (inputX == 0 && inputY == 0)
             {
-                animator.SetBool("Run", false);
+                animator.Play("idle");
+                //animator.SetBool("Run", false);
             }
         }
         else
