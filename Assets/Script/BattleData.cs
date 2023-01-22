@@ -84,12 +84,12 @@ public class BattleData : MonoBehaviour
                     if (tile.name.Contains("CRATE_1") || tile.name.Contains("RIVET") || tile.name.Contains("WARN")) //retrieve from level info
                     {
                         enviromentData.Add(new Vector2(x, y), EnvironmentType.Walkable);
-                        Debug.Log("x " + x + " y " + y + "   walk" + tile.name);
+                        //Debug.Log("x " + x + " y " + y + "   walk" + tile.name);
                     }
                     else
                     {
                         enviromentData.Add(new Vector2(x, y), EnvironmentType.Obstacle);
-                        Debug.Log("x " + x + " y " + y + "  nope" + tile.name);
+                        //Debug.Log("x " + x + " y " + y + "  nope" + tile.name);
                     }
 
                 }

@@ -85,6 +85,7 @@ public class SheepEnemy : Enemy
             }
         }
         info.card = dicardManager;
+        info.animator = animator;
         BattleLevelDriver.NewCardPlayed(info);
         animator.SetBool("WasCardPlayed", false);
     }
@@ -95,6 +96,7 @@ public class SheepEnemy : Enemy
     {   
         info.card = Deck.FindCardInHand(SheepData.handCard, cardID);
         info.Selection.Add(ActionTarget);
+        info.animator = animator;
         BattleLevelDriver.NewCardPlayed(info);
         UpdatePiles(info.card);
         animator.SetBool("WasCardPlayed", true);
