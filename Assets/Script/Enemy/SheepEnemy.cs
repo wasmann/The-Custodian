@@ -87,7 +87,6 @@ public class SheepEnemy : Enemy
         info.card = dicardManager;
         info.animator = animator;
         BattleLevelDriver.NewCardPlayed(info);
-        animator.SetBool("WasCardPlayed", false);
     }
 
     // This function plays the chosen card.
@@ -99,7 +98,6 @@ public class SheepEnemy : Enemy
         info.animator = animator;
         BattleLevelDriver.NewCardPlayed(info);
         UpdatePiles(info.card);
-        animator.SetBool("WasCardPlayed", true);
     }
 
     private bool walk (Card.InfoForActivate info, BattleData.EnemyData SheepData, 
