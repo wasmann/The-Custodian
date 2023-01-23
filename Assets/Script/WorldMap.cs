@@ -26,7 +26,7 @@ public class WorldMap : MonoBehaviour
     {
 
         //PlayerPrefs.DeleteAll();
-/*        GameData.SaveCard(1, "RunUp");
+/*      GameData.SaveCard(1, "RunUp");
         GameData.SaveCard(2, "Walk");
         GameData.SaveCard(3, "RunDown");
         GameData.SaveCard(4, "RunLeft");*/
