@@ -73,7 +73,7 @@ public class GameData : MonoBehaviour
                 continue;
             }
             Type t = Type.GetType(name);
-            Deck.Add((Card)GameObject.Find("CardBank/" + name).GetComponent(t));
+            Deck.Add((Card)Instantiate( GameObject.Find("CardBank/" + name), GameObject.Find("CardBank").transform).GetComponent(t));
         }
     }
 

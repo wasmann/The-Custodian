@@ -91,7 +91,7 @@ public class BattleLevelDriver : MonoBehaviour
                     Debug.Log("finish duplicate" + info.card.Name);
                     System.Type myType = Type.GetType(info.card.Name);
 
-                    Card newcard=(Card)GameObject.Find("CardBank/"+info.card.Name).transform.GetComponent(myType);
+                    Card newcard=(Card)Instantiate(GameObject.Find("CardBank/"+info.card.Name), GameObject.Find("CardBank").transform).transform.GetComponent(myType);
 
 
                     //GameData.Deck.Add(newcard);
