@@ -30,6 +30,7 @@ public class Headbutt : Card
         Audio.Play();
         if (Info.owner_ID == 0)
         {
+            Info.animator.SetTrigger("Attack");
             for (int i = 1; i < BattleData.EnemyDataList.Count + 1; i++)
             {
                 if (BattleData.EnemyDataList[i].position == Info.Selection[0]+ BattleData.playerData.position)
