@@ -200,6 +200,12 @@ public class UI : MonoBehaviour
             damage.GetComponent<TMP_Text>().text = "-" + (BattleData.EnemyDataList[ID].obj.GetComponentInChildren<Slider>().value - BattleData.EnemyDataList[ID].currentHealth);
             Destroy(damage, 0.5f);
             BattleData.EnemyDataList[ID].obj.GetComponentInChildren<Slider>().value = BattleData.EnemyDataList[ID].currentHealth;
+
+            if(BattleData.EnemyDataList[ID].obj.GetComponentInChildren<Slider>().value <= 0)
+            {
+                BattleData.EnemyDataList.Remove(ID);
+                GameData.killed += 1;
+            }
         }
     }
     public static void UpdateAllEnemyData()
