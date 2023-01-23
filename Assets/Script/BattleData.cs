@@ -162,7 +162,7 @@ public class BattleData : MonoBehaviour
         if (EnemyDataList.Count == 0)
         {
             GameData.currentState = GameData.state.WorldMap;
-            //SceneManager.LoadScene("WinningScreen");
+            SceneManager.LoadScene("WinningScreen");
             return true;
         }
             
@@ -174,7 +174,7 @@ public class BattleData : MonoBehaviour
         if (playerData.currentHealth <= 0)
         {
             GameData.currentState = GameData.state.WorldMap;
-            //SceneManager.LoadScene("FailedScreen");
+            SceneManager.LoadScene("FailedScreen");
             return true;
         }
             
