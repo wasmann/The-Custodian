@@ -118,4 +118,9 @@ public class WorldMap : MonoBehaviour
         ShowDeck();
         ShowDeck();
     }
+
+    public void StartMenu()
+    {
+        SceneManager.LoadScene("Start");
+    }
 }
