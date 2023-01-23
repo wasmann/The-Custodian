@@ -221,6 +221,7 @@ public class BattleData : MonoBehaviour
 
     static void LoadEnemyForLevel2()
     {
+        GameData.currentState = GameData.state.Battle;
         EnemyData enemy1 = new EnemyData();
         enemy1.position = new Vector2(18, 12);
         enemy1.obj = GameObject.Find("LabWorker");
@@ -249,10 +250,11 @@ public class BattleData : MonoBehaviour
     }
     static void LoadEnemyForLevel3()
     {
+        GameData.currentState = GameData.state.Battle;
         EnemyData sheep = new EnemyData();
         sheep.position = new Vector2(7, 4);
-        sheep.obj = GameObject.Find("AlphaSoldier");
-        sheep.enemy = sheep.obj.GetComponent<AlfaSolder>();
+        sheep.obj = GameObject.Find("LabWorker");
+        sheep.enemy = sheep.obj.GetComponent<LabWorkerEnemy>();
         sheep.enemy.EnemyID = 1;
         sheep.currentHealth = sheep.enemy.Health;
         sheep.maxHealth = sheep.enemy.Health;
