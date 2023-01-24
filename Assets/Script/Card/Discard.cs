@@ -29,7 +29,6 @@ public class Discard : Card
         {
             Card cardtodiscard = Deck.FindCardInHand(BattleData.EnemyDataList[Info.owner_ID].handCard, int.Parse(Info.otherInfo[0]));
             BattleData.EnemyDataList[Info.owner_ID].enemy.UpdatePiles(cardtodiscard);
-
         }
     }
     private void Start()

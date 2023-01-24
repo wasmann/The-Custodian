@@ -73,17 +73,30 @@ public class SheepEnemy : Enemy
         PlayedACard = false;
     }
 
-    // This function discards the card with the given ID.
+    // This function discards other than the card with the given ID.
     private void Discard(Card.InfoForActivate info, int cardID)
     {
+        bool foundACardToDiscard = false;
+        BattleData.EnemyData SheepData = BattleData.EnemyDataList[EnemyID];
         for(int i = 0; i < BattleData.EnemyDataList[EnemyID].handCard.Count; i++)
         {
             if (BattleData.EnemyDataList[EnemyID].handCard[i].ID != cardID)
             {
                 info.otherInfo.Add(BattleData.EnemyDataList[EnemyID].handCard[i].ID + "");
+                foundACardToDiscard = true;
                 break;
             }
         }
+        
+        // Sheep may have an edge case such that all of the cards (all 3 of them) in its hand can
+        // be walk cards. In that case, since all of those cards have the same cardID, the logic
+        // above will not actually select a card to discard. So, in that case, we just get rid of
+        // the first walk card in our hand.
+        if (foundACardToDiscard == false) 
+        {
+            info.otherInfo.Add(BattleData.EnemyDataList[EnemyID].handCard[0].ID + "");
+        }
+
         info.card = dicardManager;
         info.animator = animator;
         BattleLevelDriver.NewCardPlayed(info);
