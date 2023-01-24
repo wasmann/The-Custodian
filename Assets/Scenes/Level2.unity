@@ -11573,10 +11573,10 @@ MonoBehaviour:
   Threshold: 3
   speed: 3
   border:
-  - 10
-  - -7
-  - 2
-  - -19
+  - 93
+  - 11
+  - 30
+  - 6
 --- !u!114 &1138745707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13067,7 +13067,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7723026424533671341, guid: ea2aa31c06662e1468287a4cba245313, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7723026424533671341, guid: ea2aa31c06662e1468287a4cba245313, type: 3}
       propertyPath: m_AnchorMax.x

@@ -24,7 +24,6 @@ public class Walk : Card
         TileMapButton.MakeSelectable(this);
         yield return new WaitUntil(() => TargetNum == 0);
         TileMapButton.MakeUnSelectable();
-        
         //BattleData.PlayingACard = false;
         UpdateData(0, ID, Info);
     }

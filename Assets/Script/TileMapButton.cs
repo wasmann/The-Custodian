@@ -46,6 +46,7 @@ public class TileMapButton : MonoBehaviour
                 {
                     card.TargetNum--;
                     card.Info.Selection.Add(ClickPos - BattleData.playerData.position);
+                    Debug.Log(card.Info.Selection[0]);
                     GameObject.Destroy(selectionNotation);
                 }
             }

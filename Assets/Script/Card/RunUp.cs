@@ -35,6 +35,7 @@ public class RunUp : Card
         {
             BattleData.playerData.position += Info.Selection[0];
             UI.UpdatePlayerData();
+            Debug.Log(BattleData.playerData.position);
         }
         else
         {

@@ -74,46 +74,57 @@ public abstract class Card : MonoBehaviour
         }
         return false;
     }
-
-    void OnMouseDown()
+    Coroutine playcoroutine = null;
+    void OnMouseOver()
     {
-        if(GameData.currentState == GameData.state.WorldMap)
+        if (Input.GetMouseButtonDown(0))
         {
-            WorldMap.DeleteCard(this);
-        }
-        else
-        {
-            if (UI.waitForDuplicate)
+            if (GameData.currentState == GameData.state.WorldMap)
             {
-                if (this.transform.parent.name == "DuplicationGrid")
-                {
-                    UI.FinishDuplicate(this, this.rarity);
-                }
-
+                WorldMap.DeleteCard(this);
             }
             else
             {
-                if (BattleData.AbleToPalyCard == true)
+                if (UI.waitForDuplicate)
                 {
-                    ReSetTarget();
-                    // BattleData.PlayingACard = true;
-                    BattleData.AbleToPalyCard = false;
-                    Info = new InfoForActivate();
-                    Info.owner_ID = 0;
-                    Info.animator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
-                    Info.direction = new List<Vector2>();
-                    Info.Selection = new List<Vector2>();
-                    Info.card = this;
-                    StartCoroutine(Play());
+                    if (this.transform.parent.name == "DuplicationGrid")
+                    {
+                        UI.FinishDuplicate(this, this.rarity);
+                    }
+
                 }
                 else
                 {
-                    Debug.Log("Another card is now ready to play");
+                    if (BattleData.AbleToPalyCard == true)
+                    {
+                        ReSetTarget();
+                        // BattleData.PlayingACard = true;
+                        BattleData.AbleToPalyCard = false;
+                        Info = new InfoForActivate();
+                        Info.owner_ID = 0;
+                        Info.animator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
+                        Info.direction = new List<Vector2>();
+                        Info.Selection = new List<Vector2>();
+                        Info.card = this;
+                        playcoroutine=StartCoroutine(Play());
+                    }
+                    else
+                    {
+                        Debug.Log("Another card is now ready to play");
+                    }
                 }
+
             }
-
         }
-
+        else if (Input.GetMouseButtonDown(1))//Right click
+        { 
+            if (BattleData.AbleToPalyCard == false)
+            {
+                TileMapButton.MakeUnSelectable();
+                BattleData.AbleToPalyCard = true;
+                StopCoroutine(playcoroutine);
+            }
+        }
     }
 
     void OnMouseEnter()

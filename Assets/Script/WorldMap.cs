@@ -64,10 +64,13 @@ public class WorldMap : MonoBehaviour
         currentLevelID = id;
         GameData.currentState = GameData.state.Battle;
         //load scene
-        if(id == 0)
+        if (id == 0)
             SceneManager.LoadScene("Tutorial");
-        else if(id % 2 == 0)
-            SceneManager.LoadScene("EventLevel");
+        else if (id % 2 == 0&& GameData.enteredEventLevel==false)
+        {
+            GameData.enteredEventLevel = true;
+            SceneManager.LoadScene("EventLevel");        
+        }
         else
             SceneManager.LoadScene("Level" + id.ToString());
     }
