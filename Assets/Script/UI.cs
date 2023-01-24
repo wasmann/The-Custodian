@@ -333,15 +333,15 @@ public class UI : MonoBehaviour
                 break;
 
             case Card.Rarity.rare:
-                time = 5;
+                time = 4;
                 break;
 
             case Card.Rarity.epic:
-                time = 8;
+                time = 7;
                 break;
 
             case Card.Rarity.legendary:
-                time = 10;
+                time = 9;
                 break;
         }
         

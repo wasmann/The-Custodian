@@ -80,11 +80,11 @@ public class GameData : MonoBehaviour
 
     public static void DeleteCard(string name)
     {
-        for(int i = 0; i < Deck.Count; ++i)
+        for(int i = 1; i <= GetCardNumber(); ++i)
         {
-            if(Deck[i].Name == name)
+            if(PlayerPrefs.GetString(i.ToString()) == name)
             {
-                PlayerPrefs.DeleteKey( (i+1).ToString());
+                PlayerPrefs.DeleteKey( i.ToString());
                 LoadCard();
                 break;
             }
