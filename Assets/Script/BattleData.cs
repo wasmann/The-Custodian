@@ -117,12 +117,13 @@ public class BattleData : MonoBehaviour
         switch (BattleLevelID)
         {
             case 0:
+            case 1:
                 LoadEnemyForLevel1();
                 break;
-            case 1:
+            case 2:
                 LoadEnemyForLevel2();
                 break;
-            case 2:
+            case 3:
                 LoadEnemyForLevel3();
                 break; 
         }
