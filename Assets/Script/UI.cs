@@ -42,7 +42,7 @@ public class UI : MonoBehaviour
     //duplication
     static GameObject duplicationPanel;
 
-    public static bool waitForDuplicate;
+    public static bool waitForDuplicate = false;
     public static GameObject duplicationGrid;
 
     static Vector3 mouseWorldPos;

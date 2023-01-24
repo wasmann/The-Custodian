@@ -129,6 +129,8 @@ public class BattleData : MonoBehaviour
 
     }
     public static void LoadPlayerData(){
+        AbleToPalyCard = true;
+        UI.waitForDuplicate = false;
         playerData.position = new Vector2(2,2);
         playerData.maxHealth = GameData.health;
         playerData.maxEnergy = GameData.Energy;

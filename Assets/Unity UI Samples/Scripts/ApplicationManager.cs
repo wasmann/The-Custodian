@@ -82,7 +82,8 @@ public class ApplicationManager : MonoBehaviour {
 		background.SetActive(false);
 		menuPanel.SetActive(false);
 		paused = false;
-		gameManager.GetComponent<BattleLevelDriver>().Pause();
+		UI.waitForDuplicate = false;
+        gameManager.GetComponent<BattleLevelDriver>().Pause();
 	}
 
 	public void SetTickSpeed()
