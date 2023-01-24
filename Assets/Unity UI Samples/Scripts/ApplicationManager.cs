@@ -22,6 +22,9 @@ public class ApplicationManager : MonoBehaviour {
 	public bool paused = false;
 	[SerializeField]
 	public GameObject gameManager;
+
+	[SerializeField]
+	public GameObject canvasPanel;
 	public void Quit () 
 	{
 		#if UNITY_EDITOR
@@ -50,7 +53,7 @@ public class ApplicationManager : MonoBehaviour {
         {
             if (!paused)
             {
-				
+				canvasPanel.SetActive(false);
 				background.SetActive(true);
 				menuPanel.SetActive(true);
 				paused = true;
@@ -59,7 +62,7 @@ public class ApplicationManager : MonoBehaviour {
             else
             {
 				Resume();
-				
+				canvasPanel.SetActive(true);
 			}
 				
 		}
@@ -83,6 +86,7 @@ public class ApplicationManager : MonoBehaviour {
 		menuPanel.SetActive(false);
 		paused = false;
 		gameManager.GetComponent<BattleLevelDriver>().Pause();
+		canvasPanel.SetActive(true);
 	}
 
 	public void SetTickSpeed()

@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 offset;
 
-    private bool isTigger;
+    private bool isTrigger;
 
     // Start is called before the first frame update
     void Start()
@@ -28,12 +28,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isTigger)
+        if (!isTrigger)
         {
             inputX = Input.GetAxisRaw("Horizontal");
             inputY = Input.GetAxisRaw("Vertical");
             Vector2 input = new Vector2(inputX, inputY).normalized;
             rigidBody.velocity = input * speed;
+
+            rigidBody.position = new Vector2(
+                Mathf.Clamp(rigidBody.position.x, -11, 15),
+                Mathf.Clamp(rigidBody.position.y, -21, 5));
 
             Camera.main.transform.position = transform.position + offset;
 
@@ -55,6 +59,8 @@ public class PlayerMovement : MonoBehaviour
                 animator.Play("idle");
                 //animator.SetBool("Run", false);
             }
+
+
         }
         else
         {
@@ -68,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Trigger()
     {
-        isTigger = true;
+        isTrigger = true;
     }
 
 }

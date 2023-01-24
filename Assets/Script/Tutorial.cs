@@ -189,6 +189,8 @@ public class Tutorial : MonoBehaviour
                 break;
 
             case 3:
+                DisableDialog();
+                
                 director.playableGraph.GetRootPlayable(0).SetSpeed(1);
                 break;
 
@@ -197,11 +199,14 @@ public class Tutorial : MonoBehaviour
                 break;
 
             case 5:
+                DisableDialog();
                 card.SetActive(false);
                 director.playableGraph.GetRootPlayable(0).SetSpeed(1);
                 break;
 
             case 6:
+                //DisableDialog();
+                nextButton.gameObject.SetActive(false);
                 Camera.main.transform.Translate(5, 0, 0);
                 director.playableGraph.GetRootPlayable(0).SetSpeed(1);
                 break;
@@ -211,6 +216,7 @@ public class Tutorial : MonoBehaviour
                 break;
 
             case 8:
+                DisableDialog();
                 GameData.SaveCard(5, "Headbutt");
                 dialogName.SetActive(false);
                 dialog.SetActive(false);
@@ -221,6 +227,10 @@ public class Tutorial : MonoBehaviour
             case 9:
                 nextButton.gameObject.SetActive(false);
                 pausebutton.SetActive(true);
+                break;
+
+            case 10:
+                director.playableGraph.GetRootPlayable(0).SetSpeed(1);
                 break;
         }
     }
@@ -235,13 +245,14 @@ public class Tutorial : MonoBehaviour
     {
         dialogName.SetActive(true);
         dialog.SetActive(true);
+        nextButton.gameObject.SetActive(true);
     }
 
     public void DisableDialog()
     {
         dialogName.SetActive(false);
         dialog.SetActive(false);
-        
+        nextButton.gameObject.SetActive(false);
     }
 
     public void OnClickPauseButton()
