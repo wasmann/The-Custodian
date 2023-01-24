@@ -35,7 +35,7 @@ public class WorldMap : MonoBehaviour
     }
     private void Start()
     {
-        for(int i = 0; i < positions.Length; i++)
+        for(int i = 0; i <= GameData.accessible; i++)
         {
             GameObject newButton = Instantiate(buttonPrefab, positions[i].transform);
             if (i == 0)
@@ -44,12 +44,18 @@ public class WorldMap : MonoBehaviour
                 newButton.GetComponent<LevelButton>().levelText.text = "Event";
             else 
                 newButton.GetComponent<LevelButton>().levelText.text = "Level" + i.ToString();
-
-            if(i <= GameData.accessible)
+            if (GameData.enteredEventLevel)
             {
-                int x = i;
-                newButton.GetComponent<Button>().onClick.AddListener(() => LoadLevelScene(x));
+                Destroy(positions[2].gameObject);
             }
+
+            if (GameData.upgraded)
+            {
+                Destroy(positions[4].gameObject);
+            }
+            int x = i;
+            newButton.GetComponent<Button>().onClick.AddListener(() => LoadLevelScene(x));
+            
             
         }
 

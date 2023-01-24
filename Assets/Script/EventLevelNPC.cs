@@ -23,6 +23,13 @@ public class EventLevelNPC : MonoBehaviour
     [SerializeField]
     GameObject over;
 
+    private void Start()
+    {
+        if (!GameData.enteredEventLevel)
+            GameData.enteredEventLevel = true;
+        else
+            GameData.upgraded = true;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         dialogName.SetActive(true);
@@ -66,7 +73,7 @@ public class EventLevelNPC : MonoBehaviour
                 name = "Sleep";
                 break;
             case 10:
-                name = "Baa";
+                name = "Sleep";
                 break;
             case 11:
                 name = "Jump";

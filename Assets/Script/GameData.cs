@@ -17,7 +17,7 @@ public class GameData : MonoBehaviour
     public static float tickspeed = 1;
     public static int killed;
     public static int duplicated;
-    public static int accessible = 3;
+    public static int accessible = 2;
     public static bool upgraded;
     public static bool enteredEventLevel = false;
     public enum state // In battle activate drag and drop to play a card, in worldmap activate onmousepointenter to zoom in a card for detailed Information
