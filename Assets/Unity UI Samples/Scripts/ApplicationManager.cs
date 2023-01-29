@@ -7,8 +7,6 @@ public class ApplicationManager : MonoBehaviour {
 
 	[SerializeField]
 	public GameObject menuPanel;
-	[SerializeField]
-	public GameObject background;
 
 	[SerializeField]
 	public Slider tickSlider;
@@ -23,8 +21,8 @@ public class ApplicationManager : MonoBehaviour {
 	[SerializeField]
 	public GameObject gameManager;
 
-	[SerializeField]
-	public GameObject canvasPanel;
+	public GameObject PauseButton;
+
 	public void Quit () 
 	{
 		#if UNITY_EDITOR
@@ -53,16 +51,19 @@ public class ApplicationManager : MonoBehaviour {
         {
             if (!paused)
             {
-				canvasPanel.SetActive(false);
-				background.SetActive(true);
+
 				menuPanel.SetActive(true);
 				paused = true;
 				gameManager.GetComponent<BattleLevelDriver>().Pause();
-            }
+				HideHandCard();
+				PauseButton.SetActive(false);
+
+			}
             else
             {
 				Resume();
-				canvasPanel.SetActive(true);
+				ShowHandCard();
+				PauseButton.SetActive(true);
 			}
 				
 		}
@@ -81,13 +82,11 @@ public class ApplicationManager : MonoBehaviour {
 
 	public void Resume()
     {
-
-		background.SetActive(false);
 		menuPanel.SetActive(false);
 		paused = false;
 		UI.waitForDuplicate = false;
 		gameManager.GetComponent<BattleLevelDriver>().Pause();
-		canvasPanel.SetActive(true);
+		
 	}
 
 	public void SetTickSpeed()
@@ -95,13 +94,31 @@ public class ApplicationManager : MonoBehaviour {
 		GameData.tickspeed = tickSlider.value;
     }
 
+	public void HideHandCard()
+	{
+		for (int i = 0; i < BattleData.playerData.handCard.Count; i++)
+		{
+			BattleData.playerData.handCard[i].gameObject.SetActive(false);
+		}
+	}
+
+	public void ShowHandCard()
+	{
+		for (int i = 0; i < BattleData.playerData.handCard.Count; i++)
+		{
+			BattleData.playerData.handCard[i].gameObject.SetActive(true);
+		}
+	}
+
 	public void gogogo()
     {
-		SceneManager.LoadScene("EventLevel");
+		SceneManager.LoadScene("WorldMap");
+		GameData.accessible = 3;
     }
 
 	public void gogogo2()
 	{
-		SceneManager.LoadScene("EventLevel");
+		SceneManager.LoadScene("WorldMap");
+		GameData.accessible = 4;
 	}
 }

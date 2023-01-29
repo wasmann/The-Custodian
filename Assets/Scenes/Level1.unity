@@ -2975,6 +2975,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05a81c3d5091440058129444d28322f3, type: 3}
+--- !u!1 &169237178 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7723026424533671340, guid: ea2aa31c06662e1468287a4cba245313, type: 3}
+  m_PrefabInstance: {fileID: 7723026424934754904}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &169342389
 GameObject:
   m_ObjectHideFlags: 0
@@ -3835,13 +3840,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuPanel: {fileID: 928897660}
-  background: {fileID: 1170046506}
   tickSlider: {fileID: 1673306192}
   volumeSlider: {fileID: 2058654334}
   musicTiggle: {fileID: 944222287}
   paused: 0
   gameManager: {fileID: 1677132430}
-  canvasPanel: {fileID: 769581116}
+  PauseButton: {fileID: 169237178}
 --- !u!4 &295766939
 Transform:
   m_ObjectHideFlags: 0
@@ -4871,7 +4875,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Dificulty
+  m_Text: Difficulty
 --- !u!222 &704582870
 CanvasRenderer:
   m_ObjectHideFlags: 0
