@@ -38,7 +38,7 @@ public class ApplicationManager : MonoBehaviour {
 
 	public void NewGame()
 	{
-		SceneManager.LoadScene("Tutorial");
+		SceneManager.LoadScene("StoryTelling");
 	}
 
 	public void BackToStart()
