@@ -15,8 +15,7 @@ public class WorldMap : MonoBehaviour
     [SerializeField]
     public GameObject deckPanel;
 
-    [SerializeField]
-    public GameObject deckGrid;
+    public static GameObject deckGrid;
 
     public static GameObject deleteButton;
 
@@ -60,8 +59,11 @@ public class WorldMap : MonoBehaviour
             
         }
 
+        deckGrid = GameObject.Find("DeckGrid");
         deleteButton = GameObject.Find("Delete");
         deleteButton.SetActive(false);
+
+        GameData.currentState = GameData.state.WorldMap;
     }
 
 
@@ -121,6 +123,20 @@ public class WorldMap : MonoBehaviour
         readyToDelete = card;
     }
 
+    public static void Unselect()
+    {
+        readyToDelete = null;
+        deleteButton.SetActive(false);
+    }
+
+    public static void DeleteAllBorder()
+    {
+        foreach(Transform child in deckGrid.transform)
+        {
+            if (child.childCount != 0)
+                Destroy(child.GetChild(0).gameObject);
+        }
+    }
     public void Delete()
     {
         //GameData.Deck.Remove(readyToDelete);
@@ -133,4 +149,6 @@ public class WorldMap : MonoBehaviour
     {
         SceneManager.LoadScene("Start");
     }
+
+
 }

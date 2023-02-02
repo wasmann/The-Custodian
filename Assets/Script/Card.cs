@@ -81,7 +81,14 @@ public abstract class Card : MonoBehaviour
         {
             if (GameData.currentState == GameData.state.WorldMap)
             {
-                WorldMap.DeleteCard(this);
+                if(this.transform.childCount == 0)
+                {
+                    WorldMap.DeleteAllBorder();
+                    GameObject obj = Instantiate(Resources.Load("Prefab/UI/Border") as GameObject, this.transform);
+                    obj.GetComponent<SpriteRenderer>().sortingOrder = this.GetComponent<SpriteRenderer>().sortingOrder;
+                    WorldMap.DeleteCard(this);
+                }
+               
             }
             else
             {
@@ -95,6 +102,12 @@ public abstract class Card : MonoBehaviour
                 }
                 else
                 {
+                    if (this.transform.childCount == 0 && BattleData.AbleToPalyCard)
+                    {
+                        GameObject obj = Instantiate(Resources.Load("Prefab/UI/Border") as GameObject, this.transform);
+                        obj.GetComponent<SpriteRenderer>().sortingOrder = this.GetComponent<SpriteRenderer>().sortingOrder;
+                    }
+                        
                     if (BattleData.AbleToPalyCard == true)
                     {
                         ReSetTarget();
@@ -117,8 +130,15 @@ public abstract class Card : MonoBehaviour
             }
         }
         else if (Input.GetMouseButtonDown(1))//Right click
-        { 
-            if (BattleData.AbleToPalyCard == false)
+        {
+            if (this.transform.childCount == 1)
+                Destroy(this.transform.GetChild(0).gameObject);
+
+            if(GameData.currentState == GameData.state.WorldMap)
+            {
+                WorldMap.Unselect();
+            }
+            else if (BattleData.AbleToPalyCard == false)
             {
                 TileMapButton.MakeUnSelectable();
                 BattleData.AbleToPalyCard = true;
