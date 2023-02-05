@@ -10,6 +10,7 @@ public class BattleLevelDriver : MonoBehaviour
 {
     public bool Paused;
     public bool BattleOver;
+    public GameObject duplicationPanel;
 
     public static List<List<Card.InfoForActivate>> TimeLineSlots;
     [SerializeField]
@@ -99,7 +100,28 @@ public class BattleLevelDriver : MonoBehaviour
                     GameData.duplicated += 1;
                     BattleData.playerData.drawPile.Add(newcard);
                     BattleData.duplicated.Add(newcard);
+
+                    //Confirm getting a new Card
+                    Pause();
+                    duplicationPanel.gameObject.SetActive(true);
+                    duplicationPanel.transform.Find("Text").gameObject.SetActive(true);
+                    duplicationPanel.transform.Find("Confirm").gameObject.SetActive(true);
+                    GameObject cardInPanel = Instantiate(GameObject.Find("CardOnTimeLine/" + info.card.Name), duplicationPanel.transform,true);
+                    cardInPanel.transform.localPosition = Vector3.zero;
+                    cardInPanel.transform.localScale *= 5;
+                    while (Paused)
+                    {
+                        yield return new WaitForSeconds(0.2f);
+
+                    }
+                    Destroy(cardInPanel);
+                    duplicationPanel.gameObject.SetActive(false);
+                    duplicationPanel.transform.Find("Text").gameObject.SetActive(false);
+                    duplicationPanel.transform.Find("Confirm").gameObject.SetActive(false);
+
                     continue;
+
+
                 }
 
                 if (info.owner_ID == 0)
