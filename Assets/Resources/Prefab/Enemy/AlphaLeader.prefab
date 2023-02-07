@@ -425,7 +425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyID: 0
   dicardManager: {fileID: 0}
-  Animator: {fileID: 0}
+  Animator: {fileID: 6502979706173651870}
   deck:
   - {fileID: 3551649005920662421, guid: 1135a9ca0db55084e8ecd6d9d82ddc5e, type: 3}
   - {fileID: 3551649005920662421, guid: 1135a9ca0db55084e8ecd6d9d82ddc5e, type: 3}

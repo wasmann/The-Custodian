@@ -60,6 +60,7 @@ public class GunShoot : Card
                     BattleData.EnemyDataList[i].position == Info.Selection[0] * 5 + BattleData.playerData.position)
                 {
                     BattleData.EnemyData data = BattleData.EnemyDataList[i];
+                    data.currentHealth -= 2;
                     data.buff.Frozen += 4;
                     BattleData.EnemyDataList[i] = data;
                     UI.UpdateEnemyData(i);
@@ -81,6 +82,7 @@ public class GunShoot : Card
                 UI.UpdateEnemyData(Info.owner_ID);
 
                 BattleData.playerData.buff.Frozen += 4;
+                BattleData.playerData.currentHealth -= 2;
                 UI.UpdatePlayerData();
             }
         }

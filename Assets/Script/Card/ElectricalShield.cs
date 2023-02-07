@@ -34,7 +34,7 @@ public class ElectricalShield : Card
         }
         else
         {
-            int SelectionID = int.Parse(Info.otherInfo[0]);
+            int SelectionID = 1;
             BattleData.EnemyData newData = BattleData.EnemyDataList[SelectionID];
             newData.buff.Shield = 3;
             BattleData.EnemyDataList[SelectionID] = newData;

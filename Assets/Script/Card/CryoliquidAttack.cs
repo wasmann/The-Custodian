@@ -44,6 +44,7 @@ public class CryoliquidAttack : Card
                 {
                     BattleData.EnemyData data = BattleData.EnemyDataList[i];
                     data.buff.Frozen += 2;
+                    data.currentHealth -= 2;
                     BattleData.EnemyDataList[i] = data;
                     UI.UpdateEnemyData(i);
                     return;
@@ -56,6 +57,7 @@ public class CryoliquidAttack : Card
                 {
                     BattleData.EnemyData data = BattleData.EnemyDataList[i];
                     data.buff.Frozen += 2;
+                    data.currentHealth -= 2;
                     BattleData.EnemyDataList[i] = data;
                     UI.UpdateEnemyData(i);
                     return;

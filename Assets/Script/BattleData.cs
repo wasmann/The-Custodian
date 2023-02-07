@@ -95,19 +95,6 @@ public class BattleData : MonoBehaviour
                 }
             }
         }
-        //enviromentData = new Dictionary<Vector2, EnvironmentType>();
-        //string path = "Assets/Scenes/SceneDoc/BattleLevel" + BattleLevelID + ".txt";
-        //StreamReader reader = new StreamReader(path);
-        //string line;
-        //while ((line = reader.ReadLine()) != null)
-        //{
-        //    string[] split = line.Split(',');          
-        //    EnvironmentType environmentType = (EnvironmentType)System.Enum.Parse(typeof(EnvironmentType), split[2]);
-        //    enviromentData.Add(new Vector2(int.Parse(split[0]), int.Parse(split[1])), environmentType);
-        //}
-        //reader.Close();
-        //Debug.Log(enviromentData.Count);
-        //Debug.Log(enviromentData.ElementAt(0).Value);
     }
 
     public static void LoadEnermyData(){
@@ -227,7 +214,7 @@ public class BattleData : MonoBehaviour
     {
         GameData.currentState = GameData.state.Battle;
         EnemyData enemy1 = new EnemyData();
-        enemy1.position = new Vector2(18, 12);
+        enemy1.position = new Vector2(5, 6);
         enemy1.obj = GameObject.Find("LabWorker");
         enemy1.enemy = enemy1.obj.GetComponent<LabWorkerEnemy>();
         enemy1.enemy.EnemyID = 1;
@@ -236,11 +223,11 @@ public class BattleData : MonoBehaviour
         enemy1.drawPile = enemy1.enemy.CardsDeck;
         enemy1.handCard = new List<Card>();
         enemy1.discardPile = new List<Card>();
-        StartingHandCards(2, enemy1.handCard, enemy1.drawPile, false);
+        StartingHandCards(3, enemy1.handCard, enemy1.drawPile, false);
         EnemyDataList.Add(1, enemy1);
 
         var enemy = new EnemyData();
-        enemy.position = new Vector2(16, 12);
+        enemy.position = new Vector2(13, 2);
         enemy.obj = GameObject.Find("Hound");
         enemy.enemy = enemy.obj.GetComponent<Hound>();
         enemy.enemy.EnemyID = 2;
@@ -254,11 +241,12 @@ public class BattleData : MonoBehaviour
     }
     static void LoadEnemyForLevel3()
     {
+
         GameData.currentState = GameData.state.Battle;
         EnemyData sheep = new EnemyData();
-        sheep.position = new Vector2(7, 4);
-        sheep.obj = GameObject.Find("LabWorker");
-        sheep.enemy = sheep.obj.GetComponent<LabWorkerEnemy>();
+        sheep.position = new Vector2(5, 4);
+        sheep.obj = GameObject.Find("AlphaSoldier");
+        sheep.enemy = sheep.obj.GetComponent<AlfaSolder>();
         sheep.enemy.EnemyID = 1;
         sheep.currentHealth = sheep.enemy.Health;
         sheep.maxHealth = sheep.enemy.Health;
@@ -267,5 +255,18 @@ public class BattleData : MonoBehaviour
         sheep.discardPile = new List<Card>();
         StartingHandCards(2, sheep.handCard, sheep.drawPile, false);
         EnemyDataList.Add(1, sheep);
+
+        //var enemy = new EnemyData();
+        //enemy.position = new Vector2(7, 3);
+        //enemy.obj = GameObject.Find("Hound");
+        //enemy.enemy = enemy.obj.GetComponent<Hound>();
+        //enemy.enemy.EnemyID = 2;
+        //enemy.currentHealth = enemy.enemy.Health;
+        //enemy.maxHealth = enemy.enemy.Health;
+        //enemy.drawPile = enemy.enemy.CardsDeck;
+        //enemy.handCard = new List<Card>();
+        //enemy.discardPile = new List<Card>();
+        //StartingHandCards(3, enemy.handCard, enemy.drawPile, false);
+        //EnemyDataList.Add(2, enemy);
     }
 }
