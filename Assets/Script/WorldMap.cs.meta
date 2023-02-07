@@ -3,7 +3,11 @@ guid: 83a1aa96e9613304fb3e3d37982b6d43
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - battleLevelDriver: {instanceID: 0}
+  - buttonPrefab: {fileID: 7723026424533671340, guid: ea2aa31c06662e1468287a4cba245313, type: 3}
+  - buttonParent: {instanceID: 0}
+  - deckPanel: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
