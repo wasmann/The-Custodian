@@ -36,7 +36,7 @@ public class UI : MonoBehaviour
     public static GameObject NotationList;
 
     //pause
-    static GameObject pauseButton;
+    public static GameObject pauseButton;
     public static bool isPaused = false;
 
     //duplication
@@ -193,6 +193,11 @@ public class UI : MonoBehaviour
 
     public static void UpdateEnemyData(int ID)
     {
+       /* if (BattleData.EnemyDataList[ID].obj.transform.position.x - ToolFunction.FromCoorinateToWorld(BattleData.EnemyDataList[ID].position).x <= 0)
+            BattleData.EnemyDataList[ID].obj.GetComponent<SpriteRenderer>().flipX = true;
+        else
+            BattleData.EnemyDataList[ID].obj.GetComponent<SpriteRenderer>().flipX = false;*/
+
         BattleData.EnemyDataList[ID].obj.transform.position= ToolFunction.FromCoorinateToWorld(BattleData.EnemyDataList[ID].position);
         if (BattleData.EnemyDataList[ID].obj.GetComponentInChildren<Slider>().value != BattleData.EnemyDataList[ID].currentHealth)
         {
@@ -392,6 +397,22 @@ public class UI : MonoBehaviour
         Destroy(damage, 0.5f);
     }
 
+    public static void FlipCusto(float num)
+    {
+        if (num <= 0 && !custoRender.flipX)
+            custoRender.flipX = true;
+        else
+            custoRender.flipX = false;
+    }
+
+    public static void FlipEnemy(int enemy, float num)
+    {
+        SpriteRenderer spriteRenderer = BattleData.EnemyDataList[enemy].obj.GetComponent<SpriteRenderer>();
+        if (num <= 0 && !spriteRenderer.flipX)
+            spriteRenderer.flipX = true;
+        else
+            spriteRenderer.flipX = false;
+    }
     private void Update()
     {
         if (newPosition != custodian.transform.position)

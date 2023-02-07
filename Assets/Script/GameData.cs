@@ -41,7 +41,8 @@ public class GameData : MonoBehaviour
         SaveCard(2, "Walk");
         SaveCard(3, "RunDown");
         SaveCard(4, "RunLeft");
-        SaveCard(5, "Headbutt");*/
+        SaveCard(5, "RunRight");
+        SaveCard(6, "Headbutt");*/
         LoadCard();
     }
 

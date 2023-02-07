@@ -59,6 +59,12 @@ public class RushAndCollisionAttack: Card
 
             int Distance = (int)moveDir.magnitude - 1;
 
+            GameObject obj = Instantiate(Resources.Load("Prefab/UI/Slash") as GameObject);
+            obj.transform.position = ToolFunction.FromCoorinateToWorld(Info.Selection[0] + oriPos);
+            Destroy(obj, 1f);
+            UI.FlipCusto(Info.Selection[0].x);
+
+
             for (int i = 1; i < BattleData.EnemyDataList.Count + 1; i++)
             {
                 if (BattleData.EnemyDataList[i].position == Info.Selection[0]+oriPos)
@@ -67,6 +73,10 @@ public class RushAndCollisionAttack: Card
                     data.currentHealth -= 2 + Distance;
                     BattleData.EnemyDataList[i] = data;
                     UI.UpdateEnemyData(i);
+
+                    GameObject obj2 = Instantiate(Resources.Load("Prefab/UI/Headbutt") as GameObject);
+                    obj2.transform.position = ToolFunction.FromCoorinateToWorld(Info.Selection[0] + oriPos);
+                    Destroy(obj2, 1f);
                 }
             }
             BattleData.playerData.position += Info.Selection[0] - Info.Selection[0] / Info.Selection[0].magnitude;
@@ -81,10 +91,20 @@ public class RushAndCollisionAttack: Card
 
             int Distance = (int)moveDir.magnitude - 1;
 
+            GameObject obj = Instantiate(Resources.Load("Prefab/UI/Slash") as GameObject);
+            obj.transform.position = ToolFunction.FromCoorinateToWorld(Info.Selection[0] + oriPos);
+            Destroy(obj, 1f);
+            UI.FlipEnemy(Info.owner_ID, Info.Selection[0].x);
+
             if (BattleData.playerData.position == Info.Selection[0] + oriPos)
             {
                 BattleData.playerData.currentHealth -= 2 + Distance;
                 UI.UpdatePlayerData();
+
+                GameObject obj2 = Instantiate(Resources.Load("Prefab/UI/Headbutt") as GameObject);
+                obj2.transform.position = ToolFunction.FromCoorinateToWorld(Info.Selection[0] + oriPos);
+                Destroy(obj2, 1f);
+
             }        
             BattleData.EnemyData newData = BattleData.EnemyDataList[Info.owner_ID];
             newData.position += Info.Selection[0] - Info.Selection[0] / Info.Selection[0].magnitude;

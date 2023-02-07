@@ -30,13 +30,24 @@ public class Headbutt : Card
         Audio.Play();
         if (Info.owner_ID == 0)
         {
+
             Info.animator.SetTrigger("Attack");
+            GameObject obj = Instantiate(Resources.Load("Prefab/UI/Slash") as GameObject);
+            obj.transform.position = ToolFunction.FromCoorinateToWorld(Info.Selection[0] + BattleData.playerData.position);
+            Destroy(obj, 1f);
+            UI.FlipCusto(Info.Selection[0].x);
+            
             for (int i = 1; i < BattleData.EnemyDataList.Count + 1; i++)
             {
                 if (BattleData.EnemyDataList[i].position == Info.Selection[0]+ BattleData.playerData.position)
                 {
                     BattleData.EnemyData data = BattleData.EnemyDataList[i];
                     data.currentHealth -= 3;
+
+                    GameObject obj2 = Instantiate(Resources.Load("Prefab/UI/Headbutt") as GameObject);
+                    obj2.transform.position = ToolFunction.FromCoorinateToWorld(Info.Selection[0] + BattleData.playerData.position);
+                    Destroy(obj2, 1f);
+
                     BattleData.EnemyDataList[i] = data;
                     UI.UpdateEnemyData(i);
                     return;
@@ -45,8 +56,17 @@ public class Headbutt : Card
         }
         else
         {
+            GameObject obj = Instantiate(Resources.Load("Prefab/UI/Slash") as GameObject);
+            obj.transform.position = ToolFunction.FromCoorinateToWorld(Info.Selection[0] + BattleData.EnemyDataList[Info.owner_ID].position);
+            Destroy(obj, 1f);
             if (BattleData.playerData.position == Info.Selection[0] + BattleData.EnemyDataList[Info.owner_ID].position)
             {
+                GameObject obj2 = Instantiate(Resources.Load("Prefab/UI/Headbutt") as GameObject);
+                //obj2.transform.position = ToolFunction.FromCoorinateToWorld(Info.Selection[0] + BattleData.playerData.position);
+                obj2.transform.position = ToolFunction.FromCoorinateToWorld(BattleData.playerData.position);
+                UI.FlipEnemy(Info.owner_ID, Info.Selection[0].x); //turn before attack
+                Destroy(obj2, 1f);
+
                 BattleData.playerData.currentHealth -= 3;
                 UI.UpdatePlayerData();
             }

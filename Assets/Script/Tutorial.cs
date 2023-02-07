@@ -56,6 +56,7 @@ public class Tutorial : MonoBehaviour
         GameData.SaveCard(2, "Walk");
         GameData.SaveCard(3, "RunDown");
         GameData.SaveCard(4, "RunLeft");
+        GameData.SaveCard(5, "RunRight");
     }
     // Start is called before the first frame update
     void Start()
@@ -265,7 +266,7 @@ public class Tutorial : MonoBehaviour
 
     public void Skip()
     {
-        GameData.SaveCard(5, "Headbutt");
+        GameData.SaveCard(6, "Headbutt");
         SceneManager.LoadScene("Level1");
     }
 }

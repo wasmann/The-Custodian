@@ -51,6 +51,8 @@ public abstract class Card : MonoBehaviour
             BattleData.playerData.discardPile.Add(this);// need test
             BattleLevelDriver.NewCardPlayed(this.Info);
             Deck.DrawCard();
+            if (this.transform.childCount == 1)
+                Destroy(this.transform.GetChild(0).gameObject);
 
         }
         else
