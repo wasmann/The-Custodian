@@ -12,6 +12,7 @@ public class Reloading : Card
     public override IEnumerator Play()
     {
         Info.owner_ID = 0;
+        BattleData.playerData.currentEnergy = 5;
         yield return new WaitForSeconds(0.1f);
         UpdateData(0, ID, Info);
     }
@@ -21,6 +22,7 @@ public class Reloading : Card
         if (Info.owner_ID == 0)
         {
             //TODO:show animation 
+            
             Debug.Log("player reloading");
         }
         else

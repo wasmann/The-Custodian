@@ -59,7 +59,7 @@ public class CryoliquidShooting : Card
                     BattleData.EnemyDataList[i].position == Info.Selection[0]*5 + BattleData.playerData.position)
                 {
                     BattleData.EnemyData data = BattleData.EnemyDataList[i];
-                    data.buff.Frozen +=4;
+                    //data.buff.Frozen +=4;
                     data.currentHealth -= 3;
                     BattleData.EnemyDataList[i] = data;
                     UI.UpdateEnemyData(i);
@@ -77,7 +77,7 @@ public class CryoliquidShooting : Card
             {
                 Info.animator.SetTrigger("Shoot");
                 BattleData.playerData.currentHealth -= 3;
-                BattleData.playerData.buff.Frozen += 4;
+                //BattleData.playerData.buff.Frozen += 4;
                 UI.UpdatePlayerData();
             }
         }
