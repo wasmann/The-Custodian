@@ -119,6 +119,6 @@ public class ApplicationManager : MonoBehaviour {
 	public void gogogo2()
 	{
 		SceneManager.LoadScene("WorldMap");
-		GameData.accessible = 4;
+		GameData.accessible = 5;
 	}
 }
