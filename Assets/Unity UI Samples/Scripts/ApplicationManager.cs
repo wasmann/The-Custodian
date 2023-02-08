@@ -86,7 +86,9 @@ public class ApplicationManager : MonoBehaviour {
 		paused = false;
 		UI.waitForDuplicate = false;
 		gameManager.GetComponent<BattleLevelDriver>().Pause();
-		
+		ShowHandCard();
+		PauseButton.SetActive(true);
+
 	}
 
 	public void SetTickSpeed()
@@ -118,6 +120,8 @@ public class ApplicationManager : MonoBehaviour {
 
 	public void gogogo2()
 	{
+		GameData.upgraded = false;
+		GameData.enteredEventLevel = true;
 		SceneManager.LoadScene("WorldMap");
 		GameData.accessible = 5;
 	}

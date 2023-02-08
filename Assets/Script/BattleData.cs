@@ -153,7 +153,7 @@ public class BattleData : MonoBehaviour
         {
             GameData.currentState = GameData.state.WorldMap;
             SceneManager.LoadScene("WinningScreen");
-            GameData.accessible = BattleLevelID + 2;
+            GameData.accessible = BattleLevelID + 3;
             return true;
         }
             

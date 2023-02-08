@@ -80,6 +80,11 @@ public class WorldMap : MonoBehaviour
             GameData.enteredEventLevel = true;
             SceneManager.LoadScene("EventLevel");        
         }
+        else if(id % 2 == 0 && GameData.enteredEventLevel == true)
+        {
+            GameData.upgraded = true;
+            SceneManager.LoadScene("EventLevel");
+        }
         else
             SceneManager.LoadScene("Level" + (id / 2 + 1).ToString());
     }
