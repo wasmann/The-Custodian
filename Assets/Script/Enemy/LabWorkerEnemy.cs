@@ -240,7 +240,7 @@ public class LabWorkerEnemy : Enemy
         float utility;
         List<float> result = new List<float>();
         //DoubleJumpfollowingPath
-        utility = weight.w_PathTooLong + 2 * weight.w_ObsticalInBetween - weight.w_Injured + weight.w_RareCardNotUsed;
+        utility = weight.w_PathTooLong - 2 * weight.w_ObsticalInBetween - weight.w_Injured + weight.w_RareCardNotUsed;
         result.Add(utility);
         //DoubleJumpForAligning
         utility = weight.w_Aggressive + weight.w_WalkCanAlign - weight.w_Injured - weight.w_Aligned +  weight.w_ObsticalInBetween + weight.w_RareCardNotUsed; 
@@ -259,7 +259,7 @@ public class LabWorkerEnemy : Enemy
         int utility;
         List<float> result = new List<float>();
         //JumpfollowingPath
-        utility = weight.w_PathTooLong + 2 * weight.w_ObsticalInBetween - weight.w_Injured;
+        utility = weight.w_PathTooLong - 2 * weight.w_ObsticalInBetween - weight.w_Injured;
         result.Add(utility);
         //JumpForAligning
         utility = weight.w_Aggressive + weight.w_WalkCanAlign - weight.w_Injured + weight.w_Aligned + weight.w_ObsticalInBetween;
