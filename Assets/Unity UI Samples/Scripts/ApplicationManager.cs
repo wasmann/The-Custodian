@@ -114,7 +114,7 @@ public class ApplicationManager : MonoBehaviour {
 
 	public void gogogo()
     {
-		SceneManager.LoadScene("WorldMap");
+		SceneManager.LoadScene("WinningScreen");
 		GameData.accessible = 3;
     }
 
@@ -122,7 +122,7 @@ public class ApplicationManager : MonoBehaviour {
 	{
 		GameData.upgraded = false;
 		GameData.enteredEventLevel = true;
-		SceneManager.LoadScene("WorldMap");
+		SceneManager.LoadScene("WinningScreen");
 		GameData.accessible = 5;
 	}
 }
